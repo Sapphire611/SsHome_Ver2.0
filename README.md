@@ -16,6 +16,7 @@
 - git push -u origin master
 
 ### Annotation
-- @Controller 把当前类作为路由API的承载着
+- @Controller 把当前类作为路由API的承载者
 - @Component 仅仅把当前类作为容器初始化到Spring的上下文
 - @Autowire 把Spring容器中写好的实例加载到上下文
+- @Value 不通过配置文件的注入属性

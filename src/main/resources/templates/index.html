@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<!-- 引用命名标签 -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Sapphire's Home</title>
@@ -29,70 +30,52 @@
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="https://github.com/login/oauth/authorize?client_id=4ce03e6d08271639376f&redirect_uri=http://localhost:6197/callback&scope=user&state=1">Login</a></li>
-                <li class="dropdown">
+                <!-- <div th:text="${session.user}"></div> -->
+                <li class="dropdown" th:if = "${session.user != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">About Me <span class="caret"></span></a>
+                       aria-expanded="false"><span th:text="${session.user.getName()}"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Message</a></li>=
+                        <li><a href="#">Message</a></li>
                         <li><a href="#">Profile</a></li>
                         <li><a href="#">Log Out</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#">Nothing</a></li>
                     </ul>
                 </li>
+
+                <li th:if="${session.user == null}"><a href="https://github.com/login/oauth/authorize?client_id=4ce03e6d08271639376f&redirect_uri=http://localhost:6197/callback&scope=user&state=1">Github Login</a></li>
+
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
 
-<!-- Standard button -->
-<button type="button" class="btn btn-default">（默认样式）Default</button>
 
-<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-<button type="button" class="btn btn-primary">（首选项）Primary</button>
 
 <!-- Indicates a successful or positive action -->
-<button type="button" class="btn btn-success">（成功）Success</button>
+<button type="button" th:if = "${session.user != null}" class="btn btn-success" >Login Success</button>
 
 <!-- Contextual button for informational alert messages -->
-<button type="button" class="btn btn-info">（一般信息）Info</button>
-
-<!-- Indicates caution should be taken with this action -->
-<button type="button" class="btn btn-warning">（警告）Warning</button>
-
-<!-- Indicates a dangerous or potentially negative action -->
-<button type="button" class="btn btn-danger">（危险）Danger</button>
+<button type="button" th:if = "${session.user == null}" class="btn btn-info"> Please Login </button>
 
 <div class="bs-example" data-example-id="hoverable-table">
     <table class="table table-hover">
         <thead>
         <tr>
             <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            <th>UserName</th>
+            <th>UserId</th>
+            <th>Bio</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr th:if = "${session.user != null}">
             <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <td><span th:text="${session.user.getName()}"></span></td>
+            <td><span th:text="${session.user.getId()}"></span></td>
+            <td><span th:text="${session.user.getBio()}"></span></td>
         </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-        </tr>
+
         </tbody>
     </table>
 </div><!-- /example -->

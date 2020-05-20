@@ -24,7 +24,7 @@ public class GithubProvider {
             // access_token=d9a6f4f12987394d0440e1a0c4427bb51a843101&scope=user&token_type=bearer
             String token = string.split("&")[0].split("=")[1];
 
-            System.out.println("Token = " + token);
+            // System.out.println("Token = " + token);
             return token;
         } catch (Exception e) {
             e.printStackTrace();
