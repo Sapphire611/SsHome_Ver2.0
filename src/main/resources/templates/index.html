@@ -31,19 +31,18 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <!-- <div th:text="${session.user}"></div> -->
-                <li class="dropdown" th:if = "${session.githubUser != null}">
+                <li class="dropdown" th:if = "${session.user != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false"><span th:text="${session.githubUser.getName()}"></span></a>
+                       aria-expanded="false"><span th:text="${session.user.getName()}"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Message</a></li>
                         <li><a href="#">Profile</a></li>
                         <li><a href="#">Log Out</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Nothing</a></li>
+                        <li role="separator" class="divider"></li><li><a href="#">Nothing</a></li>
                     </ul>
                 </li>
 
-                <li th:if="${session.githubUser == null}"><a href="https://github.com/login/oauth/authorize?client_id=4ce03e6d08271639376f&redirect_uri=http://localhost:6197/callback&scope=user&state=1">Github Login</a></li>
+                <li th:if="${session.user == null}"><a href="https://github.com/login/oauth/authorize?client_id=4ce03e6d08271639376f&redirect_uri=http://localhost:6197/callback&scope=user&state=1">Github Login</a></li>
 
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -52,11 +51,11 @@
 
 
 
-<div class="alert alert-success" th:if = "${session.githubUser != null}" role="alert">
-    <strong>Well done!</strong> Login successfully.
+<div class="alert alert-success" th:if = "${session.user != null}" role="alert">
+    <strong>Well done!</strong> Github Login successfully.
 </div>
 
-<div class="alert alert-info" th:if = "${session.githubUser == null}" role="alert">
+<div class="alert alert-info" th:if = "${session.user == null}" role="alert">
     <strong>Heads up!</strong> You need to Login from the top.
 </div>
 
@@ -66,16 +65,16 @@
         <tr>
             <th>#</th>
             <th>UserName</th>
-            <th>UserId</th>
-            <th>Bio</th>
+            <th>UserAccountId</th>
+            <th>GmtCreate</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:if = "${session.githubUser != null}">
+        <tr th:if = "${session.user != null}">
             <th scope="row">You -> </th>
-            <td><span th:text="${session.githubUser.getName()}"></span></td>
-            <td><span th:text="${session.githubUser.getId()}"></span></td>
-            <td><span th:text="${session.githubUser.getBio()}"></span></td>
+            <td><span th:text="${session.user.getName()}"></span></td>
+            <td><span th:text="${session.user.getAccountId()}"></span></td>
+            <td><span th:text="${session.user.getGmtCreate()}"></span></td>
         </tr>
 
         </tbody>

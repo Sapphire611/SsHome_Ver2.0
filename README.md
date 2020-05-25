@@ -20,3 +20,19 @@
 - @Component 仅仅把当前类作为容器初始化到Spring的上下文
 - @Autowire 把Spring容器中写好的实例加载到上下文
 - @Value 不通过配置文件的注入属性
+
+### SQL
+```
+CREATE TABLE user(
+ id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+ accountid varchar(100),
+ name varchar(50),
+ token varchar(36),
+ gmtCreate BIGINT,
+ gmtModified BIGINT
+);
+
+```
+### Terminal
+- source ~/.bash_profile
+- mvn flyway:migrate
