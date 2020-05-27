@@ -1,0 +1,8 @@
+.main{
+    margin: 30px;
+}
+
+.bodyBg{
+    background-color: #efefef;
+    background-image:url("/img/bg.jpg");
+}

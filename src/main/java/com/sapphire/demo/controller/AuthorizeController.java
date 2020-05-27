@@ -57,6 +57,8 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(githubUser.getId())); //Long -> String 强制转换
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
+            user.setAvatar_url(githubUser.getAvatar_url());
+            user.setBio(githubUser.getBio());
             userMapper.insert(user);
 
             // Cookie & Session

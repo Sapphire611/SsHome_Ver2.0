@@ -5,6 +5,8 @@
 [Spring 文档](https://spring.io/guidess)
 [GitHub OAuth](https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/)
 [OKHttp](https://square.github.io/okhttp/)
+[lomnok](https://projectlombok.org/)
+[api-getUsers-demo](https://api.github.com/users/Sapphire611)
 
 ### Git
 - git init  初始化 git
@@ -33,6 +35,28 @@ CREATE TABLE user(
 );
 
 ```
+```
+create table question
+(
+    id int auto_increment,
+    title varchar(50) null,
+    description TEXT null,
+    gmtCreate BIGINT null,
+    gmtModified BIGINT null,
+    comment_count int default 0 null,
+    like_count int default 0 null,
+    view_count int default 0 null,
+    tag varchar(255) null,
+    constraint question_pk primary key (id)
+);
+
+
+
+```
 ### Terminal
 - source ~/.bash_profile
 - mvn flyway:migrate
+
+### Port
+- sudo lsof -i:6197
+- sudo kill -9 42505
