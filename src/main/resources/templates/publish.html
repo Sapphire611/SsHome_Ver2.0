@@ -41,8 +41,8 @@
                     <ul class="dropdown-menu">
                         <li><a href="#">Message</a></li>
                         <li><a href="#">Profile</a></li>
+                        <li role="separator" class="divider"></li>
                         <li><a href="#">Log Out</a></li>
-                        <li role="separator" class="divider"></li><li><a href="#">Nothing</a></li>
                     </ul>
                 </li>
 
@@ -75,6 +75,8 @@
                 </div>
                 <div class="alert alert-danger" role="alert"  th:text="${error}"  th:if = "${error} != null" >...</div>
                 <button type="submit" class="btn btn-success">Publish</button>
+                <br>
+                <br>
             </form>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">

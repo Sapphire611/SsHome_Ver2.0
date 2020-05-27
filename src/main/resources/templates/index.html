@@ -8,6 +8,7 @@
     <link type="text/css" rel="stylesheet" href="../static/css/bootstrap-theme.min.css"
           th:href="@{/css/bootstrap-theme.min.css}"/>
     <link type="text/css" rel="stylesheet" href="../static/css/home.css" th:href="@{/css/home.css}"/>
+    <script src="../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}" type="application/javascript"></script>
     <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" type="application/javascript"></script>
 </head>
 
@@ -40,8 +41,8 @@
                     <ul class="dropdown-menu">
                         <li><a href="#">Message</a></li>
                         <li><a href="#">Profile</a></li>
+                        <li role="separator" class="divider"></li>
                         <li><a href="#">Log Out</a></li>
-                        <li role="separator" class="divider"></li><li><a href="#">Nothing</a></li>
                     </ul>
                 </li>
 
@@ -52,37 +53,38 @@
     </div><!-- /.container-fluid -->
 </nav>
 
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span>&nbsp;&nbsp;What's New</h3>
+            <hr>
 
-
-<div class="alert alert-success" th:if = "${session.user != null}" role="alert">
-    <strong>Well done!</strong> Github Login successfully.
+            <!--循环获取questions表中内容-->
+            <div class="media" th:each="question : ${questions}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-thumbnail" th:src="${question.user.avatarUrl}">
+                    </a>
+                    <!--<span th:text="${question.user.toString()}"></span>-->
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <span th:text="${question.description}"></span>
+                    <p><a href="#">Sapphire</a>
+                        <span class="mediaText">published an article  • <span th:text="${question.commentCount}"></span> comments • <span th:text="${question.viewCount}"></span> views •  <span th:text="${#dates.format(question.getGmtCreate(),'yyyy-MM-dd')}"></span>
+                    </p>
+                </div>
+                <br>
+            </div>
+            <!--循环结束-->
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>&nbsp;&nbsp;Hot Topic</h3>
+            <hr>
+            <img src="img/Sara.jpeg" height="315px">
+        </div>
+    </div>
 </div>
-
-<div class="alert alert-info" th:if = "${session.user == null}" role="alert">
-    <strong>Heads up!</strong> You need to Login from the top.
-</div>
-
-<div class="bs-example" data-example-id="hoverable-table">
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>UserName</th>
-            <th>UserAccountId</th>
-            <th>GmtCreate</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:if = "${session.user != null}">
-            <th scope="row">You -> </th>
-            <td><span th:text="${session.user.getName()}"></span></td>
-            <td><span th:text="${session.user.getAccountId()}"></span></td>
-            <td><span th:text="${session.user.getGmtCreate()}"></span></td>
-        </tr>
-
-        </tbody>
-    </table>
-</div><!-- /example -->
 
 </body>
 </html>
