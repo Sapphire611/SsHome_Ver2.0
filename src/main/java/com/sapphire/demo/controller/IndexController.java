@@ -1,19 +1,17 @@
 package com.sapphire.demo.controller;
 
-import com.sapphire.demo.dto.QuestionDTO;
-import com.sapphire.demo.mapper.QuestionMapper;
+import com.sapphire.demo.dto.PaginationDTO;
 import com.sapphire.demo.mapper.UserMapper;
-import com.sapphire.demo.model.Question;
 import com.sapphire.demo.model.User;
 import com.sapphire.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 public class IndexController {
@@ -25,7 +23,11 @@ public class IndexController {
     private QuestionService questionService;
 
     @GetMapping("/")
-    public String index(HttpServletRequest request, Model model) {
+    // size = 一页显示7个问题
+    public String index(HttpServletRequest request,
+                        Model model,
+                        @RequestParam(name = "page",defaultValue = "1") Integer page,
+                        @RequestParam(name = "size",defaultValue = "7") Integer size) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0) {
             for (Cookie cookie : cookies) {
@@ -41,8 +43,8 @@ public class IndexController {
         }
 
 
-        List<QuestionDTO> questionList = questionService.list();
-        model.addAttribute("questions",questionList);
+        PaginationDTO paginationDTO = questionService.list(page,size);
+        model.addAttribute("paginationDTO",paginationDTO);
         return "index";
     }
 }

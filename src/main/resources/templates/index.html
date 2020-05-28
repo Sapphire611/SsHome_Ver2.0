@@ -21,7 +21,7 @@
                     data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Sapphire's Home</span>
             </button>
-            <a class="navbar-brand" href="http://localhost:6197/">Sapphire</a>
+            <a class="navbar-brand" href="/">Sapphire</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -60,23 +60,55 @@
             <hr>
 
             <!--循环获取questions表中内容-->
-            <div class="media" th:each="question : ${questions}">
+            <div class="media" th:each="question : ${paginationDTO.questions}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object img-thumbnail" th:src="${question.user.avatarUrl}">
                     </a>
                     <!--<span th:text="${question.user.toString()}"></span>-->
+
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading" th:text="${question.title}"></h4>
                     <span th:text="${question.description}"></span>
-                    <p><a href="#">Sapphire</a>
-                        <span class="mediaText">published an article  • <span th:text="${question.commentCount}"></span> comments • <span th:text="${question.viewCount}"></span> views •  <span th:text="${#dates.format(question.getGmtCreate(),'yyyy-MM-dd')}"></span>
+                    <p>
+                        <p class="mediaText"> <a href="#">Sapphire</a> published an article  • <span th:text="${question.commentCount}"></span> comments • <span th:text="${question.viewCount}"></span> views •  <span th:text="${#dates.format(question.getGmtCreate(),'yyyy-MM-dd')}"></span>
                     </p>
                 </div>
                 <br>
             </div>
             <!--循环结束-->
+            <!--分页模块-->
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li>
+                        <a th:if="${paginationDTO.showFirstPage}" th:href="@{/(page=1)}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:if="${paginationDTO.showPrevious}" th:href="@{/(page=1)}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <!--动态输出pages中的内容-->
+                    <li th:class="${paginationDTO.page == page} ? 'active' : ''" th:each="page : ${paginationDTO.pages}">
+                        <a th:href="@{/(page=${page})}" th:text="${page}"></a>
+                    </li>
+                    <!--动态输出结束-->
+                    <li>
+                        <a th:if="${paginationDTO.showNext}" th:href="@{/(page=1)}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:if="${paginationDTO.showEndPage}" th:href="@{/(page=${paginationDTO.totalPage})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!--分页模块结束-->
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h3><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>&nbsp;&nbsp;Hot Topic</h3>

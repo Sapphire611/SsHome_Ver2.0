@@ -14,7 +14,11 @@ public interface QuestionMapper {
     @Insert("insert into question (title,description,gmtCreate,gmtModified,creator,tag) values (#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{tag})")
     void create(Question question);
 
-    @Select("select * from question")
-    List<Question> list();
+    // 传入非本地参数时，需要手动添加映射
+    @Select("select * from question limit #{offset},#{size}")
+    List<Question> list(@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
+
+    @Select("select count(1) from question")
+    Integer count();
 }
 
