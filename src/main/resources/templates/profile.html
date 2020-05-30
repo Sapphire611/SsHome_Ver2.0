@@ -1,9 +1,8 @@
-<!DOCTYPE HTML>
-<!-- 引用命名标签 -->
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Sapphire's Home</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:text="${sectionName}"></title>
+    <meta charset="UTF-8">
     <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
     <link type="text/css" rel="stylesheet" href="../static/css/bootstrap-theme.min.css"
           th:href="@{/css/bootstrap-theme.min.css}"/>
@@ -11,9 +10,7 @@
     <script src="../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}" type="application/javascript"></script>
     <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" type="application/javascript"></script>
 </head>
-
 <body class="bodyBg">
-
 <!-- import nav -->
 <div th:insert="~{navigation :: nav}"></div>
 <!-- End -->
@@ -21,7 +18,7 @@
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span>&nbsp;&nbsp;What's New</h3>
+            <h3><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span><span  style="font-family: inherit" th:text="'&nbsp;&nbsp;' + ${sectionName}"></span></h3>
             <hr>
 
             <!--循环获取questions表中内容-->
@@ -35,9 +32,9 @@
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading" th:text="${question.title}"></h4>
-                    <span th:text="${question.description}"></span>
+                    <!-- <span th:text="${question.description}"></span> -->
                     <p>
-                        <p class="mediaText"><a href="#"><span href="#" th:text="${question.user.getName()}"></span></a> published an article  • <span th:text="${question.commentCount}"></span> comments • <span th:text="${question.viewCount}"></span> views •  <span th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+                    <p class="mediaText"><span th:text="${question.commentCount}"></span> comments • <span th:text="${question.viewCount}"></span> views •  <span th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
                     </p>
                 </div>
                 <br>
@@ -47,38 +44,45 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li>
-                        <a th:if="${paginationDTO.showFirstPage}" th:href="@{/(page=1)}" aria-label="Previous">
+                        <a th:if="${paginationDTO.showFirstPage}" th:href="@{/{action}/(page=1)}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <li>
-                        <a th:if="${paginationDTO.showPrevious}" th:href="@{/(page=1)}" aria-label="Previous">
+                        <a th:if="${paginationDTO.showPrevious}" th:href="@{/{action}/(page=1)}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <!--动态输出pages中的内容-->
                     <li th:class="${paginationDTO.page == page} ? 'active' : ''" th:each="page : ${paginationDTO.pages}">
-                        <a th:href="@{/(page=${page})}" th:text="${page}"></a>
+                        <a th:href="@{/{action}/(page=${page})}" th:text="${page}"></a>
                     </li>
                     <!--动态输出结束-->
                     <li>
-                        <a th:if="${paginationDTO.showNext}" th:href="@{/(page=1)}" aria-label="Previous">
+                        <a th:if="${paginationDTO.showNext}" th:href="@{/{action}/(page=1)}" aria-label="Previous">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li>
-                        <a th:if="${paginationDTO.showEndPage}" th:href="@{/(page=${paginationDTO.totalPage})}" aria-label="Next">
+                        <a th:if="${paginationDTO.showEndPage}" th:href="@{/{action}/(page=${paginationDTO.totalPage})}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                 </ul>
             </nav>
             <!--分页模块结束-->
+
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h3><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>&nbsp;&nbsp;Hot Topic</h3>
+            <h3><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;Menu</h3>
             <hr>
-            <img src="img/Sara.jpeg" height="315px">
+            <div class="list-group">
+                <a href="/profile/questions" class="list-group-item" th:class="${section == 'questions' } ? 'active list-group-item' : 'list-group-item'">My Question<span class="badge">?</span></a>
+                <a href="/profile/replies" class="list-group-item" th:class="${section == 'replies' } ? 'active list-group-item' : 'list-group-item'">Reply<span class="badge">?</span></a>
+                <a href="#" class="list-group-item" th:class="${section == 'Test1' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Test1</a>
+                <a href="#" class="list-group-item" th:class="${section == 'Test2' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Test2</a>
+                <a href="#" class="list-group-item" th:class="${section == 'Test3' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Test3</a>
+            </div>
         </div>
     </div>
 </div>
