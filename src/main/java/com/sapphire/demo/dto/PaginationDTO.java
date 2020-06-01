@@ -16,6 +16,7 @@ public class PaginationDTO {
     private Integer page;
     private List<Integer> pages = new ArrayList<>();
     private Integer totalPage;
+    private Integer totalCount;
 
     /**
      @param totalCount = 总问题数
@@ -23,6 +24,8 @@ public class PaginationDTO {
      @param size = 单页问题容量
      */
     public void setPagination(Integer totalCount, Integer page, Integer size) {
+        this.totalCount = totalCount; // 个人总问题数，用于输出到Badge
+
         // 根据总问题数和单页容量计算出页面数
         if(totalCount % size == 0){
             this.totalPage = totalCount / size;

@@ -14,7 +14,6 @@
 <!-- import nav -->
 <div th:insert="~{navigation :: nav}"></div>
 <!-- End -->
-
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
@@ -44,27 +43,28 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li>
-                        <a th:if="${paginationDTO.showFirstPage}" th:href="@{/{action}/(page=1)}" aria-label="Previous">
+                        <a th:if="${paginationDTO.showFirstPage}" th:href="@{/profile/{section}/(page=1,section=${section})}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <li>
-                        <a th:if="${paginationDTO.showPrevious}" th:href="@{/{action}/(page=1)}" aria-label="Previous">
+                        <a th:if="${paginationDTO.showPrevious}" th:href="@{/profile/{section}/(page=${paginationDTO.page - 1},section=${section})}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
+                    <!--<a href="details.html" th:href="@{/order/details(orderId=${o.id})}">view</a>-->
                     <!--动态输出pages中的内容-->
                     <li th:class="${paginationDTO.page == page} ? 'active' : ''" th:each="page : ${paginationDTO.pages}">
-                        <a th:href="@{/{action}/(page=${page})}" th:text="${page}"></a>
+                        <a th:href="@{/profile/{section}/(page=${page},section=${section})}" th:text="${page}"></a>
                     </li>
                     <!--动态输出结束-->
                     <li>
-                        <a th:if="${paginationDTO.showNext}" th:href="@{/{action}/(page=1)}" aria-label="Previous">
+                        <a th:if="${paginationDTO.showNext}" th:href="@{/profile/{section}/(page=${paginationDTO.page + 1},section=${section})}" aria-label="Previous">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li>
-                        <a th:if="${paginationDTO.showEndPage}" th:href="@{/{action}/(page=${paginationDTO.totalPage})}" aria-label="Next">
+                        <a th:if="${paginationDTO.showEndPage}" th:href="@{/profile/{section}/(page=${paginationDTO.totalPage},section=${section})}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -77,7 +77,7 @@
             <h3><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;Menu</h3>
             <hr>
             <div class="list-group">
-                <a href="/profile/questions" class="list-group-item" th:class="${section == 'questions' } ? 'active list-group-item' : 'list-group-item'">My Question<span class="badge">?</span></a>
+                <a href="/profile/questions" class="list-group-item" th:class="${section == 'questions' } ? 'active list-group-item' : 'list-group-item'">My Question<span class="badge" th:text="${paginationDTO.totalCount}">?</span></a>
                 <a href="/profile/replies" class="list-group-item" th:class="${section == 'replies' } ? 'active list-group-item' : 'list-group-item'">Reply<span class="badge">?</span></a>
                 <a href="#" class="list-group-item" th:class="${section == 'Test1' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Test1</a>
                 <a href="#" class="list-group-item" th:class="${section == 'Test2' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Test2</a>
