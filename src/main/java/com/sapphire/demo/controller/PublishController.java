@@ -36,6 +36,7 @@ public class PublishController {
             Model model
     ){
 
+
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
@@ -56,7 +57,7 @@ public class PublishController {
         }
 
 
-        User user = (User) request.getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
         if(user == null){
             model.addAttribute("error","Please Login first...");
             return "publish";

@@ -15,16 +15,19 @@ public interface QuestionMapper {
     void create(Question question);
 
     // 传入非本地参数时，需要手动添加映射
-    @Select("select * from question limit #{offset},#{size}")
+    @Select("select * from question order by id desc limit #{offset},#{size} ")
     List<Question> list(@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
 
     @Select("select count(1) from question")
     Integer count();
 
-    @Select("select * from question where creator = #{userId} limit #{offset},#{size}")
+    @Select("select * from question where creator = #{userId} order by id desc limit #{offset},#{size}")
     List<Question> listByUserId(@Param(value = "userId")Integer userId,@Param(value = "offset")  Integer offset, Integer size);
 
-    @Select("select count(1) from question where creator = #{userId}")
+    @Select("select count(1) from question where creator = #{userId} order by id desc")
     Integer countByUserId(@Param(value = "userId")Integer userId);
+
+    @Select("select * from question where id = #{id}")
+    Question getById(@Param(value = "id")Integer id);
 }
 

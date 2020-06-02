@@ -34,7 +34,7 @@
 
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <a th:href="@{'/question/' +${question.getId()}}"><h4 class="media-heading" th:text="${question.title}"></h4></a>
                     <span th:text="${question.description}"></span>
                     <p>
                         <p class="mediaText"><a href="#"><span href="#" th:text="${question.user.getName()}"></span></a> published an article  • <span th:text="${question.commentCount}"></span> comments • <span th:text="${question.viewCount}"></span> views •  <span th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>

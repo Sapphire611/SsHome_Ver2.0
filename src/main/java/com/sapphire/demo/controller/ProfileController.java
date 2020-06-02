@@ -29,7 +29,8 @@ public class ProfileController {
                           HttpServletRequest request,
                           Model model) {
 
-        User user = (User) request.getAttribute("user");
+        //User user = (User) model.getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
         if(user == null){
             return "redirect:/";
         }

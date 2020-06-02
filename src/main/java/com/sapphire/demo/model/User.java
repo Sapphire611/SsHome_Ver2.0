@@ -6,6 +6,7 @@ import lombok.Data;
 public class User {
     private Integer Id;
     private String name;
+    private String password;
     private String accountId;
     private String token;
     private Long gmtCreate;
