@@ -7,19 +7,18 @@
   <title>Login to Ss'Home</title>
   
   <link rel="stylesheet" href="css/style.css">
-
+  <link type="text/css" rel="stylesheet" href="../static/css/home.css" th:href="@{/css/home.css}"/>
 </head>
-<body>
-
+<body class="bodyBg">
     <div class="main">
       <div class="container a-container" id="a-container">
         <form class="form" id="a-form" method="post" action="/login">
           <h2 class="form_title title">Login to Ss'Home</h2>
-          <span class="form__span">At first , Your UserName = password = Your GitHub accountId</span>
+          <span class="form__span">At first , Your accountId = password from Your GitHub</span>
           <input class="form__input" th:value="${accountId}" type="accountId" name="accountId" placeholder="accountId">
           <input class="form__input" th:value="${password}" type="password" name="password" placeholder="Password">
-          <div class="alert alert-danger" role="alert"  th:text="${wrongMsg}"  th:if = "${wrongMsg} != null" >...</div>
-          <button type="submit" class="switch__button button switch-btn">Publish</button>
+          <span style="color: red" class="alert alert-danger" role="alert"  th:if = "${wrongMsg} != null" th:text="${wrongMsg}">...</span>
+          <button type="submit" class="switch__button button switch-btn">Login</button>
         </form>
       </div>
 

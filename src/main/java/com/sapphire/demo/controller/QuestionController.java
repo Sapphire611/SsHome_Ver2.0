@@ -1,12 +1,15 @@
 package com.sapphire.demo.controller;
 
 import com.sapphire.demo.dto.QuestionDTO;
+import com.sapphire.demo.model.User;
 import com.sapphire.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Author : Sapphire L
@@ -20,9 +23,16 @@ public class QuestionController {
 
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id") Integer id,
+                           HttpServletRequest request,
                            Model model){
-        QuestionDTO questionDTO = questionService.getById(id);
-        model.addAttribute("question",questionDTO);
-        return "question";
+
+        User user = (User) request.getSession().getAttribute("user");
+        if(user == null){
+            return "redirect:/login";
+        }else{
+            QuestionDTO questionDTO = questionService.getById(id);
+            model.addAttribute("question",questionDTO);
+            return "question";
+        }
     }
 }

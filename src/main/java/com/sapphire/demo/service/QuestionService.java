@@ -27,8 +27,8 @@ public class QuestionService {
         Integer totalCount = questionMapper.count();
         paginationDTO.setPagination(totalCount, page, size);
         // 当前页小于1或者大于totalPage时,做出修正
-        if(page < 1) page = 1;
-        if(page > paginationDTO.getTotalPage()) page = paginationDTO.getTotalPage();
+        if (page < 1) page = 1;
+        if (page > paginationDTO.getTotalPage()) page = paginationDTO.getTotalPage();
 
 
         // size * (page - 1)
@@ -56,13 +56,13 @@ public class QuestionService {
         Integer totalCount = questionMapper.countByUserId(userId);
         paginationDTO.setPagination(totalCount, page, size);
         // 当前页小于1或者大于totalPage时,做出修正
-        if(page < 1) page = 1;
-        if(page > paginationDTO.getTotalPage()) page = paginationDTO.getTotalPage();
+        if (page < 1) page = 1;
+        if (page > paginationDTO.getTotalPage()) page = paginationDTO.getTotalPage();
 
 
         // size * (page - 1)
         Integer offset = size * (page - 1);
-        List<Question> questions = questionMapper.listByUserId(userId,offset, size);
+        List<Question> questions = questionMapper.listByUserId(userId, offset, size);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
         for (Question question : questions) {
@@ -87,5 +87,16 @@ public class QuestionService {
         questionDTO.setUser(user);
 
         return questionDTO;
+    }
+
+    public void createOrUpdate(Question question) {
+        if (question.getId() == null) {
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.create(question);
+        } else {
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.update(question);
+        }
     }
 }

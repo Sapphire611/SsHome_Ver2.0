@@ -39,9 +39,9 @@ public class LoginController {
             response.addCookie(new Cookie("token",user.getToken())); // 把Token放入Cookie中
             return "redirect:/";
         }else {
-            model.addAttribute("wrongMsg","用户名密码错误");
-            System.out.println("应该是失败了");
-            return "redirect:/login";
+            model.addAttribute("wrongMsg","AccountId or Password error ...");
+            // System.out.println("应该是失败了");
+            return "login";
         }
     }
 }

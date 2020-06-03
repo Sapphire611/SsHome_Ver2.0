@@ -17,6 +17,7 @@
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <input type="hidden" name="id" th:value="${id}">
             <h3><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span><span  style="font-family: inherit" th:text="'&nbsp;&nbsp;' + ${sectionName}"></span></h3>
             <hr>
 
@@ -30,7 +31,7 @@
 
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <a th:href="@{'/question/' +${question.getId()}}"><h4 class="media-heading" th:text="${question.title}"></h4></a>
                     <!-- <span th:text="${question.description}"></span> -->
                     <p>
                     <p class="mediaText"><span th:text="${question.commentCount}"></span> comments • <span th:text="${question.viewCount}"></span> views •  <span th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
