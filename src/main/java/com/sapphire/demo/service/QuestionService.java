@@ -96,6 +96,12 @@ public class QuestionService {
             questionMapper.create(question);
         } else {
             question.setGmtModified(question.getGmtCreate());
+            
+            Question updateQuestion = questionMapper.getById(question.getId());
+            updateQuestion.setTitle(question.getTitle());
+            updateQuestion.setDescription(question.getDescription());
+            updateQuestion.setTag(question.getTag());
+            question.setGmtModified(System.currentTimeMillis());
             questionMapper.update(question);
         }
     }
