@@ -1,12 +1,8 @@
 package com.sapphire.demo.dto;
 
-import lombok.Data;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-@Data
 public class PaginationDTO {
     private List<QuestionDTO> questions;
     private Boolean showPrevious;
@@ -17,8 +13,118 @@ public class PaginationDTO {
     private List<Integer> pages = new ArrayList<>();
     private Integer totalPage;
     private Integer totalCount;
+    
+    
 
-    /**
+    public List<QuestionDTO> getQuestions() {
+		return questions;
+	}
+
+
+
+	public void setQuestions(List<QuestionDTO> questions) {
+		this.questions = questions;
+	}
+
+
+
+	public Boolean getShowPrevious() {
+		return showPrevious;
+	}
+
+
+
+	public void setShowPrevious(Boolean showPrevious) {
+		this.showPrevious = showPrevious;
+	}
+
+
+
+	public Boolean getShowFirstPage() {
+		return showFirstPage;
+	}
+
+
+
+	public void setShowFirstPage(Boolean showFirstPage) {
+		this.showFirstPage = showFirstPage;
+	}
+
+
+
+	public Boolean getShowNext() {
+		return showNext;
+	}
+
+
+
+	public void setShowNext(Boolean showNext) {
+		this.showNext = showNext;
+	}
+
+
+
+	public Boolean getShowEndPage() {
+		return showEndPage;
+	}
+
+
+
+	public void setShowEndPage(Boolean showEndPage) {
+		this.showEndPage = showEndPage;
+	}
+
+
+
+	public Integer getPage() {
+		return page;
+	}
+
+
+
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+
+
+
+	public List<Integer> getPages() {
+		return pages;
+	}
+
+
+
+	public void setPages(List<Integer> pages) {
+		this.pages = pages;
+	}
+
+
+
+	public Integer getTotalPage() {
+		return totalPage;
+	}
+
+
+
+	public void setTotalPage(Integer totalPage) {
+		this.totalPage = totalPage;
+	}
+
+
+
+	public Integer getTotalCount() {
+		return totalCount;
+	}
+
+
+
+	public void setTotalCount(Integer totalCount) {
+		this.totalCount = totalCount;
+	}
+
+
+
+	/**
      @param totalCount = 总问题数
      @param page = 当前页面
      @param size = 单页问题容量
