@@ -26,9 +26,38 @@
                         th:text="${question.viewCount}"></span> views • <span
                         th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
                 <hr>
+   
+            <!-- 点赞按钮 th:href="@{'/publish/'+${question.getId()}} -->
+            <a th:if="${Button} != null" th:href="@{${question.getId()} + '/like'}"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;<span th:text="${question.likeCount}"></span></button></a>
+            <a th:if="${Button} == null" th:href="@{${question.getId()} + '/like'}"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;<span th:text="${question.likeCount}"></span></button></a>
+            <!-- 点赞按钮 End -->
+            <span style="color: red" class="alert alert-danger" role="alert"  th:if = "${wrongMsg} != null" th:text="${wrongMsg}">...</span>   
             </div>
+            <br>&nbsp;
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>&nbsp;
+            
+            <h3><span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>&nbsp;&nbsp;Reply</h3>
+            <hr>
+            
+            <form action="/question" method="post">
+            <!-- 同样需要将该问题的Id传过去 -->
+            <input type="hidden" name="id" th:value="${question.getId()}"> 
+            <textarea class="form-control" name="reply" id="reply" cols="30" rows="10" placeholder="..."></textarea>
+            <div class="alert alert-danger" role="alert"  th:text="${error}"  th:if = "${error} != null" >...</div>
+            <br>
+            <button type="submit" class="btn btn-success">Reply</button>
+            <br>
+            <br>
+            </form>
+            
 
-
+			
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;Publisher</h3>

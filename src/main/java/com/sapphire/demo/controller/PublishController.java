@@ -69,6 +69,7 @@ public class PublishController {
             Model model
     ){
 
+    	User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
@@ -87,9 +88,12 @@ public class PublishController {
             model.addAttribute("error","Please input tags...");
             return "/publish";
         }
+        
+        if(tag.length() > 6){
+            model.addAttribute("error","too long for tags...");
+            return "/publish";
+        }
 
-
-        User user = (User) request.getSession().getAttribute("user");
         if(user == null){
             model.addAttribute("error","Please Login first...");
             return "publish";

@@ -38,7 +38,7 @@
 
                 <div class="form-group">
                     <label for="tag">Add Tag:</label>
-                    <input type="text" class="form-control" th:value="${tag}" name="tag" id="tag" placeholder="add tag here... (use ',' to split)">
+                    <input type="text" class="form-control" th:value="${tag}" name="tag" id="tag" placeholder="add tag here... (length <= 6)">
                 </div>
 
                 <div class="alert alert-danger" role="alert"  th:text="${error}"  th:if = "${error} != null" >...</div>
@@ -52,11 +52,9 @@
             <hr>
             <p>Title less than 25 words.</p>
             <p>Be clear and Intuitive.</p>
-            <p>Add tags split by comma.</p>
+            <p>Tags length less than 6.</p>
             <p>Wish you happy everyday~</p>
             <hr>
-            <span style="color: red"  th:if = "${id} != null" th:text="${id}">...</span>
-            <span style="color: red"  th:if = "${id} == null"> Id = null</span>
         </div>
 
     </div>

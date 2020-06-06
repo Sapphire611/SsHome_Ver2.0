@@ -35,6 +35,9 @@
                 </div>
                 <div class="media-body">
                     <a th:href="@{'/question/' +${question.getId()}}"><h4 class="media-heading" th:text="${question.title}"></h4></a>
+                    <!-- 循环输出标签 -->
+                    <span class="label label-info" th:text="${question.getTag()}">New</span>
+                    <!-- 循环输出标签 End -->
                     <span th:text="${question.description}"></span>
                     <p>
                         <p class="mediaText"><a href="#"><span href="#" th:text="${question.user.getName()}"></span></a> published an article  • <span th:text="${question.commentCount}"></span> comments • <span th:text="${question.viewCount}"></span> views •  <span th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>

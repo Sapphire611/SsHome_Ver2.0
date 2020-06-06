@@ -11,6 +11,9 @@ public class Question {
     private Integer viewCount;
     private Integer commentCount;
     private Integer likeCount;
+    private String likeId;
+    private String viewedId;
+    
 	public Integer getId() {
 		return id;
 	}
@@ -71,6 +74,18 @@ public class Question {
 	public void setLikeCount(Integer likeCount) {
 		this.likeCount = likeCount;
 	}
-    
+	public String getLikeId() {
+		return likeId;
+	}
+	public void setLikeId(String likeId) {
+		this.likeId = likeId;
+	}
+	public String getViewedId() {
+		return viewedId;
+	}
+	public void setViewedId(String viewedId) {
+		this.viewedId = viewedId;
+	}
+
     
 }
