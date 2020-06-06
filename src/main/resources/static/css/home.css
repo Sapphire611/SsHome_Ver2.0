@@ -8,9 +8,15 @@
     background:url("/img/bg.jpg");
 }
 
-.media-object{
+.mediaobject-index{
     height: 69px;
     width: 69px;
+}
+
+
+.mediaObject-userInfo{
+    height: 169px;
+    width: 169px;
 }
 
 .mediaText{

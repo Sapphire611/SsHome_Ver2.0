@@ -28,7 +28,7 @@
             <div class="media" th:each="question : ${paginationDTO.questions}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-thumbnail" th:src="${question.user.avatarUrl}">
+                        <img class="media-object img-thumbnail mediaobject-index" th:src="${question.user.avatarUrl}">
                     </a>
                     <!--<span th:text="${question.user.toString()}"></span>-->
 
@@ -40,7 +40,7 @@
                     <!-- 循环输出标签 End -->
                     <span th:text="${question.description}"></span>
                     <p>
-                        <p class="mediaText"><a href="#"><span href="#" th:text="${question.user.getName()}"></span></a> published an article  • <span th:text="${question.commentCount}"></span> comments • <span th:text="${question.viewCount}"></span> views •  <span th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+                        <p class="mediaText"><a th:href="@{'/userinfo/' +${question.user.getName()}}"><span th:text="${question.user.getName()}"></span></a> published an article  • <span th:text="${question.commentCount}"></span> comments • <span th:text="${question.viewCount}"></span> views •  <span th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
                     </p>
                 </div>
                 <br>

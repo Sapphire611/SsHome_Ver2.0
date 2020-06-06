@@ -60,3 +60,10 @@ create table question
 ### Port
 - sudo lsof -i:6197
 - sudo kill -9 42505
+
+### mysql 
+```
+CREATE EVENT e_test2
+ON SCHEDULE EVERY 1 DAY
+DO TRUNCATE aaa;
+```

@@ -103,8 +103,8 @@ public class PublishController {
         Question question = new Question();
         question.setTitle(title);
         question.setId(id);
-        question.setDescription(description);
-        question.setTag(tag);
+        question.setDescription(description.trim());
+        question.setTag(tag.trim());
         question.setCreator(user.getId());
         questionService.createOrUpdate(question);
 

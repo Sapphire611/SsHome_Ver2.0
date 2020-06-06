@@ -25,7 +25,7 @@
             <div class="media" th:each="question : ${paginationDTO.questions}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-thumbnail" th:src="${question.user.avatarUrl}">
+                        <img class="media-object img-thumbnail mediaobject-index" th:src="${question.user.avatarUrl}">
                     </a>
                     <!--<span th:text="${question.user.toString()}"></span>-->
 
