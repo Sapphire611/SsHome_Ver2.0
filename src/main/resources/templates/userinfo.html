@@ -22,7 +22,7 @@
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
         <!-- 个人资料 Top -->
-            <div  style="margin:30px" class="media">
+            <div style="margin:30px" class="media">
                 <div class="media-left">
                         <img class="media-object img-thumbnail mediaObject-userInfo" th:src="${infoUser.getAvatarUrl()}">
                 </div>
@@ -31,7 +31,9 @@
                     <br>
                     <p class="text-muted"><span th:text="${infoUser.getBio()}"></span></p>
                     <br>
-                    <p class="text-muted">Join Time ： <span th:text="${#dates.format(infoUser.getGmtCreate(),'yyyy-MM-dd HH:mm:ss')}"></span></p></p>
+                    <p class="text-muted" th:text="'Id = '+ ${infoUser.getAccountId()}"></p>
+                    <br>
+                    <p class="text-muted">Join Time ： <span th:text="${#dates.format(infoUser.getGmtCreate(),'yyyy-MM-dd HH:mm:ss')}"></span></p>
                 </div>
                 <br>
             </div>

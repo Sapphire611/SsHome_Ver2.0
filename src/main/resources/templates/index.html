@@ -13,7 +13,6 @@
 </head>
 
 <body class="bodyBg">
-
 <!-- import nav -->
 <div th:insert="~{navigation :: nav}"></div>
 <!-- End -->
@@ -55,7 +54,7 @@
                         </a>
                     </li>
                     <li>
-                        <a th:if="${paginationDTO.showPrevious}" th:href="@{/(page=1)}" aria-label="Previous">
+                        <a th:if="${paginationDTO.showPrevious}" th:href="@{/(page=${paginationDTO.page-1})}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
@@ -65,7 +64,7 @@
                     </li>
                     <!--动态输出结束-->
                     <li>
-                        <a th:if="${paginationDTO.showNext}" th:href="@{/(page=1)}" aria-label="Previous">
+                        <a th:if="${paginationDTO.showNext}" th:href="@{/(page=${paginationDTO.page + 1})}" aria-label="Previous">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>

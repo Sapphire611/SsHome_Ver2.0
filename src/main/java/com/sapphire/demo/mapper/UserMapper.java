@@ -19,6 +19,9 @@ public interface UserMapper {
 
     @Select("select * from user where accountId = #{accountId} and password = #{password}")
     User login(@Param("accountId") String accountId,@Param("password") String password);
+    
+    @Select("select * from user where  name = #{userName} and password = #{password}")
+    User loginByUserName(@Param("userName") String userName,@Param("password") String password);
 
     @Select("select * from user where accountId = #{accountId}")
     User findByaccountId(@Param("accountId") String accountId);

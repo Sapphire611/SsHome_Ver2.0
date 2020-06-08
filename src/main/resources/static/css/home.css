@@ -3,9 +3,24 @@
     background-color: white;
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.background {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
 .bodyBg{
     /*background-color: #efefef;*/
-    background:url("/img/bg.jpg");
+    background:url("/img/background.png");
+    background-size:cover;
 }
 
 .mediaobject-index{
@@ -15,12 +30,17 @@
 
 
 .mediaObject-userInfo{
-    height: 169px;
-    width: 169px;
+    height: 189px;
+    width: 189px;
 }
 
 .mediaText{
     font-size: 12px;
     font-weight: normal;
     color: #999;
+}
+
+.mediaobject-reply{
+    height: 49px;
+    width: 49px;
 }

@@ -3,8 +3,11 @@ package com.sapphire.demo.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sapphire.demo.model.Reply;
+
 public class PaginationDTO {
     private List<QuestionDTO> questions;
+    private List<ReplyDTO> replies;
     private Boolean showPrevious;
     private Boolean showFirstPage;
     private Boolean showNext;
@@ -16,7 +19,19 @@ public class PaginationDTO {
     
     
 
-    public List<QuestionDTO> getQuestions() {
+    public List<ReplyDTO> getReplies() {
+		return replies;
+	}
+
+
+
+	public void setReplies(List<ReplyDTO> replies) {
+		this.replies = replies;
+	}
+
+
+
+	public List<QuestionDTO> getQuestions() {
 		return questions;
 	}
 

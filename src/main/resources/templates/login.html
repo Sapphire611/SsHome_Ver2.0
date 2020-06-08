@@ -8,6 +8,7 @@
   
   <link rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="../static/css/home.css" th:href="@{/css/home.css}"/>
+
 </head>
 <body class="bodyBg">
     <div class="main">
@@ -15,8 +16,8 @@
         <form class="form" id="a-form" method="post" action="/login">
           <h2 class="form_title title">Login to Ss'Home</h2>
           <span class="form__span">At first , Your accountId = password from Your GitHub</span>
-          <input class="form__input" th:value="${accountId}" type="accountId" name="accountId" placeholder="accountId">
-          <input class="form__input" th:value="${password}" type="password" name="password" placeholder="Password">
+          <input class="form__input" type="userName" name="userName" placeholder="UserName">
+          <input class="form__input" type="password" name="password" placeholder="Password">
           <span style="color: red" class="alert alert-danger" role="alert"  th:if = "${wrongMsg} != null" th:text="${wrongMsg}">...</span>
           <button type="submit" class="switch__button button switch-btn">Login</button>
         </form>
@@ -41,6 +42,4 @@
 
 
   <script src="js/script.js"></script>
-
-
 </body></html>

@@ -1,17 +1,24 @@
 package com.sapphire.demo.controller;
 
+import com.sapphire.demo.dto.PaginationDTO;
 import com.sapphire.demo.dto.QuestionDTO;
 import com.sapphire.demo.mapper.QuestionMapper;
+import com.sapphire.demo.mapper.ReplyMapper;
 import com.sapphire.demo.model.LikeRecord;
 import com.sapphire.demo.model.Question;
+import com.sapphire.demo.model.Reply;
 import com.sapphire.demo.model.User;
 import com.sapphire.demo.model.ViewRecord;
 import com.sapphire.demo.service.QuestionService;
+import com.sapphire.demo.service.ReplyService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,9 +34,16 @@ public class QuestionController {
 
 	@Autowired
 	private QuestionMapper questionMapper;
+	
+	@Autowired
+	private ReplyService replyService;
 
 	@GetMapping("/question/{id}")
-	public String question(@PathVariable(name = "id") Integer id, HttpServletRequest request, Model model) {
+	public String question(@PathVariable(name = "id") Integer id,
+						   @RequestParam(name = "page",defaultValue = "1") Integer page,
+						   @RequestParam(name = "size",defaultValue = "7") Integer size,
+						   HttpServletRequest request, 
+						   Model model) {
 
 		User currentUser = (User) request.getSession().getAttribute("user");
 		
@@ -57,12 +71,22 @@ public class QuestionController {
 				model.addAttribute("Button","Liked");
 			}
 			
+			// 用于显示对应问题的内容和Publisher
 			QuestionDTO questionDTO = questionService.getById(id);
 			model.addAttribute("question", questionDTO);
+			
+			
+			// 用于显示回复内容列表
+			PaginationDTO paginationDTO = replyService.list(id,page,size);
+	        if(paginationDTO.getReplies() != null) {
+	        	model.addAttribute("paginationDTO",paginationDTO);
+	        }
+			
+
 			return "question";
 		}
 	}
-
+	
 	@GetMapping("/question/{id}/like")
 	public String questionLike(@PathVariable(name = "id") Integer id, HttpServletRequest request, Model model) {
 

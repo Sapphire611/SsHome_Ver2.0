@@ -2,13 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="${question.title}"></title>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>	
     <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
     <link type="text/css" rel="stylesheet" href="../static/css/bootstrap-theme.min.css"
           th:href="@{/css/bootstrap-theme.min.css}"/>
     <link type="text/css" rel="stylesheet" href="../static/css/home.css" th:href="@{/css/home.css}"/>
     <script src="../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}" type="application/javascript"></script>
     <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" type="application/javascript"></script>
+    
 </head>
 <body class="bodyBg">
 <!-- import nav -->
@@ -17,8 +18,14 @@
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h3><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span><span
-                    style="font-family: inherit" th:text="'&nbsp;&nbsp;' + ${question.title}"></span></h3>
+            <h3><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+            <span th:text="'&nbsp;&nbsp;' + ${question.title}"></span>
+            <!-- 点赞按钮 th:href="@{'/publish/'+${question.getId()}} -->
+            <span><a style="float:right" th:if="${Button} != null" th:href="@{${question.getId()} + '/like'}"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;<span th:text="${question.likeCount}"></span></button></a></span>
+            <span><a style="float:right" th:if="${Button} == null" th:href="@{${question.getId()} + '/like'}"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;<span th:text="${question.likeCount}"></span></button></a></span>
+            <!-- 点赞按钮 End -->
+            </h3>
+            
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <hr>
                 <p th:text="${question.getDescription()}"></p>
@@ -26,43 +33,97 @@
                         th:text="${question.viewCount}"></span> views • <span
                         th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
                 <hr>
-   
-            <!-- 点赞按钮 th:href="@{'/publish/'+${question.getId()}} -->
-            <a th:if="${Button} != null" th:href="@{${question.getId()} + '/like'}"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;<span th:text="${question.likeCount}"></span></button></a>
-            <a th:if="${Button} == null" th:href="@{${question.getId()} + '/like'}"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;<span th:text="${question.likeCount}"></span></button></a>
-            <!-- 点赞按钮 End -->
-            <span style="color: red" class="alert alert-danger" role="alert"  th:if = "${wrongMsg} != null" th:text="${wrongMsg}">...</span>   
+                <br>
             </div>
+            
+            <!--循环获取replies表中回复内容-->
+            <h3><span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span >&nbsp;&nbsp; Comments</span></h3>
+            <div th:if="${paginationDTO != null}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <hr>
+            <div class="media" th:each="reply : ${paginationDTO.replies}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-thumbnail mediaobject-reply" th:src="${reply.user.avatarUrl}">
+                    </a>
+                    <!--<span th:text="${question.user.toString()}"></span>-->
+
+                </div>
+                <div class="media-body">
+                	<p th:text="${reply.user.name}"></p>
+                    <span class="mediaText" th:text="${reply.description}"></span>
+                    <span class="mediaText" style="float : right" th:text="'Reply Time : ' + ${#dates.format(reply.getGmtCreate(),'yyyy-MM-dd HH:mm:ss')}"></span>
+                </div>
+                <hr>
+            </div>
+            </div>
+            <!--循环获取replies表中回复内容-->
+            
+            <div th:if="${paginationDTO == null}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <br>
+            <br>
+            <p  align="center" class="mediaText">No Comment</p>
+            <hr>
+            </div>
+            
+            <!--分页模块-->
+            <nav  th:if="${paginationDTO != null}" aria-label="Page navigation">
+                <ul style="float:right" class="pagination">
+                    <li>
+                        <a th:if="${paginationDTO.showFirstPage}" th:href="@{/(page=1)}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:if="${paginationDTO.showPrevious}" th:href="@{'/question/' + ${question.getId()} + '?page=' + ${paginationDTO.page-1}}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <!--动态输出pages中的内容-->
+                    <li th:class="${paginationDTO.page == page} ? 'active' : ''" th:each="page : ${paginationDTO.pages}">
+                        <a th:href="@{'/question/' + ${question.getId()} + '?page=' + ${page}}" th:text="${page}"></a>
+                    </li>
+                    <!--动态输出结束-->
+                    <li>
+                        <a th:if="${paginationDTO.showNext}" th:href="@{'/question/' + ${question.getId()} + '?page=' + ${paginationDTO.page+1}}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:if="${paginationDTO.showEndPage}" th:href="@{/(page=${paginationDTO.totalPage})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!--分页模块结束-->
+            
             <br>&nbsp;
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
             <br>
             <br>&nbsp;
             
             <h3><span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>&nbsp;&nbsp;Reply</h3>
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <hr>
             
-            <form action="/question" method="post">
-            <!-- 同样需要将该问题的Id传过去 -->
-            <input type="hidden" name="id" th:value="${question.getId()}"> 
-            <textarea class="form-control" name="reply" id="reply" cols="30" rows="10" placeholder="..."></textarea>
-            <div class="alert alert-danger" role="alert"  th:text="${error}"  th:if = "${error} != null" >...</div>
-            <br>
-            <button type="submit" class="btn btn-success">Reply</button>
-            <br>
-            <br>
+            <form action="/reply" method="post">
+            	<!-- 同样需要将该问题的Id传过去 -->
+            	<input type="hidden" name="questionId" th:value="${question.getId()}"> 
+            	<input type="hidden" name="userId" th:value="${question.user.getId()}"> 
+            	<textarea class="form-control" name="description" id="description" cols="30" rows="10" placeholder="..."></textarea>
+            	<br>
+            	<button type="submit" name="reply" id="reply" class="btn btn-success">Reply</button>
+            	<br>
+            	<br>
+            	</div>
             </form>
             
 
 			
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+        <!-- 显示Publisher -->
             <h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;Publisher</h3>
             <hr>
-            <!--<span href="#" th:text="${question.toString()}"></span>-->
             <div class="media">
                 <div class="media-left">
                     <a href="#">
@@ -82,8 +143,8 @@
                 </button>
                 </a>
                 <br>
-                <span style="color: red" th:text="${error}">...</span>
             </div>
+             <!-- 显示Publisher End-->
             <br>
             <br>
 

@@ -29,11 +29,12 @@ public class LoginController {
     @PostMapping("/login")
     public String doLogin(HttpServletRequest request,
                         HttpServletResponse response,
-                        @RequestParam("accountId")String accountId,
+                        @RequestParam("userName")String userName,
                         @RequestParam("password")String password,
                         Model model
     ){
-        User user = userMapper.login(accountId,password);
+    	
+        User user = userMapper.loginByUserName(userName,password);
         if (user!=null && user.getPassword().equals(password)){
             model.addAttribute("user",user);
             response.addCookie(new Cookie("token",user.getToken())); // 把Token放入Cookie中

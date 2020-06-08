@@ -2,12 +2,23 @@ package com.sapphire.demo.dto;
 
 public class GithubUser {
     private String name;
+    private String login;
     private Long id;
     private String bio;
     private String avatar_url;
 
     
-    public String getName() {
+    public String getLogin() {
+		return login;
+	}
+
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+
+	public String getName() {
 		return name;
 	}
 

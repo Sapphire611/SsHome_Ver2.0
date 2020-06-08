@@ -54,9 +54,13 @@ public class AuthorizeController {
             User user = new User();
             String token = UUID.randomUUID().toString();
             user.setToken(token);
-            user.setName(githubUser.getName());
+            
+            //为了得到GitHub中能够对应搜索到的名字
+            user.setName(githubUser.getLogin());
+            // user.setName(githubUser.getName());
+            
             user.setAccountId(String.valueOf(githubUser.getId())); //Long -> String 强制转换
-            user.setPassword(user.getAccountId());
+            user.setPassword((int)(Math.random()*9+1)*100000+"");
             user.setAvatarUrl(githubUser.getAvatar_url());
             user.setBio(githubUser.getBio());
             userService.createOrUpdate(user);

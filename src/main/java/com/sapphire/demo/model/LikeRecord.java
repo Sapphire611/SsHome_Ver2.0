@@ -1,26 +1,26 @@
 package com.sapphire.demo.model;
 
 public class LikeRecord {
-	private int id;
-	private int userId;
-	private int questionId;
+	private Integer id;
+	private Integer userId;
+	private Integer questionId;
 	private Long gmtCreate;
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public int getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public int getQuestionId() {
+	public Integer getQuestionId() {
 		return questionId;
 	}
-	public void setQuestionId(int questionId) {
+	public void setQuestionId(Integer questionId) {
 		this.questionId = questionId;
 	}
 	public Long getGmtCreate() {
