@@ -21,5 +21,10 @@ public interface ReplyMapper {
 	@Select("select count(1) from reply where questionId = #{questionId} order by gmtCreate")
     Integer countByQuestionId(@Param(value = "questionId")Integer questionId);
 	
+	@Select("select * from reply where userId = #{userId} order by gmtCreate desc limit #{offset},#{size}")
+	List<Reply> listByUserId(@Param(value = "userId")Integer userId,@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
+	
+	@Select("select count(1) from reply where userId = #{userId} order by gmtCreate desc")
+	Integer countByUserId(@Param(value = "userId")Integer userId,@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
 }
 

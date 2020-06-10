@@ -5,11 +5,21 @@ import com.sapphire.demo.model.User;
 public class ReplyDTO {
 	private Integer id;
 	private Integer questionId;
+	private String questionTitle;
 	private Integer userId;
 	private String description;
 	private Long gmtCreate;
 	private Long gmtModified;
 	private User user;
+	
+	
+	public String getQuestionTitle() {
+		return questionTitle;
+	}
+	public void setQuestionTitle(String questionTitle) {
+		this.questionTitle = questionTitle;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

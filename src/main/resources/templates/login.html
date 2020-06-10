@@ -15,7 +15,7 @@
       <div class="container a-container" id="a-container">
         <form class="form" id="a-form" method="post" action="/login">
           <h2 class="form_title title">Login to Ss'Home</h2>
-          <span class="form__span">At first , Your accountId = password from Your GitHub</span>
+          <span class="form__span">Then use userName and password to login.</span>
           <input class="form__input" type="userName" name="userName" placeholder="UserName">
           <input class="form__input" type="password" name="password" placeholder="Password">
           <span style="color: red" class="alert alert-danger" role="alert"  th:if = "${wrongMsg} != null" th:text="${wrongMsg}">...</span>

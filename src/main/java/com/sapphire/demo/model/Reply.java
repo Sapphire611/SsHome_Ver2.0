@@ -3,10 +3,12 @@ package com.sapphire.demo.model;
 public class Reply {
 	private Integer id;
 	private Integer questionId;
+	private String questionTitle;
 	private Integer userId;
 	private String description;
 	private Long gmtCreate;
 	private Long gmtModified;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -43,7 +45,12 @@ public class Reply {
 	public void setGmtModified(Long gmtModified) {
 		this.gmtModified = gmtModified;
 	}
-	
+	public String getQuestionTitle() {
+		return questionTitle;
+	}
+	public void setQuestionTitle(String questionTitle) {
+		this.questionTitle = questionTitle;
+	}
 	@Override
 	public String toString() {
 		return "Reply [id=" + id + ", questionId=" + questionId + ", userId=" + userId + ", description=" + description

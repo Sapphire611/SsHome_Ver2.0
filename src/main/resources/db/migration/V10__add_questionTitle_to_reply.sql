@@ -1,0 +1,1 @@
+alter table reply add questionTitle varchar(50) null;

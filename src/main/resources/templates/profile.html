@@ -22,7 +22,7 @@
             <hr>
 
             <!--循环获取questions表中内容-->
-            <div class="media" th:each="question : ${paginationDTO.questions}">
+            <div th:if="${section} == 'questions'" class="media" th:each="question : ${paginationDTO.questions}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object img-thumbnail mediaobject-index" th:src="${question.user.avatarUrl}">
@@ -40,6 +40,28 @@
                 <br>
             </div>
             <!--循环结束-->
+            
+            <!--循环获取replies表中内容-->
+            <div th:if="${section} == 'replies'" class="media" th:each="reply : ${paginationDTO.getReplies()}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-thumbnail mediaobject-index" th:src="${reply.getUser().getAvatarUrl()}">
+                    </a>
+                    <!--<span th:text="${question.user.toString()}"></span>-->
+
+                </div>
+                <div class="media-body">
+                    <a th:href="@{'/question/' +${reply.getId()}}"><h4 class="media-heading" th:text="${reply.getQuestionTitle()}"></h4></a>
+                    <span th:text="${reply.getDescription()}"></span>
+                    <p>
+                    <p style="float : right" class="mediaText"><span th:text="${#dates.format(reply.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+                    </p>
+                </div>
+                <br>
+            </div>
+            <!--循环结束-->
+            
+            
             <!--分页模块-->
             <nav aria-label="Page navigation">
                 <ul class="pagination">
@@ -78,11 +100,11 @@
             <h3><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;Menu</h3>
             <hr>
             <div class="list-group">
-                <a href="/profile/questions" class="list-group-item" th:class="${section == 'questions' } ? 'active list-group-item' : 'list-group-item'">My Question<span class="badge" th:text="${paginationDTO.totalCount}">?</span></a>
-                <a href="/profile/replies" class="list-group-item" th:class="${section == 'replies' } ? 'active list-group-item' : 'list-group-item'">Reply<span class="badge">?</span></a>
-                <a href="#" class="list-group-item" th:class="${section == 'Test1' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Test1</a>
-                <a href="#" class="list-group-item" th:class="${section == 'Test2' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Test2</a>
-                <a href="#" class="list-group-item" th:class="${section == 'Test3' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Test3</a>
+                <a href="/profile/questions" class="list-group-item" th:class="${section == 'questions' } ? 'active list-group-item' : 'list-group-item'">Question</a>
+                <a href="/profile/replies" class="list-group-item" th:class="${section == 'replies' } ? 'active list-group-item' : 'list-group-item'">Reply</a>
+                <a href="#" class="list-group-item" th:class="${section == 'Test1' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Notice</a>
+                <a href="#" class="list-group-item" th:class="${section == 'Test2' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Personal Info</a>
+                <a href="#" class="list-group-item" th:class="${section == 'Test3' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Follow</a>
             </div>
         </div>
     </div>

@@ -4,6 +4,8 @@ import com.sapphire.demo.dto.PaginationDTO;
 import com.sapphire.demo.mapper.UserMapper;
 import com.sapphire.demo.model.User;
 import com.sapphire.demo.service.QuestionService;
+import com.sapphire.demo.service.ReplyService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,9 @@ public class ProfileController {
 
     @Autowired
     private QuestionService questionService;
+    
+    @Autowired
+    private ReplyService replyService;
 
     @GetMapping("/profile/{action}")
     public String profile(@PathVariable(name = "action") String action,
@@ -36,16 +41,24 @@ public class ProfileController {
         }
 
         if ("questions".equals(action)) {
+        	// Question 页面
             model.addAttribute("section", "questions");
             model.addAttribute("sectionName", "My Questions");
+            
+            PaginationDTO paginationQuestionDTO = questionService.list(user.getId(),page,size);
+            model.addAttribute("paginationDTO",paginationQuestionDTO);
         } else if("replies".equals(action)){
+        	//Reply 页面
+        	
+        	PaginationDTO paginationQuestionDTO = replyService.listAtProfile(user.getId(),page,size);
+            model.addAttribute("paginationDTO",paginationQuestionDTO);
+            
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "Replies");
         }
 
 
-        PaginationDTO paginationDTO = questionService.list(user.getId(),page,size);
-        model.addAttribute("paginationDTO",paginationDTO);
+        
 
         return "profile";
     }
