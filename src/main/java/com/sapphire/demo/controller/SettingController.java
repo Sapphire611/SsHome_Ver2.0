@@ -27,7 +27,7 @@ public class SettingController {
 	@Autowired
 	private ReplyService replyService;
 
-	@GetMapping("/profile/settings/modified")
+	@GetMapping("/profile/settings/changeInfo")
 	public String profile(HttpServletRequest request, Model model) {
 
 		// User user = (User) model.getAttribute("user");
@@ -35,6 +35,7 @@ public class SettingController {
 		if (currentUser == null) {
 			return "redirect:/";
 		} else {
+			
 			return "/";
 		}
 
