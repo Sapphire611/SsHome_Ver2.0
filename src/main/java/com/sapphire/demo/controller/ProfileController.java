@@ -35,8 +35,8 @@ public class ProfileController {
                           Model model) {
 
         //User user = (User) model.getAttribute("user");
-        User user = (User) request.getSession().getAttribute("user");
-        if(user == null){
+        User currentUser = (User) request.getSession().getAttribute("user");
+        if(currentUser == null){
             return "redirect:/";
         }
 
@@ -45,16 +45,24 @@ public class ProfileController {
             model.addAttribute("section", "questions");
             model.addAttribute("sectionName", "My Questions");
             
-            PaginationDTO paginationQuestionDTO = questionService.list(user.getId(),page,size);
+            PaginationDTO paginationQuestionDTO = questionService.list(currentUser.getId(),page,size);
             model.addAttribute("paginationDTO",paginationQuestionDTO);
         } else if("replies".equals(action)){
         	//Reply 页面
-        	
-        	PaginationDTO paginationQuestionDTO = replyService.listAtProfile(user.getId(),page,size);
+        	PaginationDTO paginationQuestionDTO = replyService.listAtProfile(currentUser.getId(),page,size);
             model.addAttribute("paginationDTO",paginationQuestionDTO);
-            
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "Replies");
+        } else if("personalInfo".equals(action)) {
+            return "redirect:/userinfo/" + currentUser.getName();
+        }else if("settings".equals(action)){
+        	model.addAttribute("section", "settings");
+            model.addAttribute("sectionName", "My Settings");
+        	
+        	User infoUser = currentUser;
+			model.addAttribute("infoUser",infoUser);
+			
+			return "settings";
         }
 
 

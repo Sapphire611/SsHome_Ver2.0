@@ -51,7 +51,7 @@
 
                 </div>
                 <div class="media-body">
-                    <a th:href="@{'/question/' +${reply.getId()}}"><h4 class="media-heading" th:text="${reply.getQuestionTitle()}"></h4></a>
+                    <a th:href="@{'/question/' +${reply.getQuestionId()}}"><h4 class="media-heading" th:text="${reply.getQuestionTitle()}"></h4></a>
                     <span th:text="${reply.getDescription()}"></span>
                     <p>
                     <p style="float : right" class="mediaText"><span th:text="${#dates.format(reply.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
@@ -102,9 +102,8 @@
             <div class="list-group">
                 <a href="/profile/questions" class="list-group-item" th:class="${section == 'questions' } ? 'active list-group-item' : 'list-group-item'">Question</a>
                 <a href="/profile/replies" class="list-group-item" th:class="${section == 'replies' } ? 'active list-group-item' : 'list-group-item'">Reply</a>
-                <a href="#" class="list-group-item" th:class="${section == 'Test1' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Notice</a>
-                <a href="#" class="list-group-item" th:class="${section == 'Test2' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Personal Info</a>
-                <a href="#" class="list-group-item" th:class="${section == 'Test3' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Follow</a>
+                <a href="/profile/notices" class="list-group-item" th:class="${section == 'notices' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Notice</a>
+                <a href="/profile/settings" class="list-group-item" th:class="${section == 'settings' } ? 'active list-group-item' : 'list-group-item'">settings</a>
             </div>
         </div>
     </div>
