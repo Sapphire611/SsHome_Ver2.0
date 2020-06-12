@@ -29,10 +29,11 @@
                 <div style="padding:10px" class="media-body ">
                     <h3 class="media-heading" th:text="${infoUser.getName()}"></h3>
                     <br>
+                    <br>
                     <p class="text-muted"><span th:text="${infoUser.getBio()}"></span></p>
-                    <br>
+                    
                     <p class="text-muted" th:text="'Id = '+ ${infoUser.getAccountId()}"></p>
-                    <br>
+                    
                     <p class="text-muted">Join Time ： <span th:text="${#dates.format(infoUser.getGmtCreate(),'yyyy-MM-dd HH:mm:ss')}"></span></p>
                 </div>
                 <br>
@@ -78,10 +79,10 @@
         </div>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h3>Tags</h3>
+            <h3><span class="glyphicon glyphicon-tag"></span><span>&nbsp;&nbsp;My Tags</span></h3>
             <hr>
             <span th:each="tag : ${tags}">
-            	 <span class="label label-info userinfo-tags" th:text="${tag}">New</span>
+            	 <span style="margin-right:5px;" class="label label-info userinfo-tags" th:text="${tag}">New</span>
             </span>
         </div>
 

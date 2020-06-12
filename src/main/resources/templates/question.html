@@ -49,9 +49,10 @@
 
                 </div>
                 <div class="media-body">
-                	<p th:text="${reply.user.name}"></p>
-                    <span class="mediaText" th:text="${reply.description}"></span>
-                    <span class="mediaText" style="float : right" th:text="'Reply Time : ' + ${#dates.format(reply.getGmtCreate(),'yyyy-MM-dd HH:mm:ss')}"></span>
+                	<p  style="font-weight:bold" th:text="${reply.user.name}"></p>
+                    <p  style="color:darkgray"th:text="${reply.description}"></p>
+                    <br>
+                    <span class="mediaText" style="font-style:italic;" th:text="'Reply Time : ' + ${#dates.format(reply.getGmtCreate(),'yyyy-MM-dd HH:mm:ss')}"></span>
                 </div>
                 <hr>
             </div>

@@ -25,7 +25,7 @@
                     <h4>Bio</h4>
                     <input type="text" class="form-control"  th:value="${infoUser.getBio()}" name="bio" id="bio" placeholder="Bio here..">
                 </div>
-                <button style="float:right" type="submit" class="btn btn-success">ReEdit</button>
+                <button style="float:right" type="submit" class="btn btn-success">Edit</button>
                 <br>
                 <hr>	
             </form>
@@ -36,16 +36,16 @@
             <hr>
                 <div class="form-group">
                     <h4>Old Password</h4>
-                    <input type="text" class="form-control" name="bio" id="bio" placeholder="Default Old Password : 123456">
+                    <input type="text" class="form-control" name="oldPassword" id="oldPassword" placeholder="Default Old Password : 123456">
                 </div>
                 
                 <div class="form-group">
                     <h4>New Password</h4>
-                    <input type="text" class="form-control" name="bio" id="bio" placeholder="Input New Password here..">
+                    <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="Input New Password here..">
                 </div>
                 <div class="form-group">
                     <h4>Confirm</h4>
-                    <input type="text" class="form-control" name="bio" id="bio" placeholder="Input New Password again..">
+                    <input type="password" class="form-control" name="newPasswordAgain" id="newPasswordAgain" placeholder="Input New Password again..">
                 </div>
                 
                 <button style="float:right" type="submit" class="btn btn-success">Change Password</button>
@@ -60,9 +60,9 @@
             <h3><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;Menu</h3>
             <hr>
             <div class="list-group">
-                <a href="/profile/questions" class="list-group-item" th:class="${section == 'questions' } ? 'active list-group-item' : 'list-group-item'">Question</a>
-                <a href="/profile/replies" class="list-group-item" th:class="${section == 'replies' } ? 'active list-group-item' : 'list-group-item'">Reply</a>
-                <a href="/profile/notices" class="list-group-item" th:class="${section == 'notices' } ? 'active list-group-item disabled' : 'list-group-item disabled'">Notice</a>
+                <a href="/profile/questions" class="list-group-item" th:class="${section == 'questions' } ? 'active list-group-item' : 'list-group-item'">My Questions</a>
+                <a href="/profile/replies" class="list-group-item" th:class="${section == 'replies' } ? 'active list-group-item' : 'list-group-item'">My Replies</a>
+                <a href="/profile/notices" class="list-group-item" th:class="${section == 'notices' } ? 'active list-group-item disabled' : 'list-group-item disabled'">My Notice</a>
                 <a href="/profile/settings" class="list-group-item" th:class="${section == 'settings' } ? 'active list-group-item' : 'list-group-item'">Settings</a>
             </div>
         </div>
