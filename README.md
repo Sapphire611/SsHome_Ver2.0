@@ -23,7 +23,7 @@
 - @Autowire 把Spring容器中写好的实例加载到上下文
 - @Value 不通过配置文件的注入属性
 
-### SQL
+### 基础SQL语句，实际内容以db.migrate中的为准，利用flyway一键生成
 ```
 CREATE TABLE user(
  id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -49,8 +49,19 @@ create table question
     tag varchar(255) null,
     constraint question_pk primary key (id)
 );
-
-
+```
+```
+create table Reply
+(
+	id int auto_increment,
+	questionId int null,
+	userId int null,
+	description text null,
+	gmtCreate BIGINT null,
+	gmtModified BIGINT null,
+	constraint table_name_pk
+		primary key (id)
+);
 
 ```
 ### Terminal

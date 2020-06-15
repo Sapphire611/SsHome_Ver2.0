@@ -28,5 +28,11 @@ public interface UserMapper {
 
     @Update("update user set name = #{name},token = #{token},gmtModified = #{gmtModified},avatarUrl = #{avatarUrl} where id = #{id}")
     void update(User dbUser);
+    
+    @Update("update user set bio = #{bio} where id = #{id}")
+    void updateUserInfo(User dbUser);
+    
+    @Update("update user set password = #{password} where id = #{id}")
+    void updateUserPassword(User dbUser);
 }
 

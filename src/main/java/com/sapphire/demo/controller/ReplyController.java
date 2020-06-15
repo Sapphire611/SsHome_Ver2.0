@@ -43,6 +43,7 @@ public class ReplyController {
 		Reply reply = new Reply();
 		reply.setQuestionId(questionId);
 		reply.setDescription(description);
+		//reply.setDescription(description.replaceAll(" ","").replaceAll("\r","<br/>"));
 		reply.setUserId(userId);
 		reply.setGmtCreate(System.currentTimeMillis());
 		reply.setGmtModified(System.currentTimeMillis());

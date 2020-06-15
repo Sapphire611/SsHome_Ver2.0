@@ -28,7 +28,7 @@
             
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <hr>
-                <p th:text="${question.getDescription()}"></p>
+                <pre th:text="${question.getDescription()}"></pre>
                 <p class="mediaText"><span th:text="'>> '+${question.commentCount}"></span> comments • <span
                         th:text="${question.viewCount}"></span> views • <span
                         th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="media-body">
                 	<p  style="font-weight:bold" th:text="${reply.user.name}"></p>
-                    <p  style="color:darkgray"th:text="${reply.description}"></p>
+                    <pre  style="color:darkgray"th:text="${reply.description}"></pre>
                     <br>
                     <span class="mediaText" style="font-style:italic;" th:text="'Reply Time : ' + ${#dates.format(reply.getGmtCreate(),'yyyy-MM-dd HH:mm:ss')}"></span>
                 </div>
@@ -109,8 +109,8 @@
             <form action="/reply" method="post">
             	<!-- 同样需要将该问题的Id传过去 -->
             	<input type="hidden" name="questionId" th:value="${question.getId()}"> 
-            	<input type="hidden" name="userId" th:value="${question.user.getId()}"> 
-            	<textarea class="form-control" name="description" id="description" cols="30" rows="10" placeholder="..."></textarea>
+            	<input type="hidden" name="userId" th:value="${currentUser.getId()}"> 
+            	<textarea  style="resize: none;" class="form-control" name="description" id="description" cols="30" rows="10" placeholder="..."></textarea>
             	<br>
             	<button type="submit" name="reply" id="reply" class="btn btn-success">Reply</button>
             	<br>

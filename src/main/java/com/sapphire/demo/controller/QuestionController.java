@@ -82,7 +82,7 @@ public class QuestionController {
 	        	model.addAttribute("paginationDTO",paginationDTO);
 	        }
 			
-
+	        model.addAttribute("currentUser",currentUser);
 			return "question";
 		}
 	}

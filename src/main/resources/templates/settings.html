@@ -23,8 +23,10 @@
             <form action="/profile/settings/changeInfo" method="post">
                 <div class="form-group">
                     <h4>Bio</h4>
-                    <input type="text" class="form-control"  th:value="${infoUser.getBio()}" name="bio" id="bio" placeholder="Bio here..">
+                    <input type="text" class="form-control" th:value=${bio} name="bio" id="bio" th:placeholder="${infoUser.getBio()}">
                 </div>
+                <div class="alert alert-success" role="alert"  th:text="${success1}"  th:if = "${success1} != null" >...</div>
+                <div class="alert alert-danger" role="alert"  th:text="${error1}"  th:if = "${error1} != null" >...</div>
                 <button style="float:right" type="submit" class="btn btn-success">Edit</button>
                 <br>
                 <hr>	
@@ -36,18 +38,19 @@
             <hr>
                 <div class="form-group">
                     <h4>Old Password</h4>
-                    <input type="text" class="form-control" name="oldPassword" id="oldPassword" placeholder="Default Old Password : 123456">
+                    <input type="text" class="form-control" th:value=${oldPassword} name="oldPassword" id="oldPassword" placeholder="Default Old Password : 123456">
                 </div>
                 
                 <div class="form-group">
                     <h4>New Password</h4>
-                    <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="Input New Password here..">
+                    <input type="password" class="form-control" th:value=${newPassword} name="newPassword" id="newPassword" placeholder="Input New Password here..">
                 </div>
                 <div class="form-group">
-                    <h4>Confirm</h4>
-                    <input type="password" class="form-control" name="newPasswordAgain" id="newPasswordAgain" placeholder="Input New Password again..">
+                    <h4>New Password Again</h4>
+                    <input type="password" class="form-control" th:value=${newPasswordAgain} name="newPasswordAgain" id="newPasswordAgain" placeholder="Input New Password again..">
                 </div>
-                
+                <div class="alert alert-danger" role="alert"  th:text="${error2}"  th:if = "${error2} != null" >...</div>
+                <div class="alert alert-success" role="alert"  th:text="${success2}"  th:if = "${success2} != null" >...</div>
                 <button style="float:right" type="submit" class="btn btn-success">Change Password</button>
                 <br>
                 <hr>	
