@@ -37,6 +37,9 @@ public class QuestionController {
 	
 	@Autowired
 	private ReplyService replyService;
+	
+	@Autowired
+	private ReplyMapper replyMapper;
 
 	@GetMapping("/question/{id}")
 	public String question(@PathVariable(name = "id") Integer id,
@@ -118,6 +121,30 @@ public class QuestionController {
 		}
 		return currentUser_like;
 	}
+	
+	@GetMapping("/question/deleteMyQuestion")
+    public String profileDelete(@RequestParam(value = "questionId",required = false) Integer questionId,
+                          		@RequestParam(name = "page",defaultValue = "1") Integer page,
+                      			@RequestParam(name = "size",defaultValue = "7") Integer size,
+                      			HttpServletRequest request,
+                      			Model model) {
+    	
+    	 User currentUser = (User) request.getSession().getAttribute("user");
+         if(currentUser == null){
+             return "redirect:/login";
+         }
+         else{
+         	// Question 页面 - 删除问题
+        	 questionMapper.deleteQuestion(questionId);
+        	 replyMapper.deleteByQuestionId(questionId);
+        	 // System.out.println(questionId);
+             // PaginationDTO paginationQuestionDTO = questionService.list(currentUser.getId(),page,size);
+             // model.addAttribute("paginationDTO",paginationQuestionDTO);
+         } 
+         
+    	return "redirect:/";
+    	
+    }
 	
 	public Boolean judgeViewed(Integer id,HttpServletRequest request,User currentUser) {
 		ViewRecord viewedId = questionMapper.checkViewQuestion(id,currentUser.getId());

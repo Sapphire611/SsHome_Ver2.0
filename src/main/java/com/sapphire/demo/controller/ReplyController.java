@@ -60,5 +60,32 @@ public class ReplyController {
 		
 		return "redirect:/question/" + questionId + "";
 	}
+	
+	@GetMapping("/question/deleteMyReply")
+    public String profileDelete(@RequestParam(value = "replyId",required = false) Integer replyId,
+                          		@RequestParam(name = "page",defaultValue = "1") Integer page,
+                      			@RequestParam(name = "size",defaultValue = "7") Integer size,
+                      			HttpServletRequest request,
+                      			Model model) {
+    	
+    	 User currentUser = (User) request.getSession().getAttribute("user");
+    	 Integer questionId = replyMapper.FindQuestionById(replyId);
+         // System.out.println(replyId);
+         // System.out.println(questionId);
+         
+         if(currentUser == null){
+             return "redirect:/login";
+         }
+         else{
+         	// Question 页面 - 删除问题
+        	 replyMapper.deleteById(replyId);
+        	 // System.out.println(questionId);
+             // PaginationDTO paginationQuestionDTO = questionService.list(currentUser.getId(),page,size);
+             // model.addAttribute("paginationDTO",paginationQuestionDTO);
+         } 
+         
+    	return "redirect:/question/" + questionId;
+    	
+    }
 
 }

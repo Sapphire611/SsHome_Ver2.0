@@ -32,15 +32,44 @@
                 </div>
                 <div class="media-body">
                     <a th:href="@{'/question/' +${question.getId()}}"><h4 class="media-heading" th:text="${question.title}"></h4></a>
-                    <!-- <span th:text="${question.description}"></span> -->
-                    <p>
-                    <p class="mediaText"><span th:text="${question.commentCount}"></span> comments • <span th:text="${question.viewCount}"></span> views •  <span th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
-                    </p>
+                    <!-- 删除按钮
+                    <span>
+                    	<button type="button" class="btn btn-primary btn-lg close"  data-toggle="modal" data-target="#deleteQuestion">
+                    	<span aria-hidden="true">&times;</span>
+                    	</button>
+                    </span>
+                    删除按钮  End-->
+                    <p class="mediaText"><span th:text="${question.commentCount}"></span> comments • <span th:text="${question.viewCount}"></span> views •  <span th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span></p>
                 </div>
                 <br>
+                <!-- Modal  删除用户问题
+				<div class="modal fade" id="deleteQuestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Delete Your Question</h4>
+				      	</div>
+				      	<div class="modal-body">
+				        	<span th:text="'Do you want to delete Your Question : [ '+ ${question.getTitle()} + ' ] ?'"></span>
+				      	</div>
+				      
+				      	<div class="modal-footer">
+				      	<form action="/profile/question/delete" method="post">
+				      		<input type="hidden" name="questionId" th:value="${question.getId()}"> 
+				        	<button type="button" class="btn btn-primary">Yes!</button>
+				        </form>
+				      	</div>
+				       
+				    </div>
+				  </div>
+				</div>
+			Modal  删除用户问题 End-->
             </div>
             <!--循环结束-->
             
+           
+		
             <!--循环获取replies表中内容-->
             <div th:if="${section} == 'replies'" class="media" th:each="reply : ${paginationDTO.getReplies()}">
                 <div class="media-left">

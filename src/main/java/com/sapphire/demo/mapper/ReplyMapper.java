@@ -26,5 +26,15 @@ public interface ReplyMapper {
 	
 	@Select("select count(1) from reply where userId = #{userId} order by gmtCreate desc")
 	Integer countByUserId(@Param(value = "userId")Integer userId,@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
+
+	@Delete("delete from reply where questionId = #{questionId}")
+	void deleteByQuestionId(@Param(value = "questionId")Integer questionId);
+
+	@Delete("delete from reply where Id = #{replyId}")
+	void deleteById(Integer replyId);
+	
+	@Select("select questionId from reply where Id = #{replyId}")
+	Integer FindQuestionById(@Param(value = "replyId") Integer id);
+	
 }
 

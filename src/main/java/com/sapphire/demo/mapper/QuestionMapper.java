@@ -59,6 +59,10 @@ public interface QuestionMapper {
     
     @Select("select title from question where id = #{questionId}")
     String findNameById(@Param(value = "questionId")Integer questionId);
+
+    @Delete("delete from question where id = #{id}")
+    void deleteQuestion(@Param(value = "id")Integer id);
+	
 	
 }
 
