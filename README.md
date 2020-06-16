@@ -78,10 +78,6 @@ CREATE EVENT e_test2
 ON SCHEDULE EVERY 1 DAY
 DO TRUNCATE aaa;
 ```
-
-```
-
-```
 ```
 create database SapphireHome;
 INSERT INTO `SapphireHome`.`user`(`id`, `accountid`, `name`, `token`, `gmtCreate`, `gmtModified`, `bio`, `avatarUrl`, `password`) VALUES (19, '34004352', 'Sapphire611', 'aa1b67aa-4e8c-4f06-a788-b58e5fa876c0', 1591117858620, 1591632105748, 'Sara is my one and only. ', 'https://avatars2.githubusercontent.com/u/34004352?v=4', 'Rabbit611');

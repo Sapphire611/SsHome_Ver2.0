@@ -53,37 +53,25 @@
                     <br>
                    
                     <!-- 删除当前回复按钮 -->
-                	<button class="btn btn-default" style="float:right" th:if="${reply.user.getId() == session.user.getId()}" data-toggle="modal" data-target="#deleteReply"><span><span aria-hidden="true" data-toggle="modal" data-target="#deleteReply">Delete</button>
+                    <form action="/question/deleteMyReply" method="get">
+				      		<input type="hidden" name="replyId" th:value="${reply.getId()}"> 
+				        	<button class="btn btn-default" style="float:right" th:if="${reply.user.getId() == session.user.getId()}"><span aria-hidden="true" data-toggle="modal" data-target="#deleteReply"></span>Delete</button>
+				    </form>
                 	<!-- 删除当前回复按钮 End -->
+                	
+                	<!-- 删除当前回复按钮 (管理员专用) -->
+                	<form action="/question/deleteMyReply" method="get">
+				      		<input type="hidden" name="replyId" th:value="${reply.getId()}"> 
+				        	<button class="btn btn-danger" style="float:right" th:if="${session.user.getAdminBoolean() == 1}"><span aria-hidden="true" data-toggle="modal" data-target="#deleteReplyAdmin"></span>【Admin】Delete</button>
+				    </form>
+                	
+                	<!-- 删除当前回复按钮 (管理员专用) End -->
+                	
                 	
                     <span class="mediaText" style="font-style:italic;" th:text="'Reply Time : ' + ${#dates.format(reply.getGmtCreate(),'yyyy-MM-dd HH:mm:ss')}"></span>
                 </div>
                 <hr>
                 
-                 <!-- Modal  删除用户回复-->
-				<div class="modal fade" id="deleteReply" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-				  <div class="modal-dialog" role="document">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				        <h4 class="modal-title" id="myModalLabel">Delete Your Question</h4>
-				      	</div>
-				      	<div class="modal-body">
-				        	<span> Do you want to delete Your Reply?</span>
-				      	</div>
-				      
-				      	<div class="modal-footer">
-				      	<form action="/question/deleteMyReply" method="get">
-				      		<input type="hidden" name="replyId" th:value="${reply.getId()}"> 
-				        	<button type="submit" class="btn btn-primary">Yes!</button>
-				        </form>
-				      	</div>
-				       
-				    </div>
-				  </div>
-				</div>
-			<!-- Modal  删除用户回复 End-->
-			
             </div>
             </div>
             <!--循环获取replies表中回复内容-->
@@ -182,6 +170,13 @@
                 <!-- 删除当前问题按钮 End -->
                 
                 <br>
+                
+                <!-- 删除当前问题按钮(管理员专用) -->
+                <button th:if="${session.user.getAdminBoolean() == 1}" class="btn btn-danger"  data-toggle="modal" data-target="#deleteQuestionAdmin"><span><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;【Admin】Delete this question</span></button>
+                <!-- 删除当前问题按钮(管理员专用) End -->
+                
+                <br>
+                
                 <!-- Modal  删除用户问题-->
 				<div class="modal fade" id="deleteQuestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 				  <div class="modal-dialog" role="document">
@@ -205,6 +200,30 @@
 				  </div>
 				</div>
 			<!-- Modal  删除用户问题 End-->
+			
+			<!-- Modal 删除用户问题 (管理员专用)-->
+				<div class="modal fade" id="deleteQuestionAdmin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Delete This Question</h4>
+				      	</div>
+				      	<div class="modal-body">
+				        	<span th:text="'Admin，Do you want to delete This Question : [ '+ ${question.getTitle()} + ' ] ^_^?'"></span>
+				      	</div>
+				      
+				      	<div class="modal-footer">
+				      	<form action="/question/deleteMyQuestion" method="get">
+				      		<input type="hidden" name="questionId" th:value="${question.getId()}"> 
+				        	<button type="submit" class="btn btn-primary">Yes!</button>
+				        </form>
+				      	</div>
+				       
+				    </div>
+				  </div>
+				</div>
+			<!-- Modal 删除用户问题 (管理员专用) End-->
             </div>
             <!-- 显示Publisher End-->
             <br>

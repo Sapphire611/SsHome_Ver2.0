@@ -10,6 +10,8 @@ public class User {
     private Long gmtModified;
     private String avatarUrl;
     private String bio;
+    private Integer adminBoolean;
+    
 	public Integer getId() {
 		return Id;
 	}
@@ -63,6 +65,13 @@ public class User {
 	}
 	public void setBio(String bio) {
 		this.bio = bio;
+	}
+	
+	public Integer getAdminBoolean() {
+		return adminBoolean;
+	}
+	public void setAdminBoolean(Integer adminBoolean) {
+		this.adminBoolean = adminBoolean;
 	}
     
     

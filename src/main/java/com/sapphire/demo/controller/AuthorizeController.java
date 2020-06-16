@@ -64,6 +64,7 @@ public class AuthorizeController {
             user.setPassword(123456+"");
             user.setAvatarUrl(githubUser.getAvatar_url());
             user.setBio(githubUser.getBio());
+            user.setAdminBoolean(0);
             userService.createOrUpdate(user);
 
             // Cookie & Session
