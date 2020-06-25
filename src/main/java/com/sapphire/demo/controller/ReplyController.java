@@ -77,8 +77,9 @@ public class ReplyController {
              return "redirect:/login";
          }
          else{
-         	// Question 页面 - 删除问题
+         	// Question 页面 - 删除回复
         	 replyMapper.deleteById(replyId);
+        	 questionMapper.commentMinus(questionId);
         	 // System.out.println(questionId);
              // PaginationDTO paginationQuestionDTO = questionService.list(currentUser.getId(),page,size);
              // model.addAttribute("paginationDTO",paginationQuestionDTO);

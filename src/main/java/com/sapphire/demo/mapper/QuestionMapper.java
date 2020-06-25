@@ -66,6 +66,9 @@ public interface QuestionMapper {
     @Update("update question set comment_count = comment_count + 1 where id = #{id};")
     void commentAdd(@Param(value = "id")Integer id);
     
+    @Update("update question set comment_count = comment_count - 1 where id = #{id};")
+    void commentMinus(@Param(value = "id")Integer id);
+    
     @Select("select title from question where id = #{questionId}")
     String findNameById(@Param(value = "questionId")Integer questionId);
 
