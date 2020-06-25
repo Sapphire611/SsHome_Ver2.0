@@ -1,6 +1,9 @@
 package com.sapphire.demo.mapper;
 
 import com.sapphire.demo.model.User;
+
+import java.util.List;
+
 import org.apache.ibatis.annotations.*;
 
 @Mapper
@@ -25,6 +28,9 @@ public interface UserMapper {
 
     @Select("select * from user where accountId = #{accountId}")
     User findByaccountId(@Param("accountId") String accountId);
+    
+    @Select("select * from user where adminBoolean = 1;")
+    List<User> findAdmin();
 
     @Update("update user set name = #{name},token = #{token},gmtModified = #{gmtModified},avatarUrl = #{avatarUrl} where id = #{id}")
     void update(User dbUser);

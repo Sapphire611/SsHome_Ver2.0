@@ -62,7 +62,7 @@
                 	<!-- 删除当前回复按钮 (管理员专用) -->
                 	<form action="/question/deleteMyReply" method="get">
 				      		<input type="hidden" name="replyId" th:value="${reply.getId()}"> 
-				        	<button class="btn btn-danger" style="float:right" th:if="${session.user.getAdminBoolean() == 1}"><span aria-hidden="true" data-toggle="modal" data-target="#deleteReplyAdmin"></span>【Admin】Delete</button>
+				        	<button class="btn btn-warning" style="float:right" th:if="${session.user.getAdminBoolean() == 1}"><span aria-hidden="true" data-toggle="modal" data-target="#deleteReplyAdmin"></span>【Admin】Delete</button>
 				    </form>
                 	
                 	<!-- 删除当前回复按钮 (管理员专用) End -->
@@ -172,7 +172,7 @@
                 <br>
                 
                 <!-- 删除当前问题按钮(管理员专用) -->
-                <button th:if="${session.user.getAdminBoolean() == 1}" class="btn btn-danger"  data-toggle="modal" data-target="#deleteQuestionAdmin"><span><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;【Admin】Delete this question</span></button>
+                <button th:if="${session.user.getAdminBoolean() == 1}" class="btn btn-warning"  data-toggle="modal" data-target="#deleteQuestionAdmin"><span><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;【Admin】Delete this question</span></button>
                 <!-- 删除当前问题按钮(管理员专用) End -->
                 
                 <br>

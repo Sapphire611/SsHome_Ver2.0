@@ -41,6 +41,11 @@ public class QuestionService {
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
             questionDTO.setUser(user);
+            
+            if(question.getDescription().length() > 50) {
+            	questionDTO.setDescription(questionDTO.getDescription().substring(0, 50) + "...");
+            }
+            
             questionDTOList.add(questionDTO);
         }
 
@@ -69,6 +74,10 @@ public class QuestionService {
             User user = userMapper.findById(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
+            
+            if(question.getDescription().length() > 50) {
+            	questionDTO.setDescription(questionDTO.getDescription().substring(0, 50) + "...");
+            }
             questionDTO.setUser(user);
             questionDTOList.add(questionDTO);
         }

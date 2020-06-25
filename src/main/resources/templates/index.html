@@ -34,9 +34,13 @@
                 </div>
                 <div class="media-body">
                     <a th:href="@{'/question/' +${question.getId()}}"><h4 class="media-heading" th:text="${question.title}"></h4></a>
+                    <!-- 问题列表右侧显示点赞按钮 -->
+                    <span style="float:right;margin-left:15px"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;<span th:text="${question.getLikeCount()}"></span></span>
+                    <!-- 问题列表右侧显示点赞按钮 End-->
                     <!-- 循环输出标签 -->
                     <span class="label label-info" th:text="${question.getTag()}">New</span>
                     <!-- 循环输出标签 End -->
+                    
                     <span th:text="${question.description}"></span>
                     <p>
                         <p class="mediaText"><a th:href="@{'/userinfo/' +${question.user.getName()}}"><span th:text="${question.user.getName()}"></span></a> published an article  • <span th:text="${question.commentCount}"></span> comments • <span th:text="${question.viewCount}"></span> views •  <span th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
@@ -84,11 +88,31 @@
             <!--分页模块结束-->
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h3><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>&nbsp;&nbsp;Hot Topic</h3>
+            <h3><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>&nbsp;&nbsp;Administrator</h3>
             <hr>
+            
+             <div class="media" th:each="user : ${adminUsers}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-thumbnail mediaobject-index" th:src="${user.getAvatarUrl()}">
+                    </a>
+
+                </div>
+                <div class="media-body">
+                    <p href="#" th:text="${user.getName()}"></p>
+                    <p class="mediaText">
+                        <span href="#" th:text="${user.getBio()}"></span>
+                    </p>
+                </div>
+                <br>
+              </div>
+         <br>	  
+         <h3><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>&nbsp;&nbsp;Announcement
+         </h3>
+         <hr>
         <!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-		  Tips in Ss'Home
+		<button style="margin-left:20px" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">
+		  	Welcome Teacher CBX
 		</button>
 		<!-- Button trigger modal End -->
 		
@@ -98,17 +122,12 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">WDNMD</h4>
+		        <h4 class="modal-title" id="myModalLabel">Welcome</h4>
 		      </div>
 		      <div class="modal-body">
-		        
+		        Hello，陈老师，该项目是Group 4 的JEE期末项目，请查收。
 		      </div>
-		      <!-- 
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary">Save changes</button>
-		      </div>
-		       -->
+		      
 		    </div>
 		  </div>
 		</div>
