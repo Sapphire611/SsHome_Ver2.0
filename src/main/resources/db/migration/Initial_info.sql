@@ -1,0 +1,42 @@
+INSERT INTO `SapphireHome`.`user`(`id`, `accountid`, `name`, `token`, `gmtCreate`, `gmtModified`, `bio`, `avatarUrl`, `password`, `adminBoolean`) VALUES (19, '34004352', 'Sapphire611', '85eb0545-f964-42a0-a028-369f8bea9d55', 1591117858620, 1592301203790, 'Sara is my one and only ~', 'https://avatars2.githubusercontent.com/u/34004352?v=4', 'Rabbit611', 1);
+INSERT INTO `SapphireHome`.`user`(`id`, `accountid`, `name`, `token`, `gmtCreate`, `gmtModified`, `bio`, `avatarUrl`, `password`, `adminBoolean`) VALUES (20, '65452385', 'SensitiveSara', 'f7ab6d41-ed68-48aa-861d-5c835e64a61a', 1591625222960, 1591625222960, '可可爱爱没有脑袋🧐', 'https://avatars2.githubusercontent.com/u/65452385?v=4', '123456', 0);
+
+INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`, `gmtModified`, `comment_count`, `like_count`, `view_count`, `tag`, `creator`) VALUES (26, '我是一个假肉宝', '很假的，真不了的那种', 1591169155053, 1591169155053, 0, 3, 4, '可爱的肉宝', 20);
+INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`, `gmtModified`, `comment_count`, `like_count`, `view_count`, `tag`, `creator`) VALUES (27, '我是一个小兔宝', '我是真的小兔宝', 1591169450774, 1591169450774, 0, 1, 1, 'Test', 19);
+INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`, `gmtModified`, `comment_count`, `like_count`, `view_count`, `tag`, `creator`) VALUES (28, '我是更新，不是再次添加', 'WDNMD不要再加了', 1591169488920, 1591169488920, 0, 1, 1, 'Test', 19);
+INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`, `gmtModified`, `comment_count`, `like_count`, `view_count`, `tag`, `creator`) VALUES (29, '现在是否可以正常发布问题？', '@RequestParam = false，应该可以了', 1591170252441, 1591170252441, 0, 2, 1, 'Test', 19);
+INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`, `gmtModified`, `comment_count`, `like_count`, `view_count`, `tag`, `creator`) VALUES (30, '我要更新，不是再次添加！', '我要更新！！！！！！', 1591170280299, 1591170280299, 0, 0, 0, 'Test', 19);
+INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`, `gmtModified`, `comment_count`, `like_count`, `view_count`, `tag`, `creator`) VALUES (31, '我要更新，不是再次添加！', '是更新啊！！！！！！！！！！！！！！！！！', 1591170307265, 1591170307265, 0, 1, 1, 'Test', 19);
+INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`, `gmtModified`, `comment_count`, `like_count`, `view_count`, `tag`, `creator`) VALUES (33, '尝试更新中2', '22222', 1591171267275, 1591171267275, 0, 1, 0, 'Test', 19);
+INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`, `gmtModified`, `comment_count`, `like_count`, `view_count`, `tag`, `creator`) VALUES (34, '尝试更新中3', '33333', 1591171274403, 1591171274403, 0, 0, 1, 'Test', 19);
+INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`, `gmtModified`, `comment_count`, `like_count`, `view_count`, `tag`, `creator`) VALUES (35, '尝试更新中11111', '时间都去哪儿了？？？？', 1591171964269, 1591281174429, 0, 8, 11, 'Test', 19);
+INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`, `gmtModified`, `comment_count`, `like_count`, `view_count`, `tag`, `creator`) VALUES (43, '成功了！！！', '时间在这里', 1591270190413, 1591273130140, 1, 65, 133, 'Test', 19);
+INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`, `gmtModified`, `comment_count`, `like_count`, `view_count`, `tag`, `creator`) VALUES (49, '标签长度应该小于等于6', '多一点都不行', 1591433716049, 1591433729530, 5, 1, 3, '我只说六个字', 19);
+INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`, `gmtModified`, `comment_count`, `like_count`, `view_count`, `tag`, `creator`) VALUES (51, '测试测试', '测试看看\r\n啦啦啦啦\r\n还可以\r\n应该没啥问题\r\n可以放图片吗好像不行\r\nOK\r\n那如果我写的长一点\r\n会怎么样\r\n有\r\n滚动条\r\n吗\r\n哦有的\r\n那还行\r\n\r\n这里还算完善\r\n\r\n\r\nOK', 1591953061902, 1591953061902, 12, 2, 4, '测试测试测试', 19);
+INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`, `gmtModified`, `comment_count`, `like_count`, `view_count`, `tag`, `creator`) VALUES (53, 'Test Edit??', 'ha ha', 1592302025409, 1592302025409, 16, 0, 1, 'FUck', 19);
+
+INSERT INTO `SapphireHome`.`reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (25, 51, 19, '你才是小猪🐷', 1592210127758, 1592210127758, NULL);
+INSERT INTO `SapphireHome`.`reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (26, 51, 20, '上面那条回复有BUG，应该是Sara回复的才对', 1592210489095, 1592210489095, NULL);
+INSERT INTO `SapphireHome`.`reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (30, 43, 19, '1', 1592240138358, 1592240138358, NULL);
+INSERT INTO `SapphireHome`.`reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (37, 49, 19, '4', 1592301748599, 1592301748599, NULL);
+INSERT INTO `SapphireHome`.`reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (38, 49, 19, '5', 1592301750842, 1592301750842, NULL);
+INSERT INTO `SapphireHome`.`reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (52, 53, 19, '3', 1592302109628, 1592302109628, NULL);
+
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (1, 19, 43, 1591273130140);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (2, 19, 35, 1591273130140);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (3, 19, 34, 1591431397232);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (4, 19, 33, 1591432129057);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (5, 19, 31, 1591432138694);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (6, 19, 29, 1591432168640);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (7, 19, 26, 1591432200472);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (8, 19, 27, 1591432215525);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (9, 19, 45, 1591432304029);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (10, 19, 46, 1591432396257);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (11, 19, 1, 1591433264102);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (12, 19, 49, 1591433806570);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (13, 19, 48, 1591448007895);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (14, 19, 28, 1591523186258);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (15, 19, 50, 1591523265157);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (16, 19, 51, 1591954020425);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (17, 20, 51, 1592210503654);
+INSERT INTO `SapphireHome`.`LikeRecord`(`id`, `userId`, `questionId`, `gmtCreate`) VALUES (18, 19, 44, 1592301597197);

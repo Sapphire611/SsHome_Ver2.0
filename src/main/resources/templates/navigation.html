@@ -1,4 +1,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script src="/js/vue.js" th:href="@{/js/vue.js}"></script>
+<script src="/js/axios.min.js" th:href="@{/js/axios.min.js}"></script>
 <div th:fragment="nav">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -41,7 +43,12 @@
                         <ul class="dropdown-menu">
                             <li><a href="/profile/questions">My Questions</a></li>
                             <li><a href="/profile/replies">My Replies</a></li>
-                            <li><a href="#">My Notice</a></li>
+                            <li><a href="/profile/notices">My Notice 
+                            <div id="app">
+                            	<div v-model="noticeNumber"></div>
+                            </div>
+                            </a>
+                            </li>
                             <li><a href="/profile/settings">Settings</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/logout">Log Out</a></li>
@@ -55,5 +62,25 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-
 </div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            noticeNumber:-1,
+        },
+        methods:{
+            show:function(){
+                axios
+                .get('/getNoticeNumber')
+                .then(response => {
+                	this.noticeNumber = response.data;
+                })
+                .catch(function (error) { // 请求失败处理
+                  alert(error);
+                });
+            }
+        }
+    })
+</script>

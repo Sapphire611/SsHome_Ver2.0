@@ -1,5 +1,9 @@
 package com.sapphire.demo.model;
 
+enum AdminBoolean{
+	ADMINISTRATOR,USER
+}
+
 public class User {
     private Integer Id;
     private String name;

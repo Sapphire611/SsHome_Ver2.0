@@ -1,1 +1,0 @@
-alter table user add adminBoolean int default 0 null;

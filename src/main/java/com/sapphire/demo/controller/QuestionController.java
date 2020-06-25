@@ -50,9 +50,16 @@ public class QuestionController {
 
 		User currentUser = (User) request.getSession().getAttribute("user");
 		
+		
 		if (currentUser == null) {
 			return "redirect:/login";
 		} else {
+			
+			// 修改作者的阅读本文时间
+			if(currentUser.getId() == questionMapper.getCreatorById(id)) {
+				questionMapper.updateAuthorReadTime(System.currentTimeMillis(),id);
+			}
+			
 			// 判断当前用户是否已阅读，如果已阅读，浏览数不加一
 			boolean currentUser_view = false;
 			currentUser_view = judgeViewed(id,request,currentUser);

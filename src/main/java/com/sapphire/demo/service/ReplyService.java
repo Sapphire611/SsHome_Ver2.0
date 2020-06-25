@@ -94,5 +94,40 @@ public class ReplyService {
 
         return paginationDTO;
     }
+    
+    // Notice 用于
+    public PaginationDTO listAtNotice(Integer userId, Integer page, Integer size) {
+        PaginationDTO paginationDTO = new PaginationDTO();
+        Integer totalCount = replyMapper.countByUserId(userId,page, size);
+        if(totalCount != 0) {
+        	
+            paginationDTO.setPagination(totalCount, page, size);
+            // 当前页小于1或者大于totalPage时,做出修正
+            if (page < 1) page = 1;
+            if (page > paginationDTO.getTotalPage()) page = paginationDTO.getTotalPage();
+
+
+            // size * (page - 1)
+            Integer offset = size * (page - 1);
+        	List<Reply> replies = replyMapper.listNoticeById(userId, offset, size);
+            List<ReplyDTO> repliesDTOList = new ArrayList<>();
+
+            for (Reply reply : replies) {
+                User user = userMapper.findById(reply.getUserId());
+                String questionTitle = questionMapper.findNameById(reply.getQuestionId());
+                ReplyDTO replyDTO = new ReplyDTO();
+                BeanUtils.copyProperties(reply, replyDTO);
+                replyDTO.setUser(user);
+                replyDTO.setQuestionTitle(questionTitle);
+                replyDTO.setGmtQuestionRead(questionMapper.getAuthorReadTimeById(reply.getQuestionId()));
+                repliesDTOList.add(replyDTO);
+            }
+
+            paginationDTO.setReplies(repliesDTOList);
+        }
+        
+
+        return paginationDTO;
+    }
   
 }

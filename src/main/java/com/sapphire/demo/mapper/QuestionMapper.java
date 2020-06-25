@@ -30,11 +30,20 @@ public interface QuestionMapper {
     @Select("select count(1) from question where creator = #{userId} order by id desc")
     Integer countByUserId(@Param(value = "userId")Integer userId);
 
+    @Select("select creator from question where id = #{id}")
+    Integer getCreatorById(@Param(value = "id")Integer id);
+    
     @Select("select * from question where id = #{id}")
     Question getById(@Param(value = "id")Integer id);
-
+    
+    @Select("select q.*,r.questionId  from question q ,reply r where q.id = r.questionId and q.id = #{id};")
+    Question getById2(@Param(value = "id")Integer id);
+    
     @Update("update question set title = #{title},description = #{description},gmtModified = #{gmtModified},tag = #{tag} where id = #{id}")
     void update(Question question);
+    
+    @Update("update question set gmtAuthorRead = #{readTime} where id = #{id}")
+    void updateAuthorReadTime(@Param(value = "readTime")Long readTime,@Param(value = "id")Integer id);
     
     @Select("select * from viewRecord where userId = #{userID} and questionId = #{questionId}")
     ViewRecord checkViewQuestion(@Param(value = "questionId")Integer questionId,@Param(value = "userID") Integer userID);
@@ -62,7 +71,9 @@ public interface QuestionMapper {
 
     @Delete("delete from question where id = #{id}")
     void deleteQuestion(@Param(value = "id")Integer id);
-	
+    
+    @Select("select gmtAuthorRead from question where id = #{id}")
+    Long getAuthorReadTimeById(@Param(value = "id")Integer id);
 	
 }
 

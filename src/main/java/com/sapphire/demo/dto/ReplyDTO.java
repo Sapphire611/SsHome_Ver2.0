@@ -10,9 +10,16 @@ public class ReplyDTO {
 	private String description;
 	private Long gmtCreate;
 	private Long gmtModified;
+	private Long gmtQuestionRead;
 	private User user;
 	
 	
+	public Long getGmtQuestionRead() {
+		return gmtQuestionRead;
+	}
+	public void setGmtQuestionRead(Long gmtQuestionRead) {
+		this.gmtQuestionRead = gmtQuestionRead;
+	}
 	public String getQuestionTitle() {
 		return questionTitle;
 	}
