@@ -42,8 +42,8 @@
             <hr>
             <div class="media" th:each="reply : ${paginationDTO.replies}">
                 <div class="media-left">
-                    <a href="#">
-                        <img class="media-object img-thumbnail mediaobject-reply" th:src="${reply.user.avatarUrl}">
+                    <a th:href="@{'/userinfo/' +${reply.user.getName()}}">
+                        <img class="media-object img-thumbnail mediaobject-reply"  th:src="${reply.user.avatarUrl}">
                     </a>
                 </div>
                 <div class="media-body">

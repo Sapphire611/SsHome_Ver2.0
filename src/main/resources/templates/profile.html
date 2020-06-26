@@ -22,7 +22,7 @@
             <hr>
 
             <!--循环获取questions表中内容-->
-            <div th:if="${section} == 'questions'" class="media" th:each="question : ${paginationDTO.questions}">
+            <div th:if="${section} == 'questions' and ${paginationDTO.questions} != null" class="media" th:each="question : ${paginationDTO.questions}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object img-thumbnail mediaobject-index" th:src="${question.user.avatarUrl}">
@@ -93,7 +93,7 @@
             
             <!--分页模块-->
             <nav aria-label="Page navigation">
-                <ul class="pagination">
+                <ul th:if="${paginationDTO.totalCount != 0}" class="pagination">
                     <li>
                         <a th:if="${paginationDTO.showFirstPage}" th:href="@{/profile/{section}/(page=1,section=${section})}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>

@@ -77,6 +77,9 @@ public interface QuestionMapper {
     
     @Select("select gmtAuthorRead from question where id = #{id}")
     Long getAuthorReadTimeById(@Param(value = "id")Integer id);
+    
+    @Select("select id from question where creator = #{id}")
+    List<Integer>getQuestionIdsById(@Param(value = "id")Integer id);
 	
 }
 

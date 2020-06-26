@@ -37,8 +37,10 @@ public interface ReplyMapper {
 	Integer FindQuestionById(@Param(value = "replyId") Integer id);
 	
     // 通过当前用户ID，寻找当前用户发布的问题中不属于自己的回复
-    @Select("select r.* from question q, reply r where q.creator = #{id} and q.creator != r.userId GROUP BY r.id order by gmtCreate desc limit #{offset},#{size}")
-    List<Reply> listNoticeById(@Param(value = "id")Integer id,@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
+	// select * from reply where questionId = 66 and userId != 23;
+    @Select("select r.* from question q, reply r where questionId = #{questionId} and userId != #{userId} GROUP BY r.id order by gmtCreate desc limit #{offset},#{size}")
+    List<Reply> listNoticeById(@Param(value = "questionId")Integer questionId,@Param(value = "userId")Integer userId,@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
+	
 	
 }
 

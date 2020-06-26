@@ -67,7 +67,12 @@ public class QuestionService {
 
         // size * (page - 1)
         Integer offset = size * (page - 1);
-        List<Question> questions = questionMapper.listByUserId(userId, offset, size);
+        
+        List<Question> questions = new ArrayList<Question>();
+        if(totalCount != 0) {
+        	questions = questionMapper.listByUserId(userId, offset, size);
+        }
+        
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
         for (Question question : questions) {

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -109,7 +110,19 @@ public class ReplyService {
 
             // size * (page - 1)
             Integer offset = size * (page - 1);
-        	List<Reply> replies = replyMapper.listNoticeById(userId, offset, size);
+           
+            // 先得到当前用户的所有问题Id
+            List<Integer> questionIds = questionMapper.getQuestionIdsById(userId);
+            List<Reply> replies = new ArrayList<Reply>();
+            List<Reply> temp = new ArrayList<Reply>();
+            for (Integer questionId : questionIds) {
+            	temp = replyMapper.listNoticeById(questionId,userId, offset, size);
+            	for (Reply reply : temp) {
+					replies.add(reply);
+				}
+			}
+            
+        	//List<Reply> repli2es = replyMapper.listNoticeById(userId, offset, size);
             List<ReplyDTO> repliesDTOList = new ArrayList<>();
 
             for (Reply reply : replies) {

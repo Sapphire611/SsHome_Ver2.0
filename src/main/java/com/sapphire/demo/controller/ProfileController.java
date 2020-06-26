@@ -53,11 +53,17 @@ public class ProfileController {
             model.addAttribute("sectionName", "My Questions");
             
             PaginationDTO paginationQuestionDTO = questionService.list(currentUser.getId(),page,size);
-            model.addAttribute("paginationDTO",paginationQuestionDTO);
+            if(paginationQuestionDTO != null) {
+            	model.addAttribute("paginationDTO",paginationQuestionDTO);
+            }else {
+            	model.addAttribute("paginationDTO",null);
+            }
+            
         } else if("replies".equals(action)){
         	//Reply 页面
         	PaginationDTO paginationQuestionDTO = replyService.listAtProfile(currentUser.getId(),page,size);
             model.addAttribute("paginationDTO",paginationQuestionDTO);
+            System.out.println(paginationQuestionDTO.toString());
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "Replies");
         } else if("personalInfo".equals(action)) {
@@ -79,6 +85,8 @@ public class ProfileController {
             
             int countNewNotice = 0;
             for (ReplyDTO reply : paginationQuestionDTO.getReplies()) {
+            	System.out.println(reply.getGmtCreate());
+            	System.out.println(reply.getGmtQuestionRead());
 				if(reply.getGmtCreate() > reply.getGmtQuestionRead()) {
 					countNewNotice ++ ;
 				}
