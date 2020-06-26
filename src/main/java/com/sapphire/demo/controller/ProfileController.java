@@ -65,7 +65,7 @@ public class ProfileController {
             model.addAttribute("paginationDTO",paginationQuestionDTO);
             System.out.println(paginationQuestionDTO.toString());
             model.addAttribute("section", "replies");
-            model.addAttribute("sectionName", "Replies");
+            model.addAttribute("sectionName", "My Replies");
         } else if("personalInfo".equals(action)) {
             return "redirect:/userinfo/" + currentUser.getName();
         }else if("settings".equals(action)){
@@ -77,7 +77,7 @@ public class ProfileController {
 			return "settings";
         }else if("notices".equals(action)){
         	model.addAttribute("section", "notices");
-            model.addAttribute("sectionName", "My notices");
+            model.addAttribute("sectionName", "My Notices");
             
             // 设置分页
         	PaginationDTO paginationQuestionDTO = replyService.listAtNotice(currentUser.getId(),page,size);
