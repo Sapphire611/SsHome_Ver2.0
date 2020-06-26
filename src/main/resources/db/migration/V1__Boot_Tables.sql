@@ -1,5 +1,5 @@
 create database SapphireHome;
-
+use SapphireHome;
 create table user(
 	 id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	 accountid varchar(100),

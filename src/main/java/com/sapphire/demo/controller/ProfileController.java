@@ -63,7 +63,7 @@ public class ProfileController {
         	//Reply 页面
         	PaginationDTO paginationQuestionDTO = replyService.listAtProfile(currentUser.getId(),page,size);
             model.addAttribute("paginationDTO",paginationQuestionDTO);
-            System.out.println(paginationQuestionDTO.toString());
+            //System.out.println(paginationQuestionDTO.toString());
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "My Replies");
         } else if("personalInfo".equals(action)) {
@@ -85,8 +85,8 @@ public class ProfileController {
             
             int countNewNotice = 0;
             for (ReplyDTO reply : paginationQuestionDTO.getReplies()) {
-            	System.out.println(reply.getGmtCreate());
-            	System.out.println(reply.getGmtQuestionRead());
+            	//System.out.println(reply.getGmtCreate());
+            	// System.out.println(reply.getGmtQuestionRead());
 				if(reply.getGmtCreate() > reply.getGmtQuestionRead()) {
 					countNewNotice ++ ;
 				}

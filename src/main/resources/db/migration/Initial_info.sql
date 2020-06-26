@@ -14,13 +14,14 @@ INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`,
 INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`, `gmtModified`, `gmtAuthorRead`, `creator`, `comment_count`, `like_count`, `view_count`, `tag`) VALUES (63, '测试', '测试', 1593164714843, 1593164714843, 1593184558117, 19, 3, 0, 3, '测试');
 INSERT INTO `SapphireHome`.`question`(`id`, `title`, `description`, `gmtCreate`, `gmtModified`, `gmtAuthorRead`, `creator`, `comment_count`, `like_count`, `view_count`, `tag`) VALUES (66, '我是新来的', '大家回复我', 1593186141475, 1593189332632, 1593189308625, 23, 3, 0, 2, 'New');
 
-INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (37, 49, 19, '4', 1592301748599, 1592301748599, NULL);
-INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (38, 49, 19, '5', 1592301750842, 1592301750842, NULL);
-INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (59, 56, 19, '我是最不可爱的🐷', 1593078183021, 1593078183021, NULL);
-INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (61, 57, 19, '好，很好，非常好👌👍', 1593079147900, 1593079147900, NULL);
-INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (62, 27, 19, '我可能有毛病', 1593081316207, 1593081316207, NULL);
-INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (63, 63, 20, 'qqq', 1593184608510, 1593184608510, NULL);
-INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (64, 63, 20, '11111', 1593184611200, 1593184611200, NULL);
-INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (66, 66, 19, '我也很累哦', 1593186171208, 1593186171208, NULL);
-INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (67, 66, 19, '真的哦', 1593186178206, 1593186178206, NULL);
-INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`, `questionTitle`) VALUES (68, 63, 23, '1', 1593186525176, 1593186525176, NULL);
+INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`) VALUES (37, 49, 19, '4', 1592301748599, 1592301748599);
+INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`) VALUES (38, 49, 19, '5', 1592301750842, 1592301750842);
+INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`) VALUES (59, 56, 19, '我是最不可爱的🐷', 1593078183021, 1593078183021);
+INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`) VALUES (61, 57, 19, '好，很好，非常好👌👍', 1593079147900, 1593079147900);
+INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`) VALUES (62, 27, 19, '我可能有毛病', 1593081316207, 1593081316207);
+INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`) VALUES (63, 63, 20, 'qqq', 1593184608510, 1593184608510);
+INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`) VALUES (64, 63, 20, '11111', 1593184611200, 1593184611200);
+INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`) VALUES (66, 66, 19, '我也很累哦', 1593186171208, 1593186171208);
+INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`) VALUES (67, 66, 19, '真的哦', 1593186178206, 1593186178206);
+INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`) VALUES (68, 63, 23, '1', 1593186525176, 1593186525176);
+INSERT INTO `SapphireHome`.`Reply`(`id`, `questionId`, `userId`, `description`, `gmtCreate`, `gmtModified`) VALUES (69, 66, 19, '再一次回复你', 1593188993353, 1593188993353);
