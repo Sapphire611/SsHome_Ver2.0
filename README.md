@@ -30,8 +30,12 @@
 - mvn flyway:migrate
 
 ### Port
+> netstat -apn | grep 6197
+> nohup java -jar demo-0.0.1-SNAPSHOT.jar >/root/Springboot.log 2>&1 &
 - sudo lsof -i:6197
 - sudo kill -9 42505
 
 ### mysql 修改密码
 > alter user 'root'@'localhost' identified by  'Rabbit611.';
+
+
