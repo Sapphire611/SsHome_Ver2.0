@@ -1,13 +1,14 @@
 ## My Demo About Spring
 
-[视频地址](https://www.bilibili.com/video/BV1dK4y1b7YH)
-[Bootstrap](https://v3.bootcss.com/css/)
-[Spring 文档](https://spring.io/guidess)
-[GitHub OAuth](https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/)
-[OKHttp](https://square.github.io/okhttp/)
-[lomnok](https://projectlombok.org/)
-[api-getUsers-demo](https://api.github.com/users/Sapphire611)
-[新版本mysql修改root密码时提示语法错误的解决方法](https://blog.csdn.net/hunt_er/article/details/82901331)
+- [视频地址](https://www.bilibili.com/video/BV1dK4y1b7YH)
+- [Bootstrap](https://v3.bootcss.com/css/)
+- [Spring 文档](https://spring.io/guidess)
+- [GitHub OAuth](https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/)
+- [OKHttp](https://square.github.io/okhttp/)
+- [lomnok](https://projectlombok.org/)
+- [api-getUsers-demo](https://api.github.com/users/Sapphire611)
+- [新版本mysql修改root密码时提示语法错误的解决方法](https://blog.csdn.net/hunt_er/article/details/82901331)
+- [彻底解决mysql中文乱码](https://blog.csdn.net/u012410733/article/details/61619656)
 
 ### Git
 - git init  初始化 git
