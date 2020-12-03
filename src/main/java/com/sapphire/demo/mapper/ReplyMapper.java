@@ -12,7 +12,7 @@ import com.sapphire.demo.model.Reply;
 @Mapper
 public interface ReplyMapper {
     
-	@Insert("Insert into Reply (questionId,userId,description,gmtCreate,gmtModified) values (#{questionId},#{userId},#{description},#{gmtCreate},#{gmtModified})")
+	@Insert("Insert into reply (questionId,userId,description,gmtCreate,gmtModified) values (#{questionId},#{userId},#{description},#{gmtCreate},#{gmtModified})")
     void insert(Reply reply);
 
 	@Select("select * from reply where questionId = #{questionId} order by gmtCreate limit #{offset},#{size}")

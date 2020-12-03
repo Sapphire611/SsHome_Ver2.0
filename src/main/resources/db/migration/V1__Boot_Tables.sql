@@ -29,7 +29,7 @@ create table question
     constraint question_pk primary key (id)
 );
 
-create table LikeRecord
+create table likeRecord
 (
 	id int auto_increment,
 	userId int null,
@@ -49,7 +49,7 @@ create table viewRecord
 		primary key (id)
 );
 
-create table Reply
+create table reply
 (
 	id int auto_increment,
 	questionId int null,

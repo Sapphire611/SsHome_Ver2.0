@@ -54,7 +54,7 @@ public interface QuestionMapper {
     @Insert("insert into likeRecord(userId,questionId,gmtCreate) values(#{userId},#{questionId},#{gmtCreate})")
 	void likeQuestion(LikeRecord likeRecord);
 
-    @Insert("insert into ViewRecord(userId,questionId,gmtCreate) values(#{userId},#{questionId},#{gmtCreate})")
+    @Insert("insert into viewRecord(userId,questionId,gmtCreate) values(#{userId},#{questionId},#{gmtCreate})")
 	void viewQuestion(ViewRecord viewRecord);
     
     @Update("update question set view_count = view_count + 1 where id = #{id};")
