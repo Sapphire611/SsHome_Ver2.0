@@ -1,4 +1,4 @@
-## My Demo About Spring
+## My Demo About Spring —— SsHome(赛菲尔的窝)
 
 - [视频地址](https://www.bilibili.com/video/BV1dK4y1b7YH)
 - [Bootstrap](https://v3.bootcss.com/css/)
@@ -26,17 +26,17 @@
 - @Value 不通过配置文件的注入属性
 
 
-### Terminal
+### Port & Terminal
 - source ~/.bash_profile
 - mvn flyway:migrate
 
-### Port
 > netstat -apn | grep 6197
 > nohup java -jar demo-0.0.1-SNAPSHOT.jar >/root/Springboot.log 2>&1 &
-- sudo lsof -i:6197
-- sudo kill -9 42505
+> put Desktop/demo-0.0.1-SNAPSHOT.jar /root (sftp)
+> sudo lsof -i:6197
+> sudo kill -9 42505
 
 ### mysql 修改密码
-> alter user 'root'@'localhost' identified by  'Rabbit611.';
+> alter user 'root'@'localhost' identified by  '新密码';
 
 
