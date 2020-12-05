@@ -24,14 +24,14 @@ use SapphireHome;
 -- ----------------------------
 -- Table structure for LikeRecord
 -- ----------------------------
-DROP TABLE IF EXISTS `LikeRecord`;
-CREATE TABLE `LikeRecord` (
+DROP TABLE IF EXISTS `likeRecord`;
+CREATE TABLE `likeRecord` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) DEFAULT NULL,
   `questionId` int(11) DEFAULT NULL,
   `gmtCreate` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Table structure for question
@@ -50,7 +50,7 @@ CREATE TABLE `question` (
   `view_count` int(11) DEFAULT '0',
   `tag` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of question
@@ -62,8 +62,8 @@ COMMIT;
 -- ----------------------------
 -- Table structure for Reply
 -- ----------------------------
-DROP TABLE IF EXISTS `Reply`;
-CREATE TABLE `Reply` (
+DROP TABLE IF EXISTS `reply`;
+CREATE TABLE `reply` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `questionId` int(11) DEFAULT NULL,
   `userId` int(11) DEFAULT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE `Reply` (
   `gmtCreate` bigint(20) DEFAULT NULL,
   `gmtModified` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Table structure for user
@@ -89,7 +89,7 @@ CREATE TABLE `user` (
   `gmtCreate` bigint(20) DEFAULT NULL,
   `gmtModified` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of user
@@ -108,6 +108,6 @@ CREATE TABLE `viewRecord` (
   `questionId` int(11) DEFAULT NULL,
   `gmtCreate` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 SET FOREIGN_KEY_CHECKS = 1;

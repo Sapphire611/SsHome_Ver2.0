@@ -30,10 +30,14 @@
 - source ~/.bash_profile
 - mvn flyway:migrate
 
-> netstat -apn | grep 6197
+> netstat -apn | grep 80
+
 > nohup java -jar demo-0.0.1-SNAPSHOT.jar >/root/Springboot.log 2>&1 &
-> put Desktop/demo-0.0.1-SNAPSHOT.jar /root (sftp)
-> sudo lsof -i:6197
+
+> put Desktop/demo-0.0.1-SNAPSHOT.jar /root
+
+> sudo lsof -i:80
+
 > sudo kill -9 42505
 
 ### mysql 修改密码
