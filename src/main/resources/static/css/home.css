@@ -22,8 +22,8 @@ body {
 }
 
 .bodyBg{
-    /*background-color: #efefef;*/
-    background:url("/img/backgroundWhite.jpg");
+    background-color: #efefef;
+    /* background:url("/img/backgroundWhite.jpg"); */
     background-size:cover;
 }
 
@@ -47,18 +47,4 @@ body {
 .mediaobject-reply{
     height: 49px;
     width: 49px;
-}
-
-.bigHello1{
-	background:url("/img/hello2.jpeg") no-repeat -50px -40px;
-	height:300px;
-	margin: 20px;
-	border: solid darkgrey 1px;
-}
-
-.bigHello2{
-	background:url("/img/hello1.jpeg") no-repeat -50px -40px;
-	margin: 20px;
-	height:300px;
-	border: solid red 1px;
 }

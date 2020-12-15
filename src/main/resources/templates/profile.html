@@ -1,147 +1,181 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${sectionName}"></title>
-    <meta charset="UTF-8">
-    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
-    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap-theme.min.css"
-          th:href="@{/css/bootstrap-theme.min.css}"/>
-    <link type="text/css" rel="stylesheet" href="../static/css/home.css" th:href="@{/css/home.css}"/>
-    <script src="../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}" type="application/javascript"></script>
-    <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" type="application/javascript"></script>
+<title th:text="${sectionName}"></title>
+<meta charset="UTF-8">
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css" />
+<link type="text/css" rel="stylesheet" href="/css/home.css" />
+<script src="/js/jquery-3.5.1.js" type="application/javascript"></script>
+<script src="/js/bootstrap.min.js" type="application/javascript"></script>
+<script src="/js/bootstrap.bundle.min.js" type="application/javascript"></script>
 </head>
 <body class="bodyBg">
-<!-- import nav -->
-<div th:insert="~{navigation :: nav}"></div>
-<!-- End -->
-<div class="container-fluid main">
-    <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <input type="hidden" name="id" th:value="${id}">
-            <h3><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span><span  style="font-family: inherit" th:text="'&nbsp;&nbsp;' + ${sectionName}"></span></h3>
-            <hr>
+	<!-- import nav -->
+	<div th:insert="~{navigation :: nav}"></div>
+	<!-- End -->
+	<div class="container-fluid main">
+		<div class="row">
+			<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+				<input type="hidden" name="id" th:value="${id}">
+				<h3>
+					<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span><span
+						style="font-family: inherit"
+						th:text="'&nbsp;&nbsp;' + ${sectionName}"></span>
+				</h3>
+				<hr>
 
-            <!--循环获取questions表中内容-->
-            <div th:if="${section} == 'questions' and ${paginationDTO.questions} != null" class="media" th:each="question : ${paginationDTO.questions}">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object img-thumbnail mediaobject-index" th:src="${question.user.avatarUrl}">
-                    </a>
-                    <!--<span th:text="${question.user.toString()}"></span>-->
+				<!--循环获取questions表中内容-->
+				<div
+					th:if="${section} == 'questions' and ${paginationDTO.questions} != null"
+					class="media" th:each="question : ${paginationDTO.questions}">
+					<div class="media-left">
+						<a href="#"> <img
+							class="media-object img-thumbnail mediaobject-index"
+							th:src="${question.user.avatarUrl}">
+						</a>
+						<!--<span th:text="${question.user.toString()}"></span>-->
 
-                </div>
-                <div class="media-body">
-                    <a th:href="@{'/question/' +${question.getId()}}"><h4 class="media-heading" th:text="${question.title}"></h4></a>
-                    <!-- 删除按钮
+					</div>
+					<div class="media-body">
+						<a th:href="@{'/question/' +${question.getId()}}"><h4
+								class="media-heading" th:text="${question.title}"></h4></a>
+						<!-- 删除按钮
                     <span>
                     	<button type="button" class="btn btn-primary btn-lg close"  data-toggle="modal" data-target="#deleteQuestion">
                     	<span aria-hidden="true">&times;</span>
                     	</button>
                     </span>
                     删除按钮  End-->
-                    <p class="mediaText"><span th:text="${question.commentCount}"></span> comments • <span th:text="${question.viewCount}"></span> views •  <span th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span></p>
-                </div>
-                <br>
-            </div>
-            <!--循环结束-->
-            
-           
-		
-            <!--循环获取replies表中内容-->
-            <div th:if="${section} == 'replies'" class="media" th:each="reply : ${paginationDTO.getReplies()}">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object img-thumbnail mediaobject-index" th:src="${reply.getUser().getAvatarUrl()}">
-                    </a>
-                    <!--<span th:text="${question.user.toString()}"></span>-->
-
-                </div>
-                <div class="media-body">
-                    <a th:href="@{'/question/' +${reply.getQuestionId()}}"><h4 class="media-heading" th:text="${reply.getQuestionTitle()}"></h4></a>
-                    <span th:text="${reply.getDescription()}"></span>
-                    <p>
-                    <p style="float : right" class="mediaText"><span th:text="${#dates.format(reply.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
-                    </p>
-                </div>
-                <br>
-            </div>
-            <!--循环结束-->
-            
-            <!--循环获取notices表中内容-->
-            <div th:if="${section} == 'notices'" class="media" th:each="reply : ${paginationDTO.getReplies()}">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object img-thumbnail mediaobject-index" th:src="${reply.getUser().getAvatarUrl()}">
-                    </a>
-                    <!--<span th:text="${question.user.toString()}"></span>-->
-
-                </div>
-                <div class="media-body">
-               		<span style="float : right" th:if="${reply.getGmtQuestionRead()} < ${reply.getGmtCreate()}"><button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></button></span>
-                    <span style="float : right" th:if="${reply.getGmtQuestionRead()} > ${reply.getGmtCreate()}"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button></span>
-                    <a th:href="@{'/question/' +${reply.getQuestionId()}}"><h4 class="media-heading" th:text="${reply.getQuestionTitle()}"></h4></a>
-                    <!-- 如果作者的阅读时间 小于 回复的创建时间 就算没有阅读-->
-                    <span th:text="${reply.getDescription()}"></span>
-                    <p>
-                    <p style="float : right" class="mediaText"><span th:text="${#dates.format(reply.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span></p>
-                </div>
-                <br>
-            </div>
-            <!--循环结束-->
-            
-            
-            
-            <!--分页模块-->
-            <nav aria-label="Page navigation">
-                <ul th:if="${paginationDTO.totalCount != 0}" class="pagination">
-                    <li>
-                        <a th:if="${paginationDTO.showFirstPage}" th:href="@{/profile/{section}/(page=1,section=${section})}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:if="${paginationDTO.showPrevious}" th:href="@{/profile/{section}/(page=${paginationDTO.page - 1},section=${section})}" aria-label="Previous">
-                            <span aria-hidden="true">&lt;</span>
-                        </a>
-                    </li>
-                    <!--<a href="details.html" th:href="@{/order/details(orderId=${o.id})}">view</a>-->
-                    <!--动态输出pages中的内容-->
-                    <li th:class="${paginationDTO.page == page} ? 'active' : ''" th:each="page : ${paginationDTO.pages}">
-                        <a th:href="@{/profile/{section}/(page=${page},section=${section})}" th:text="${page}"></a>
-                    </li>
-                    <!--动态输出结束-->
-                    <li>
-                        <a th:if="${paginationDTO.showNext}" th:href="@{/profile/{section}/(page=${paginationDTO.page + 1},section=${section})}" aria-label="Previous">
-                            <span aria-hidden="true">&gt;</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:if="${paginationDTO.showEndPage}" th:href="@{/profile/{section}/(page=${paginationDTO.totalPage},section=${section})}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <!--分页模块结束-->
-
-        </div>
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h3><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;Menu</h3>
-            <hr>
-            <div class="list-group">
-                <a href="/profile/questions" class="list-group-item" th:class="${section == 'questions' } ? 'active list-group-item' : 'list-group-item'">My Questions</a>
-                <a href="/profile/replies" class="list-group-item" th:class="${section == 'replies' } ? 'active list-group-item' : 'list-group-item'">My Replies</a>
-                <a href="/profile/notices" class="list-group-item" th:class="${section == 'notices' } ? 'active list-group-item' : 'list-group-item'">My Notices<span class="badge" th:text="${countNewNotice}"></span></a>
-                <a href="/profile/settings" class="list-group-item" th:class="${section == 'settings' } ? 'active list-group-item' : 'list-group-item'">Settings</a>
-            </div>
-        </div>
-    </div>
-</div>
+						<p class="mediaText">
+							<span th:text="${question.commentCount}"></span> comments • <span
+								th:text="${question.viewCount}"></span> views • <span
+								th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+						</p>
+					</div>
+					<br>
+				</div>
+				<!--循环结束-->
 
 
-<!-- import bottom -->
-<div th:insert="~{bottom :: bottom}"></div>
-<!-- End -->
+
+				<!--循环获取replies表中内容-->
+				<div th:if="${section} == 'replies'" class="media"
+					th:each="reply : ${paginationDTO.getReplies()}">
+					<div class="media-left">
+						<a href="#"> <img
+							class="media-object img-thumbnail mediaobject-index"
+							th:src="${reply.getUser().getAvatarUrl()}">
+						</a>
+						<!--<span th:text="${question.user.toString()}"></span>-->
+
+					</div>
+					<div class="media-body">
+						<a th:href="@{'/question/' +${reply.getQuestionId()}}"><h4
+								class="media-heading" th:text="${reply.getQuestionTitle()}"></h4></a>
+						<span th:text="${reply.getDescription()}"></span>
+						<p>
+						<p style="float: right" class="mediaText">
+							<span
+								th:text="${#dates.format(reply.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+						</p>
+					</div>
+					<br>
+				</div>
+				<!--循环结束-->
+
+				<!--循环获取notices表中内容-->
+				<div th:if="${section} == 'notices'" class="media"
+					th:each="reply : ${paginationDTO.getReplies()}">
+					<div class="media-left">
+						<a href="#"> <img
+							class="media-object img-thumbnail mediaobject-index"
+							th:src="${reply.getUser().getAvatarUrl()}">
+						</a>
+						<!--<span th:text="${question.user.toString()}"></span>-->
+
+					</div>
+					<div class="media-body">
+						<span style="float: right"
+							th:if="${reply.getGmtQuestionRead()} < ${reply.getGmtCreate()}"><button
+								type="button" class="btn btn-warning">
+								<span class="glyphicon glyphicon-exclamation-sign"
+									aria-hidden="true"></span>
+							</button></span> <span style="float: right"
+							th:if="${reply.getGmtQuestionRead()} > ${reply.getGmtCreate()}"><button
+								type="button" class="btn btn-success">
+								<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+							</button></span> <a th:href="@{'/question/' +${reply.getQuestionId()}}"><h4
+								class="media-heading" th:text="${reply.getQuestionTitle()}"></h4></a>
+						<!-- 如果作者的阅读时间 小于 回复的创建时间 就算没有阅读-->
+						<span th:text="${reply.getDescription()}"></span>
+						<p>
+						<p style="float: right" class="mediaText">
+							<span
+								th:text="${#dates.format(reply.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+						</p>
+					</div>
+					<br>
+				</div>
+				<!--循环结束-->
+
+
+
+				<!--分页模块-->
+				<nav aria-label="Page navigation">
+					<ul th:if="${paginationDTO.totalCount != 0}" class="pagination">
+						<li><a th:if="${paginationDTO.showFirstPage}"
+							th:href="@{/profile/{section}/(page=1,section=${section})}"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						</a></li>
+						<li><a th:if="${paginationDTO.showPrevious}"
+							th:href="@{/profile/{section}/(page=${paginationDTO.page - 1},section=${section})}"
+							aria-label="Previous"> <span aria-hidden="true">&lt;</span>
+						</a></li>
+						<!--<a href="details.html" th:href="@{/order/details(orderId=${o.id})}">view</a>-->
+						<!--动态输出pages中的内容-->
+						<li th:class="${paginationDTO.page == page} ? 'active' : ''"
+							th:each="page : ${paginationDTO.pages}"><a
+							th:href="@{/profile/{section}/(page=${page},section=${section})}"
+							th:text="${page}"></a></li>
+						<!--动态输出结束-->
+						<li><a th:if="${paginationDTO.showNext}"
+							th:href="@{/profile/{section}/(page=${paginationDTO.page + 1},section=${section})}"
+							aria-label="Previous"> <span aria-hidden="true">&gt;</span>
+						</a></li>
+						<li><a th:if="${paginationDTO.showEndPage}"
+							th:href="@{/profile/{section}/(page=${paginationDTO.totalPage},section=${section})}"
+							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+						</a></li>
+					</ul>
+				</nav>
+				<!--分页模块结束-->
+
+			</div>
+			<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+				<h3>
+					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;Menu
+				</h3>
+				<hr>
+				<div class="list-group">
+					<a href="/profile/questions" class="list-group-item"
+						th:class="${section == 'questions' } ? 'active list-group-item' : 'list-group-item'">My
+						Questions</a> <a href="/profile/replies" class="list-group-item"
+						th:class="${section == 'replies' } ? 'active list-group-item' : 'list-group-item'">My
+						Replies</a> <a href="/profile/notices" class="list-group-item"
+						th:class="${section == 'notices' } ? 'active list-group-item' : 'list-group-item'">My
+						Notices<span class="badge" th:text="${countNewNotice}"></span>
+					</a> <a href="/profile/settings" class="list-group-item"
+						th:class="${section == 'settings' } ? 'active list-group-item' : 'list-group-item'">Settings</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- import bottom -->
+	<div th:insert="~{bottom :: bottom}"></div>
+	<!-- End -->
 
 </body>
 </html>

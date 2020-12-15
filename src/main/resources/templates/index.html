@@ -2,144 +2,119 @@
 <!-- 引用命名标签 -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Sapphire's Home</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
-    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap-theme.min.css"
-          th:href="@{/css/bootstrap-theme.min.css}"/>
-    <link type="text/css" rel="stylesheet" href="../static/css/home.css" th:href="@{/css/home.css}"/>
-    <script src="../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}" type="application/javascript"></script>
-    <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" type="application/javascript"></script>
+<title>SsHome</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="/css/home.css" />
+
+<script src="/js/jquery-3.5.1.js" type="application/javascript"></script>
+<script src="/js/bootstrap.bundle.min.js" type="application/javascript"></script>
+<script src="/js/bootstrap.min.js"  type="application/javascript"></script>
+
 </head>
 
 <body class="bodyBg">
-<!-- import nav -->
-<div th:insert="~{navigation :: nav}"></div>
-<!-- End -->
+	<!-- import nav -->
+	<div th:insert="~{navigation :: nav}"></div>
+	<!-- End -->
 
-<div class="container-fluid main">
-    <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h3><span class="glyphicon glyphicon-list" aria-hidden="true"></span>&nbsp;&nbsp;What's New</h3>
-            <hr>
-
-            <!--循环获取questions表中内容-->
-            <div th:if="${paginationDTO != null}" class="media" th:each="question : ${paginationDTO.questions}">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object img-thumbnail mediaobject-index" th:src="${question.user.avatarUrl}">
-                    </a>
-                    <!--<span th:text="${question.user.toString()}"></span>-->
-
-                </div>
-                <div class="media-body">
-                    <a th:href="@{'/question/' +${question.getId()}}"><h4 class="media-heading" th:text="${question.title}"></h4></a>
-                    <!-- 问题列表右侧显示点赞按钮 -->
-                    <span style="float:right;margin-left:15px"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;<span th:text="${question.getLikeCount()}"></span></span>
-                    <!-- 问题列表右侧显示点赞按钮 End-->
-                    <!-- 循环输出标签 -->
-                    <span class="label label-info" th:text="${question.getTag()}">New</span>
-                    <!-- 循环输出标签 End -->
-                    
-                    <span th:text="${question.description}"></span>
-                    <p>
-                        <p class="mediaText"><a th:href="@{'/userinfo/' +${question.user.getName()}}"><span th:text="${question.user.getName()}"></span></a> published an article  • <span th:text="${question.commentCount}"></span> comments • <span th:text="${question.viewCount}"></span> views •  <span th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
-                    </p>
-                </div>
-                <br>
-            </div>
-            <!--循环结束-->
-            <div th:if="${paginationDTO == null}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <br>
-            <br>
-            <p  align="center" class="mediaText">No Question</p>
-            <hr>
-            </div>
-            <!--分页模块-->
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li>
-                        <a th:if="${paginationDTO.showFirstPage}" th:href="@{/(page=1)}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:if="${paginationDTO.showPrevious}" th:href="@{/(page=${paginationDTO.page-1})}" aria-label="Previous">
-                            <span aria-hidden="true">&lt;</span>
-                        </a>
-                    </li>
-                    <!--动态输出pages中的内容-->
-                    <li th:class="${paginationDTO.page == page} ? 'active' : ''" th:each="page : ${paginationDTO.pages}">
-                        <a th:href="@{/(page=${page})}" th:text="${page}"></a>
-                    </li>
-                    <!--动态输出结束-->
-                    <li>
-                        <a th:if="${paginationDTO.showNext}" th:href="@{/(page=${paginationDTO.page + 1})}" aria-label="Previous">
-                            <span aria-hidden="true">&gt;</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:if="${paginationDTO.showEndPage}" th:href="@{/(page=${paginationDTO.totalPage})}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <!--分页模块结束-->
-        </div>
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h3><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>&nbsp;&nbsp;Administrator</h3>
-            <hr>
-            
-             <div class="media" th:each="user : ${adminUsers}">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object img-thumbnail mediaobject-index" th:src="${user.getAvatarUrl()}">
-                    </a>
-
-                </div>
-                <div class="media-body">
-                    <p href="#" th:text="${user.getName()}"></p>
-                    <p class="mediaText">
-                        <span href="#" th:text="${user.getBio()}"></span>
-                    </p>
-                </div>
-                <br>
-              </div>
-         <br>	  
-         <h3><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>&nbsp;&nbsp;Announcement
-         </h3>
-         <hr>
-        <!-- Button trigger modal -->
-		<button style="margin-left:20px" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">
-		  	Welcome Teacher CBX
-		</button>
-		<!-- Button trigger modal End -->
-		
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Welcome</h4>
-		      </div>
-		      <div class="modal-body">
-		        Hello，陈老师，该项目是Group 4 的JEE期末项目，请查收。
-		      </div>
-		      
-		    </div>
-		  </div>
+	<main role="main" class="container">
+	<div
+		class="d-flex align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
+		<img class="mr-3" src="/img/piper.jpeg" alt="" width="48" height="48">
+		<div class="lh-100">
+			<h6 class="mb-0 text-black lh-100">版主的个人板块</h6>
+			<small>From Sapphire & Sara —— 2017.12.11</small>
 		</div>
-		<!-- Modal End-->	
-        </div>
-    </div>
-</div>
+	</div>
 
+	<div
+		class="align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
+		<span class="mb-0 text-black lh-100" style="">全部板块 >> 版主的个人板块</span> <span
+			class="mb-0 text-black lh-100" style="float: right;"> <a
+			href="/publish">+ 发布问题</a></span>
 
-<!-- import bottom -->
-<div th:insert="~{bottom :: bottom}"></div>
-<!-- End -->
+	</div>
+
+	<!-- 板块问题 循环部分 -->
+	<div class="my-3 p-3 bg-white rounded shadow-sm">
+		<h6 class="border-bottom border-gray pb-2 mb-0">近期问题</h6>
+
+		<div th:if="${paginationDTO != null}"
+			th:each="question : ${paginationDTO.questions}"
+			class="media text-muted pt-3">
+			<!-- <img class="media-object img-thumbnail mediaobject-index" th:src="${question.user.avatarUrl}"> -->
+			<img class="mr-3" src="/img/piper.jpeg" alt="" width="48" height="48">
+			<p
+				class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+				<span class="badge badge-info" th:text="${question.getTag()}">-1</span>
+				<strong class="text-gray-dark"><a
+					th:href="@{'/question/' +${question.getId()}}"
+					th:text="${question.title}" style="font-size: 14px;"></a></strong> <span
+					class="d-block mediaText" style="margin-top: 5px;"> <a
+					th:href="@{'/userinfo/' +${question.user.getName()}}"><span
+						th:text="${question.user.getName()}"></span></a> published an article
+					• <span th:text="${question.commentCount}"></span> comments • <span
+					th:text="${question.viewCount}"></span> views • <span
+					th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+				</span>
+			</p>
+
+		</div>
+		<!-- 分页部分 -->
+		<nav aria-label="Page navigation example" style="margin-top: 15px;">
+			<ul class="pagination">
+				<li class="page-item"><a class="page-link"
+					th:if="${paginationDTO.showFirstPage}" th:href="@{/(page=1)}"
+					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+				</a></li>
+				<li class="page-item"><a class="page-link"
+					th:if="${paginationDTO.showPrevious}"
+					th:href="@{/(page=${paginationDTO.page-1})}" aria-label="Previous">
+						<span aria-hidden="true">&lt;</span>
+				</a></li>
+				<li class="page-item"
+					th:class="${paginationDTO.page == page} ? 'active' : ''"
+					th:each="page : ${paginationDTO.pages}"><a class="page-link"
+					th:href="@{/(page=${page})}" th:text="${page}">1</a></li>
+				<li class="page-item"><a class="page-link"
+					th:if="${paginationDTO.showNext}"
+					th:href="@{/(page=${paginationDTO.page + 1})}" aria-label="Next">
+						<span aria-hidden="true">&gt;</span>
+				</a></li>
+				<li class="page-item"><a class="page-link"
+					th:if="${paginationDTO.showEndPage}"
+					th:href="@{/(page=${paginationDTO.totalPage})}" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+				</a></li>
+			</ul>
+		</nav>
+		<!-- 分页部分 End-->
+	</div>
+	<!-- 板块问题 循环部分 End-->
+
+	<div class="my-3 p-3 bg-white rounded shadow-sm">
+		<h6 class="border-bottom border-gray pb-2 mb-0">板块管理员</h6>
+		<!--  板块管理员 循环部分 -->
+		<div class="media text-muted pt-3" th:each="user : ${adminUsers}">
+			<img class="mr-3" src="/img/piper.jpeg" alt="" width="48" height="48">
+			<div
+				class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+				<div class="d-flex justify-content-between align-items-center w-100">
+					<strong class="text-gray-dark" th:text="${user.getName()}">-1</strong>
+					<a href="#">Follow</a>
+				</div>
+				<span class="d-block" th:text="${user.getBio()}">(Bio) -1</span>
+			</div>
+		</div>
+		<!--  板块管理员 循环部分 -->
+	</div>
+
+	</main>
+
+	<!-- import bottom -->
+	<div th:insert="~{bottom :: bottom}"></div>
+	<!-- End -->
 
 </body>
 </html>
