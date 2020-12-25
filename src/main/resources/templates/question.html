@@ -4,7 +4,8 @@
 <title th:text="${question.title}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
-<link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css" />
+<link type="text/css" rel="stylesheet"
+	href="/css/bootstrap-theme.min.css" />
 <link type="text/css" rel="stylesheet" href="/css/home.css" />
 <script src="/js/jquery-3.5.1.js" type="application/javascript"></script>
 <script src="/js/bootstrap.min.js" type="application/javascript"></script>
@@ -15,294 +16,307 @@
 	<!-- import nav -->
 	<div th:insert="~{navigation :: nav}"></div>
 	<!-- End -->
-	<!-- <div class="container-fluid main">
-		<div class="row">
-			<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-				<h3>
-					<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-					<span th:text="'&nbsp;&nbsp;' + ${question.title}"></span>
-					点赞按钮 th:href="@{'/publish/'+${question.getId()}}
-					<span><a style="float: right" th:if="${Button} != null"
-						th:href="@{${question.getId()} + '/like'}"><button
-								type="button" class="btn btn-success">
-								<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;<span
-									th:text="${question.likeCount}"></span>
-							</button></a></span> <span><a style="float: right" th:if="${Button} == null"
-						th:href="@{${question.getId()} + '/like'}"><button
-								type="button" class="btn btn-default">
-								<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;<span
-									th:text="${question.likeCount}"></span>
-							</button></a></span>
-					点赞按钮 End
-				</h3>
+	
+	<main role="main" class="container">
+	<div
+		class="d-flex align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
+		<img class="media-object img-thumbnail mediaobject-index"
+			th:src="${question.user.avatarUrl}">
+		<div style="margin-left: 16px;" class="lh-100">
+			<h6 class="mb-0 text-black lh-100"
+				th:text="'提问者 : ' + ${question.user.getName()}"></h6>
+			<small th:text="${question.user.getBio()}"></small>
+		</div>
 
-				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<hr>
-					<p th:text="${question.getDescription()}">
-					</p>
-					<p class="mediaText">
-						<span th:text="'>> '+${question.commentCount}"></span> comments •
-						<span th:text="${question.viewCount}"></span> views • <span
-							th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
-					<hr>
-					<br>
-				</div>
+		<br>
+	</div>
 
-				循环获取replies表中回复内容
-				<h3>
-					<span class="glyphicon glyphicon-comment" aria-hidden="true"></span><span>&nbsp;&nbsp;
-						Comments</span>
-				</h3>
-				<div th:if="${paginationDTO != null}"
-					class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<hr>
-					<div class="media" th:each="reply : ${paginationDTO.replies}">
-						<div class="media-left">
-							<a th:href="@{'/userinfo/' +${reply.user.getName()}}"> <img
-								class="media-object img-thumbnail mediaobject-reply"
-								th:src="${reply.user.avatarUrl}">
-							</a>
-						</div>
-						<div class="media-body">
-							<p style="font-weight: bold" th:text="${reply.user.name}"></p>
-							<pre style="color: darkgray" th:text="${reply.description}"></pre>
-							<span th:text="${reply.getId()}"></span>
-							<br>
+	<div
+		class="align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
+		<span class="mb-0 text-black lh-100">全部板块 >> 版主的个人板块 >> 某个问题</span> <a
+			th:if="${question.user.getId() == session.user.getId()}"
+			th:href="@{'/publish/'+${question.getId()}}"
+			class="mb-0 text-black lh-100" style="float: right;"> &nbsp; 重新编辑
+			&nbsp; </a>
 
-							删除当前回复按钮
-							<form action="/question/deleteMyReply" method="get">
-								<input type="hidden" name="replyId" th:value="${reply.getId()}">
-								<button class="btn btn-default" style="float: right"
-									th:if="${reply.user.getId() == session.user.getId()}">
-									<span aria-hidden="true" data-toggle="modal"
-										data-target="#deleteReply"></span>Delete
-								</button>
-							</form>
-							删除当前回复按钮 End
+		<!-- 用户自行删除问题 -->
+		<span th:if="${question.user.getId() == session.user.getId()}"
+			class="mb-0 text-green lh-100" style="float: right;"
+			data-toggle="modal" data-target="#deleteQuestion1"> <a
+			href="#">&nbsp;删除问题&nbsp;</a>
+		</span>
+		<!-- 用户自行删除问题 End-->
 
-							删除当前回复按钮 (管理员专用)
-							<form action="/question/deleteMyReply" method="get">
-								<input type="hidden" name="replyId" th:value="${reply.getId()}">
-								<button class="btn btn-warning" style="float: right"
-									th:if="${session.user.getAdminBoolean() == 1}">
-									<span aria-hidden="true" data-toggle="modal"
-										data-target="#deleteReplyAdmin"></span>【Admin】Delete
-								</button>
-							</form>
-
-							删除当前回复按钮 (管理员专用) End
-
-
-							<span class="mediaText" style="font-style: italic;"
-								th:text="'Reply Time : ' + ${#dates.format(reply.getGmtCreate(),'yyyy-MM-dd HH:mm:ss')}"></span>
-						</div>
-						<hr>
-
-					</div>
-				</div>
-				循环获取replies表中回复内容
-
-
-				<div th:if="${paginationDTO == null}"
-					class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<br> <br>
-					<p align="center" class="mediaText">No Comment</p>
-					<hr>
-				</div>
-
-				分页模块
-				<nav th:if="${paginationDTO != null}" aria-label="Page navigation">
-					<ul style="float: right" class="pagination">
-						<li><a th:if="${paginationDTO.showFirstPage}"
-							th:href="@{/(page=1)}" aria-label="Previous"> <span
-								aria-hidden="true">&laquo;</span>
-						</a></li>
-						<li><a th:if="${paginationDTO.showPrevious}"
-							th:href="@{'/question/' + ${question.getId()} + '?page=' + ${paginationDTO.page-1}}"
-							aria-label="Previous"> <span aria-hidden="true">&lt;</span>
-						</a></li>
-						动态输出pages中的内容
-						<li th:class="${paginationDTO.page == page} ? 'active' : ''"
-							th:each="page : ${paginationDTO.pages}"><a
-							th:href="@{'/question/' + ${question.getId()} + '?page=' + ${page}}"
-							th:text="${page}"></a></li>
-						动态输出结束
-						<li><a th:if="${paginationDTO.showNext}"
-							th:href="@{'/question/' + ${question.getId()} + '?page=' + ${paginationDTO.page+1}}"
-							aria-label="Previous"> <span aria-hidden="true">&gt;</span>
-						</a></li>
-						<li><a th:if="${paginationDTO.showEndPage}"
-							th:href="@{/(page=${paginationDTO.totalPage})}" aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-						</a></li>
-					</ul>
-				</nav>
-				分页模块结束
-
-				<br>&nbsp; <br> <br>&nbsp;
-
-				<h3>
-					<span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>&nbsp;&nbsp;Reply
-				</h3>
-				<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-					<hr>
-
-					<form action="/reply" method="post">
-						同样需要将该问题的Id传过去
-						<input type="hidden" name="questionId"
-							th:value="${question.getId()}"> <input type="hidden"
-							name="userId" th:value="${currentUser.getId()}">
-						<textarea style="resize: none;" class="form-control"
-							name="description" id="description" cols="30" rows="10"
-							placeholder="..."></textarea>
-						<br>
-						<button type="submit" name="reply" id="reply"
-							class="btn btn-success">Reply</button>
-						<br> <br>
-				</div>
-				</form>
-
-
-
-			</div>
-			<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-				显示Publisher
-				<h3>
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;Publisher
-				</h3>
-				<hr>
-				<div class="media">
-					<div class="media-left">
-						<a href="#"> <img
-							class="media-object img-thumbnail mediaobject-index"
-							th:src="${question.user.getAvatarUrl()}">
-						</a>
-
-					</div>
-					<div class="media-body">
-						<p href="#" th:text="${question.user.getName()}"></p>
-						<p class="mediaText">
-							<span href="#" th:text="${question.user.getBio()}"></span>
-						</p>
-					</div>
-					<br>
-
-					重新编辑文章按钮
-					<a th:if="${question.user.getId() == session.user.getId()}"
-						th:href="@{'/publish/'+${question.getId()}}">
-						<button class="btn btn-default">
-							<span><span class="glyphicon glyphicon-pencil"
-								aria-hidden="true"></span>&nbsp;ReEdit this question</span>
+		<!-- Modal 用户自行删除问题-->
+		<div class="modal fade" id="deleteQuestion1" tabindex="-1"
+			role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">删除这个问题</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
 						</button>
-					</a>
-					重新编辑文章按钮 End
-
-					<br>
-
-					删除当前问题按钮
-					<button th:if="${question.user.getId() == session.user.getId()}"
-						class="btn btn-default" data-toggle="modal"
-						data-target="#deleteQuestion">
-						<span><span class="glyphicon glyphicon-remove"
-							aria-hidden="true"></span>&nbsp;Delete this question</span>
-					</button>
-					删除当前问题按钮 End
-
-					<br>
-
-					删除当前问题按钮(管理员专用)
-					<button th:if="${session.user.getAdminBoolean() == 1}"
-						class="btn btn-warning" data-toggle="modal"
-						data-target="#deleteQuestionAdmin">
-						<span><span class="glyphicon glyphicon-remove"
-							aria-hidden="true"></span>&nbsp;【Admin】Delete this question</span>
-					</button>
-					删除当前问题按钮(管理员专用) End
-
-					<br>
-
-					Modal  删除用户问题
-					<div class="modal fade" id="deleteQuestion" tabindex="-1"
-						role="dialog" aria-labelledby="myModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-									<h4 class="modal-title" id="myModalLabel">Delete Your
-										Question</h4>
-								</div>
-								<div class="modal-body">
-									<span
-										th:text="'Do you want to delete Your Question : [ '+ ${question.getTitle()} + ' ] ?'"></span>
-								</div>
-
-								<div class="modal-footer">
-									<form action="/question/deleteMyQuestion" method="get">
-										<input type="hidden" name="questionId"
-											th:value="${question.getId()}">
-										<button type="submit" class="btn btn-primary">Yes!</button>
-									</form>
-								</div>
-
-							</div>
-						</div>
 					</div>
-					Modal  删除用户问题 End
-
-					Modal 删除用户问题 (管理员专用)
-					<div class="modal fade" id="deleteQuestionAdmin" tabindex="-1"
-						role="dialog" aria-labelledby="myModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-									<h4 class="modal-title" id="myModalLabel">Delete This
-										Question</h4>
-								</div>
-								<div class="modal-body">
-									<span
-										th:text="'Admin，Do you want to delete This Question : [ '+ ${question.getTitle()} + ' ] ^_^?'"></span>
-								</div>
-
-								<div class="modal-footer">
-									<form action="/question/deleteMyQuestion" method="get">
-										<input type="hidden" name="questionId"
-											th:value="${question.getId()}">
-										<button type="submit" class="btn btn-primary">Yes!</button>
-									</form>
-								</div>
-
-							</div>
-						</div>
+					<div class="modal-body">
+						<span th:text="'确定要删除你的问题 : [ '+ ${question.getTitle()} + ' ] 吗?'"></span>
 					</div>
-					Modal 删除用户问题 (管理员专用) End
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">取消</button>
+						<form action="/question/deleteMyQuestion" method="get">
+							<input type="hidden" name="questionId"
+								th:value="${question.getId()}">
+							<button type="submit" class="btn btn-primary">确定!</button>
+						</form>
+					</div>
 				</div>
-				显示Publisher End
-				<br> <br>
+			</div>
+		</div>
+		<!-- Modal 用户自行删除问题 End-->
+
+		<!-- 管理员替你删除问题 -->
+		<span
+			th:if="${question.user.getId() != session.user.getId() && session.user.getAdminBoolean() == 1}"
+			class="mb-0 text-red lh-100" style="float: right;"
+			data-toggle="modal" data-target="#deleteQuestion2"> <a
+			href="#">&nbsp;【删除问题】</a>
+		</span>
+		<!-- 管理员替你删除问题 End-->
+
+		<!-- Modal 管理员替你删除问题-->
+		<div class="modal fade" id="deleteQuestion2" tabindex="-1"
+			role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">删除这个问题</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<span
+							th:text="'Admin，确定要删除这个问题 : [ '+ ${question.getTitle()} + ' ] 吗?'"></span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">取消</button>
+						<form action="/question/deleteMyQuestion" method="get">
+							<input type="hidden" name="questionId"
+								th:value="${question.getId()}">
+							<button type="submit" class="btn btn-primary">确定!</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal 管理员替你删除问题 End-->
 
 
+	</div>
+	<!-- Question 主题内容 -->
+	<div class="my-3 p-3 bg-white rounded shadow-sm">
+		<h3 class="border-bottom border-gray pb-2 mb-0"
+			th:text="${question.getTitle()}"></h3>
+		<p id="questionDes" th:utext="${question.getDescription()}"></p>
+		<p style="margin-bottom:0px;" class="mediaText">
+			<span th:text="'>> '+${question.commentCount}"></span> comments • <span
+				th:text="${question.viewCount}"></span> views • <span
+				th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+			<!-- 这是一个很早之前就写好的点赞按钮 -->
+		<div style="margin-bottom:60px;">
+			<span> <a style="float: right" th:if="${Button} != null"
+				th:href="@{${question.getId()} + '/like'}">
+					<button type="button" class="btn btn-success">
+						<span aria-hidden="true">👍</span>&nbsp;<span
+							th:text="${question.likeCount}"></span>
+					</button>
+			</a>
+			</span> <span><a style="float: right" th:if="${Button} == null"
+				th:href="@{${question.getId()} + '/like'}"><button type="button"
+						class="btn btn-default">
+						<span aria-hidden="true">👍</span>&nbsp;<span
+							th:text="${question.likeCount}"></span>
+					</button></a></span> </a>
+		</div>
 
+		<!-- 点赞按钮End -->
+		<hr>
+		<!-- Question 主题内容 End-->
+	</div>
+
+	<div class="my-3 p-3 bg-white rounded">
+		<h5>Comments</h5>
+
+		<div th:if="${paginationDTO.replies != null} == true"
+			th:each="reply : ${paginationDTO.replies}"
+			class="media text-muted pt-3">
+			<!-- <img class="media-object img-thumbnail mediaobject-index" th:src="${question.user.avatarUrl}"> -->
+			<div class="media-left">
+				<a th:href="@{'/userinfo/' +${reply.user.getName()}}"> <img
+					class="media-object img-thumbnail mediaobject-reply"
+					th:src="${reply.user.avatarUrl}">
+				</a>
+			</div>
+			<div class="media-body"
+				style="margin-left: 15px; margin-right: 100px;">
+				<p style="font-weight: bold" th:text="${reply.user.name}"></p>
+				<p style="margin-bottom: 0px;" th:utext="${reply.description}"></p>
+				<hr>
+				<!-- 用户自行删除回复 条件：回复本人/问题发起者可以删除,管理员就则不显示2次了-->
+				<span
+					th:if="${(question.user.getId() == session.user.getId() || reply.user.getId() == session.user.getId()) && session.user.getAdminBoolean() == 0}"
+					class="mb-0 text-green lh-100" style="float: right;"
+					data-toggle="modal" data-target="#deleteReply1"> <a href="#">&nbsp;[删除回复]&nbsp;</a>
+				</span>
+				<!-- 用户自行删除回复 End-->
+
+				<!-- Modal 用户自行删除回复 -->
+				<div class="modal fade" id="deleteReply1" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">删除这个回复</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<span th:text="'确定要删除你的这条回复吗?'"></span>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">取消</button>
+								<form action="/question/deleteMyReply" method="get">
+									<input type="hidden" name="replyId" th:value="${reply.getId()}">
+									<button type="submit" class="btn btn-primary">确定!</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Modal 用户自行删除回复 End-->
+
+				<!-- 管理员删除回复 -->
+				<span
+					th:if="${question.user.getId() != session.user.getId() && session.user.getAdminBoolean() == 1}"
+					class="mb-0 text-green lh-100" style="float: right;"
+					data-toggle="modal" data-target="#deleteReply2"> <a href="#">&nbsp;【删除回复】&nbsp;</a>
+				</span>
+				<!-- 管理员删除回复 End-->
+
+				<!-- Modal 用户自行删除回复 -->
+				<div class="modal fade" id="deleteReply2" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">删除这个回复</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<span th:text="'确定要删除你的这条回复吗?'"></span>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">取消</button>
+								<form action="/question/deleteMyReply" method="get">
+									<input type="hidden" name="replyId" th:value="${reply.getId()}">
+									<button type="submit" class="btn btn-primary">确定!</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Modal 用户自行删除回复 End-->
 
 			</div>
 		</div>
+		<div th:if="${paginationDTO.replies != null} == false">
+			<br> <br>
+			<p align="center" class="mediaText">No Comment</p>
+			<hr>
+		</div>
+		<!-- 分页部分 -->
+		<nav aria-label="Page navigation example" style="margin-top: 15px;">
+			<ul class="pagination">
+				<li class="page-item"><a class="page-link"
+					th:if="${paginationDTO.showFirstPage}" th:href="@{/(page=1)}"
+					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+				</a></li>
+				<li class="page-item"><a class="page-link"
+					th:if="${paginationDTO.showPrevious}"
+					th:href="@{'/question/' + ${question.getId()} + '?page=' + ${paginationDTO.page-1}}"
+					aria-label="Previous"> <span aria-hidden="true">&lt;</span>
+				</a></li>
+				<li class="page-item"
+					th:class="${paginationDTO.page == page} ? 'active' : ''"
+					th:each="page : ${paginationDTO.pages}"><a class="page-link"
+					th:href="@{'/question/' + ${question.getId()} + '?page=' + ${page}}"
+					th:text="${page}">1</a></li>
+				<li class="page-item"><a class="page-link"
+					th:if="${paginationDTO.showNext}"
+					th:href="@{'/question/' + ${question.getId()} + '?page=' + ${paginationDTO.page+1}}"
+					aria-label="Next"> <span aria-hidden="true">&gt;</span>
+				</a></li>
+				<li class="page-item"><a class="page-link"
+					th:if="${paginationDTO.showEndPage}"
+					th:href="@{/(page=${paginationDTO.totalPage})}" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+				</a></li>
+			</ul>
+		</nav>
+		<!-- 分页部分 End-->
+
 	</div>
-	</div>
-	</div> -->
+
+	<form action="/reply" method="post">
+		<div class="my-3 p-3 bg-white rounded shadow-sm">
+			<h5 class="border-bottom border-gray pb-2 mb-0">
+				<p>回复问题</p>
+			</h5>
+
+
+			<div id="div1"></div>
+			<input type="hidden" name="questionId" th:value="${question.getId()}">
+			<input type="hidden" name="userId" th:value="${currentUser.getId()}">
+			<input type="hidden" name="description" id="description"
+				th:value="${description}">
+			<div class="alert alert-danger" role="alert" th:text="${error}"
+				th:if="${error} != null">...</div>
+			<button style="margin-top: 10px;" Onclick="getText()" type="submit"
+				class="btn btn-success">Publish</button>
+		</div>
+	</form>
+	</main>
 
 
 	<!-- import bottom -->
 	<div th:insert="~{bottom :: bottom}"></div>
 	<!-- End -->
-	<script>
-		var str = '<p class="odd" id="odd">123</p>';
-		var pattern = /<\/?[a-zA-Z]+(\s+[a-zA-Z]+=".*")*>/g;
-		console.log(str.match(pattern));
+	<script src="../static/js/wangEditor.min.js"
+		th:src="@{/js/wangEditor.min.js}" type="application/javascript"></script>
+	<script type="text/javascript">
+		const E = window.wangEditor
+		const editor = new E('#div1')
+		// 或者 const editor = new E( document.getElementById('div1') )
+		editor.create()
+
+		function getText() {
+			var des = document.getElementById('description')
+			des.value = editor.txt.html()
+		}
 	</script>
+
 </body>
 </html>

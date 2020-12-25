@@ -88,9 +88,7 @@ public class QuestionController {
 			
 			// 用于显示回复内容列表
 			PaginationDTO paginationDTO = replyService.list(id,page,size);
-	        if(paginationDTO.getReplies() != null) {
-	        	model.addAttribute("paginationDTO",paginationDTO);
-	        }
+			model.addAttribute("paginationDTO",paginationDTO);
 			
 	        model.addAttribute("currentUser",currentUser);
 			return "question";

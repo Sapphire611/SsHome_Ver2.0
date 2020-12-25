@@ -111,6 +111,7 @@
 				<button style="margin-top:10px;"  Onclick="getText()" type="submit" class="btn btn-success">Publish</button>
 		</div>
 	</form>
+	<!-- <button style="margin-top:10px;"  Onclick="reText()" class="btn btn-success">Retext</button> -->
 	</main>
 
 
@@ -121,15 +122,23 @@
 	<script src="../static/js/wangEditor.min.js"
 		th:src="@{/js/wangEditor.min.js}" type="application/javascript"></script>
 	<script type="text/javascript">
-		const E = window.wangEditor
-		const editor = new E('#div1')
+		const E = window.wangEditor;
+		const editor = new E('#div1');
 		// 或者 const editor = new E( document.getElementById('div1') )
-		editor.create()
+		editor.create();
 		
+		//发布问题时自动执行的事件，将富文本编辑器中的内容赋值到hidden的标签中一起提交
 		function getText(){
-			var des = document.getElementById('description')
-			des.value = editor.txt.html()
+			var des = document.getElementById('description');
+			des.value = editor.txt.html();
 		}
+		
+		function reText(){
+			var des = document.getElementById('description');
+			editor.txt.html(des.value);
+		}
+		window.onload = reText();
+		//这里需要再写一个方法，让<input id='description'>description中的值 重新赋值回富文本编辑器中
 	</script>
 </body>
 </html>

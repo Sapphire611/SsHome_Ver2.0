@@ -33,6 +33,7 @@ public class PublishController {
         User user = (User) request.getSession().getAttribute("user");
         if(user == null){
             return "redirect:/login";
+            //这里似乎要防止别的用户进入这个地址，不然任何人都可以编辑问题
         }else{
             // ID = question.id
             // 通过get传来的id，找到对应问题的id,再查询对应问题的发布者

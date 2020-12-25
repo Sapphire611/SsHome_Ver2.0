@@ -6,11 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="/css/home.css" />
-
-<script src="/js/jquery-3.5.1.js" type="application/javascript"></script>
-<script src="/js/bootstrap.bundle.min.js" type="application/javascript"></script>
-<script src="/js/bootstrap.min.js"  type="application/javascript"></script>
-
 </head>
 
 <body class="bodyBg">
@@ -21,8 +16,9 @@
 	<main role="main" class="container">
 	<div
 		class="d-flex align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
-		<img class="mr-3" src="/img/piper.jpeg" alt="" width="48" height="48">
-		<div class="lh-100">
+		<img class="media-object img-thumbnail mediaobject-index"
+			src="/forum/Sapphire L.jpeg">
+		<div style="margin-left: 16px;" class="lh-100">
 			<h6 class="mb-0 text-black lh-100">版主的个人板块</h6>
 			<small>From Sapphire & Sara —— 2017.12.11</small>
 		</div>
@@ -33,7 +29,6 @@
 		<span class="mb-0 text-black lh-100" style="">全部板块 >> 版主的个人板块</span> <span
 			class="mb-0 text-black lh-100" style="float: right;"> <a
 			href="/publish">+ 发布问题</a></span>
-
 	</div>
 
 	<!-- 板块问题 循环部分 -->
@@ -43,15 +38,16 @@
 		<div th:if="${paginationDTO != null}"
 			th:each="question : ${paginationDTO.questions}"
 			class="media text-muted pt-3">
-			<!-- <img class="media-object img-thumbnail mediaobject-index" th:src="${question.user.avatarUrl}"> -->
-			<img class="mr-3" src="/img/piper.jpeg" alt="" width="48" height="48">
-			<p
+			<img class="media-object img-thumbnail mediaobject-index"
+				th:src="${question.user.avatarUrl}">
+			<!-- <img class="mr-3" th:src="${question.user.avatarUrl}" alt="" width="48" height="48"> -->
+			<p style="margin-left: 16px;"
 				class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
 				<span class="badge badge-info" th:text="${question.getTag()}">-1</span>
-				<strong class="text-gray-dark"><a
+				<strong class="text-gray-dark"> <a
 					th:href="@{'/question/' +${question.getId()}}"
-					th:text="${question.title}" style="font-size: 14px;"></a></strong> <span
-					class="d-block mediaText" style="margin-top: 5px;"> <a
+					th:text="${question.title}" style="font-size: 14px;"></a>
+				</strong> <span class="d-block mediaText" style="margin-top: 5px;"> <a
 					th:href="@{'/userinfo/' +${question.user.getName()}}"><span
 						th:text="${question.user.getName()}"></span></a> published an article
 					• <span th:text="${question.commentCount}"></span> comments • <span
@@ -97,8 +93,9 @@
 		<h6 class="border-bottom border-gray pb-2 mb-0">板块管理员</h6>
 		<!--  板块管理员 循环部分 -->
 		<div class="media text-muted pt-3" th:each="user : ${adminUsers}">
-			<img class="mr-3" src="/img/piper.jpeg" alt="" width="48" height="48">
-			<div
+			<img class="media-object img-thumbnail mediaobject-index"
+				th:src="${user.avatarUrl}">
+			<div style="margin-left: 16px;"
 				class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
 				<div class="d-flex justify-content-between align-items-center w-100">
 					<strong class="text-gray-dark" th:text="${user.getName()}">-1</strong>
@@ -115,6 +112,10 @@
 	<!-- import bottom -->
 	<div th:insert="~{bottom :: bottom}"></div>
 	<!-- End -->
+	<script src="../static/js/jquery-3.5.1.slim.min.js"
+		th:src="@{/js/jquery-3.5.1.slim.min.js}" type="application/javascript"></script>
+	<script src="/js/bootstrap.bundle.min.js" type="application/javascript"></script>
+	<script src="/js/bootstrap.min.js" type="application/javascript"></script>
 
 </body>
 </html>

@@ -64,6 +64,10 @@ public class AuthorizeController {
 			// user.setPassword((int)(Math.random()*9+1)*100000+"");
 			user.setPassword(123456 + "");
 			user.setAvatarUrl(githubUser.getAvatar_url());
+			
+			// 这里有一个待完成的功能：下载头像并重命名存储到avatar文件夹中
+			// 网站似乎难以访问，方案：设置默认头像，让用户自行上传～
+			
 			user.setBio(githubUser.getBio());
 			user.setAdminBoolean(0);
 			userService.createOrUpdate(user);
