@@ -43,7 +43,7 @@ public class UserInfoController {
     	User currentUser = (User) request.getSession().getAttribute("user");
 		
 		if (currentUser == null) {
-			return "redirect:/login";
+			return "redirect:/functions/login";
 		} else {
 			// 个人信息
 			User infoUser = userMapper.findByName(userName);

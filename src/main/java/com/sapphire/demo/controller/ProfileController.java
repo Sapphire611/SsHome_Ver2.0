@@ -44,7 +44,7 @@ public class ProfileController {
         //User user = (User) model.getAttribute("user");
         User currentUser = (User) request.getSession().getAttribute("user");
         if(currentUser == null){
-            return "redirect:/login";
+        	return "redirect:/functions/login";
         }
 
         if ("questions".equals(action)) {

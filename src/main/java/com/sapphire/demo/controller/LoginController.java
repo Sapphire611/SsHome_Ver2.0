@@ -21,14 +21,14 @@ public class LoginController {
 	@Autowired
 	private UserMapper userMapper;
 
-	@GetMapping("/login")
+	@GetMapping("/functions/login")
 	public String login() {
 		return "login";
 	}
 
-	@PostMapping("/login")
+	@PostMapping("/functions/login")
 	public String doLogin(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam("userName") String userName, @RequestParam("password") String password, Model model) {
+			@RequestParam("username") String userName, @RequestParam("password") String password, Model model) {
 			User user = userMapper.loginByUserName(userName, password);
 			if (user != null && user.getPassword().equals(password)) {
 				model.addAttribute("user", user);

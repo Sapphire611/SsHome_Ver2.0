@@ -61,6 +61,7 @@ public class AuthorizeController {
 			// user.setName(githubUser.getName());
 
 			user.setAccountId(String.valueOf(githubUser.getId())); // Long -> String 强制转换
+			// 一个随机六位数的密码～
 			// user.setPassword((int)(Math.random()*9+1)*100000+"");
 			user.setPassword(123456 + "");
 			user.setAvatarUrl(githubUser.getAvatar_url());

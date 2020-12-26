@@ -52,7 +52,7 @@ public class QuestionController {
 		
 		
 		if (currentUser == null) {
-			return "redirect:/login";
+			return "redirect:/functions/login";
 		} else {
 			
 			// 修改作者的阅读本文时间

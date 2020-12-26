@@ -1,62 +1,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<!-- 
-<nav class="navbar navbar-default">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-				aria-expanded="false"></button>
-			<a class="navbar-brand" href="/">Ss'Home</a>
-		</div>
 
-		<div class="navbar-header" style="margin:0 auto;">
-			<form class="form-inline my-2 my-lg-0">
-			<input class="form-control mr-sm-2" type="search"
-				placeholder="Search" aria-label="Search">
-			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-		</form>
-		</div>
-
-		
-		<ul class="nav navbar-nav navbar-right">
-			<li th:if="${session.user != null}"><a href="/publish">Publish
-					Question</a></li>
-			<li th:if="${session.user != null}"><a
-				href="/profile/personalInfo">My Info</a></li>
-
-			<li class="dropdown" th:if="${session.user != null}"><a href="#"
-				class="dropdown-toggle" data-toggle="dropdown" role="button"
-				aria-haspopup="true" aria-expanded="false"> <span
-					th:text="${session.user.getName()}"></span> <span class="caret"></span>
-			</a>
-
-				<ul class="dropdown-menu">
-					<li><a href="/profile/questions">My Questions</a></li>
-					<li><a href="/profile/replies">My Replies</a></li>
-					<li><a href="/profile/notices">My Notices</li>
-					<li><a href="/profile/settings">Settings</a></li>
-					<li role="separator" class="divider"></li>
-					<li><a href="/logout">Log Out</a></li>
-				</ul></li>
-
-			<li th:if="${session.user == null}"><a href="/login">Login</a></li>
-
-		</ul>
-	</div>
-</div>
-</nav>
- -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<a class="navbar-brand" href="/">SsHome&nbsp;&nbsp;</a>
 
 	<div class="collapse navbar-collapse">
 		<ul class="navbar-nav">
-			<li class="nav-item" th:if="${session.user == null}"><a class="nav-link" href="/login">登陆&nbsp;</a></li>
+			<li class="nav-item" th:if="${session.user == null}"><a class="nav-link" href="/functions/login">登陆&nbsp;</a></li>
 			<li class="nav-item dropdown" th:if="${session.user != null}">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="true">
-				<!-- <span><img th:src="${session.user.getAvatarUrl()}"></span> 头像不一定加载的出来啊..-->
+				<span><img th:src="${session.user.getAvatarUrl()}" style="width:20px;height:20px;"></span> 
 				<span th:text="${session.user.getName()}">&nbsp;</span></a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" href="/profile/questions">个人提问</a> <a

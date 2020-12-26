@@ -36,7 +36,7 @@ public class SettingController {
 		// User user = (User) model.getAttribute("user");
 		User currentUser = (User) request.getSession().getAttribute("user");
 		if (currentUser == null) {
-			return "redirect:/login";
+			return "redirect:/functions/login";
 		} else {	
 			String currentUserBio = currentUser.getBio();
 			
