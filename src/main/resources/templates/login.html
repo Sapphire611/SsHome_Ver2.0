@@ -1,48 +1,3 @@
-<!-- <!DOCTYPE html>
-
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
-  <title>Login to Ss'Home</title>
-  
-  <link rel="stylesheet" href="css/style.css">
-  <link type="text/css" rel="stylesheet" href="../static/css/home.css" th:href="@{/css/home.css}"/>
-
-</head>
-<body class="bodyBg">
-    <div class="main">
-      <div class="container a-container" id="a-container">
-        <form class="form" id="a-form" method="post" action="/login">
-          <h2 class="form_title title">Login to Ss'Home</h2>
-          <span class="form__span">Then use userName and password to login.</span>
-          <input class="form__input" type="userName" name="userName" placeholder="UserName">
-          <input class="form__input" type="password" name="password" placeholder="Password">
-          <span style="color: red" class="alert alert-danger" role="alert"  th:if = "${wrongMsg} != null" th:text="${wrongMsg}">...</span>
-          <button type="submit" class="switch__button button switch-btn">Login</button>
-        </form>
-      </div>
-
-      <div class="switch" id="switch-cnt">
-        <div class="switch__circle"></div>
-        <div class="switch__circle switch__circle--t"></div>
-        <div class="switch__container" id="switch-c1">
-          <h2 class="switch__title title">Welcome!</h2>
-          <p class="switch__description description">If this is your first time logging in, please use GitHub third-party login.</p>
-          <a href="https://github.com/login/oauth/authorize?client_id=4ce03e6d08271639376f&redirect_uri=http://101.133.175.192/callback&scope=user&state=1"><button class="switch__button button switch-btn">GitHub Login</button></a>
-        </div>
-        <div class="switch__container is-hidden" id="switch-c2">
-          <h2 class="switch__title title">Aha!</h2>
-          <p class="switch__description description">GitHub is the best.</p>
-          <a href="https://github.com/login/oauth/authorize?client_id=4ce03e6d08271639376f&redirect_uri=http://101.133.175.192/callback&scope=user&state=1"><button class="switch__button button switch-btn">GitHub Login...</button></a>
-
-        </div>
-      </div>
-    </div>
-
-
-  <script src="js/script.js"></script>
-</body></html> -->
 <!DOCTYPE HTML>
 <!-- 引用命名标签 -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
@@ -71,7 +26,7 @@
 		<div class="text-center mb-4">
 			<img class="mr-3" src="/img/piper.jpeg" alt="" width="72" height="72"
 				style="margin-bottom: 10px;"> <br>
-			<h1 class="h3 mb-3 font-weight-normal">SsHome - CMS</h1>
+			<h1 class="h3 mb-3 font-weight-normal">SsHome - Login</h1>
 			<p>
 				Made by
 				<code>Sapphire & Sara</code>

@@ -2,97 +2,100 @@
 <!-- 引用命名标签 -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="'UserInfo : ' + ${infoUser.getName()}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
-    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap-theme.min.css"
-          th:href="@{/css/bootstrap-theme.min.css}"/>
-    <link type="text/css" rel="stylesheet" href="../static/css/home.css" th:href="@{/css/home.css}"/>
-    <script src="../static/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}" type="application/javascript"></script>
-    <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" type="application/javascript"></script>
+<title th:text="${infoUser.getName()}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet"
+	href="../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+<link type="text/css" rel="stylesheet"
+	href="../static/css/bootstrap-theme.min.css"
+	th:href="@{/css/bootstrap-theme.min.css}" />
+<link type="text/css" rel="stylesheet" href="../static/css/home.css"
+	th:href="@{/css/home.css}" />
+<script src="../static/js/jquery-3.5.1.js"
+	th:src="@{/js/jquery-3.5.1.js}" type="application/javascript"></script>
+<script src="../static/js/bootstrap.min.js"
+	th:src="@{/js/bootstrap.min.js}" type="application/javascript"></script>
 </head>
 
 <body class="bodyBg">
 
-<!-- import nav -->
-<div th:insert="~{navigation :: nav}"></div>
-<!-- End -->
+	<!-- import nav -->
+	<div th:insert="~{navigation :: nav}"></div>
+	<!-- End -->
 
-<div class="container-fluid main">
-    <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-        <!-- 个人资料 Top -->
-            <div style="margin:30px" class="media">
-                <div class="media-left">
-                        <img class="media-object img-thumbnail mediaObject-userInfo" th:src="${infoUser.getAvatarUrl()}">
-                </div>
-                <div style="padding:10px" class="media-body ">
-                    <h3 class="media-heading" th:text="${infoUser.getName()}"></h3>
-                    <br>
-                    <br>
-                    <p class="text-muted"><span th:text="${infoUser.getBio()}"></span></p>
-                    
-                    <p class="text-muted" th:text="'Id = '+ ${infoUser.getAccountId()}"></p>
-                    
-                    <p class="text-muted">Join Time ： <span th:text="${#dates.format(infoUser.getGmtCreate(),'yyyy-MM-dd HH:mm:ss')}"></span></p>
-                </div>
-                <br>
-            </div>
-            <!-- 个人资料 TopEnd -->
-            <hr>
-            <!-- 标签分页 -->
-            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <ul class="nav nav-pills">
-	  		    <li role="presentation" class="active"><a href="#">Latest Questions About him/her</a></li>
-			    <!-- 
-			    <li role="presentation"><a href="#">Profile</a></li>
-			    <li role="presentation"><a href="#">Messages</a></li>
-			    -->
-			</ul>
-			<hr>
-			</div>	
-            
-            	
-            <!-- 标签分页 End -->
-            <!--循环获取questions表中内容 只显示第一页-->
-            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <div class="media" th:each="question : ${paginationDTO.questions}">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object img-thumbnail mediaobject-index" th:src="${question.user.avatarUrl}">
-                    </a>
+	<main role="main" class="container">
 
-                </div>
-                <div class="media-body">
-                    <a th:href="@{'/question/' +${question.getId()}}"><h4 class="media-heading" th:text="${question.title}"></h4></a>
-                  	<!-- 循环输出标签 -->
-                    <span class="label label-info" th:text="${question.getTag()}">?</span>
-                    <!-- 循环输出标签 End -->
-                    <span th:text="${question.description}"></span>
-                </div>
-                <br>
-            </div>
-            <!--循环结束-->
-            <p style="align:center" class="text-muted">—— Only show the last 3 questions ——</p>
-            <hr>
-           
-        </div>
-        </div>
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h3><span class="glyphicon glyphicon-tag"></span><span>&nbsp;&nbsp;My Tags</span></h3>
-            <hr>
-            <span th:each="tag : ${tags}">
-            	 <span style="margin-right:5px;" class="label label-info userinfo-tags" th:text="${tag}">New</span>
-            </span>
-        </div>
+		<div style="margin-top: 30px;" class="card text-center">
+			<div class="card-header text-muted">个人信息</div>
 
-    </div>
-</div>
+			<div class="card-body">
+				<div class="media">
+					<div style="margin-left: 30px;" class="media-left">
+						<img class="media-object img-thumbnail mediaObject-userInfo"
+							th:src="${infoUser.getAvatarUrl()}">
+					</div>
+
+					<div style="margin-left: 30px;" class="media-body ">
+						<div class="card">
+							<div class="card-body">
+								<blockquote class="blockquote mb-0">
+									<p th:text="${infoUser.getBio()}"></p>
+								</blockquote>
+								<p class="card-text text-muted">
+									<span th:text="'—— ' + ${infoUser.getName()}"></span>
+								</p>
+								<a href="#" class="btn btn-primary">Follow</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="card-footer text-muted">
+				入站时间 : <span
+					th:text="${#dates.format(infoUser.getGmtCreate(),'yyyy-MM-dd HH:mm:ss')}"></span>
+			</div>
+
+		</div>
+
+		<div style="margin-top: 30px;" class="card text-center">
+			<div class="card-header">
+				<ul class="nav nav-tabs card-header-tabs">
+					<li class="nav-item"><a class="nav-link active" href="#">近期提问</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="#">其他功能1</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">其他功能2</a>
+					</li>
+				</ul>
+			</div>
+			<div class="card-body">
+				<!-- 展示个人近期提问 -->
+
+				<div class="card-deck">
+					<div class="card" th:each="question : ${paginationDTO.questions}">
+						<div class="card-body">
+							<a th:href="@{'/question/' +${question.getId()}}">
+								<h4 class="media-heading" th:text="${question.title}"></h4>
+							</a>
+
+							<p class="card-text" th:text="${question.getDescription()}"></p>
+							<span class="text-muted"
+								th:text="'最近更新 ：' + ${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+
+						</div>
+					</div>
+				</div>
+				<!-- 展示个人近期提问 End-->
+			</div>
+		</div>
+	</main>
 
 
-<!-- import bottom -->
-<div th:insert="~{bottom :: bottom}"></div>
-<!-- End -->
+	<!-- import bottom -->
+	<div th:insert="~{bottom :: bottom}"></div>
+	<!-- End -->
 
 </body>
 </html>

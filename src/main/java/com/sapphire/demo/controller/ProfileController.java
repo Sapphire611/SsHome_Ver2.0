@@ -50,7 +50,7 @@ public class ProfileController {
         if ("questions".equals(action)) {
         	// Question 页面
             model.addAttribute("section", "questions");
-            model.addAttribute("sectionName", "My Questions");
+            model.addAttribute("sectionName", "个人提问");
             
             PaginationDTO paginationQuestionDTO = questionService.list(currentUser.getId(),page,size);
             if(paginationQuestionDTO != null) {
@@ -65,19 +65,20 @@ public class ProfileController {
             model.addAttribute("paginationDTO",paginationQuestionDTO);
             //System.out.println(paginationQuestionDTO.toString());
             model.addAttribute("section", "replies");
-            model.addAttribute("sectionName", "My Replies");
+            model.addAttribute("sectionName", "个人回复");
         } else if("personalInfo".equals(action)) {
             return "redirect:/userinfo/" + currentUser.getName();
         }else if("settings".equals(action)){
         	model.addAttribute("section", "settings");
-            model.addAttribute("sectionName", "My Settings");
+            model.addAttribute("sectionName", "个人设置");
         	
         	User infoUser = currentUser;
 			model.addAttribute("infoUser",infoUser);
+			
 			return "settings";
         }else if("notices".equals(action)){
         	model.addAttribute("section", "notices");
-            model.addAttribute("sectionName", "My Notices");
+            model.addAttribute("sectionName", "他人答复");
             
             // 设置分页
         	PaginationDTO paginationQuestionDTO = replyService.listAtNotice(currentUser.getId(),page,size);
@@ -93,7 +94,7 @@ public class ProfileController {
 			}
             
             model.addAttribute("countNewNotice",countNewNotice);
-        }
+        }	
 
         return "profile";
     }

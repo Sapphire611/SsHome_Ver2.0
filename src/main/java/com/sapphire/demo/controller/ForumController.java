@@ -11,10 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class IndexController {
+public class ForumController {
 
     @Autowired
     private QuestionService questionService;
@@ -22,9 +23,26 @@ public class IndexController {
     @Autowired
     private UserMapper userMapper;
 
-    @GetMapping("/")
+    @GetMapping("/forum")
     // size = 一页显示7个问题
-    public String index(Model model,
+    public String forum(Model model,
+                        @RequestParam(name = "page",defaultValue = "1") Integer page,
+                        @RequestParam(name = "size",defaultValue = "7") Integer size) {
+
+
+        PaginationDTO paginationDTO = questionService.list(page,size);
+        model.addAttribute("paginationDTO",paginationDTO);
+        
+        List<User> adminUsers = userMapper.findAdmin(); 
+        model.addAttribute("adminUsers",adminUsers);
+        
+        return "forum";
+    }
+    
+    @GetMapping("/forum/{forumName}")
+    // size = 一页显示7个问题
+    public String forumName(Model model,
+    					@PathVariable(name = "forumName") String forumName,
                         @RequestParam(name = "page",defaultValue = "1") Integer page,
                         @RequestParam(name = "size",defaultValue = "7") Integer size) {
 
