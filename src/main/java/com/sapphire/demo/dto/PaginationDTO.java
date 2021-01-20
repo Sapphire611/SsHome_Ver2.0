@@ -3,8 +3,6 @@ package com.sapphire.demo.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sapphire.demo.model.Reply;
-
 public class PaginationDTO {
     private List<QuestionDTO> questions;
     private List<ReplyDTO> replies;

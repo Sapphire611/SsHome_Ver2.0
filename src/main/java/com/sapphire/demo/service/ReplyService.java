@@ -1,21 +1,19 @@
 package com.sapphire.demo.service;
 
-import com.sapphire.demo.dto.PaginationDTO;
-import com.sapphire.demo.dto.QuestionDTO;
-import com.sapphire.demo.dto.ReplyDTO;
-import com.sapphire.demo.mapper.QuestionMapper;
-import com.sapphire.demo.mapper.ReplyMapper;
-import com.sapphire.demo.mapper.UserMapper;
-import com.sapphire.demo.model.Question;
-import com.sapphire.demo.model.Reply;
-import com.sapphire.demo.model.User;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import com.sapphire.demo.dto.PaginationDTO;
+import com.sapphire.demo.dto.ReplyDTO;
+import com.sapphire.demo.mapper.QuestionMapper;
+import com.sapphire.demo.mapper.ReplyMapper;
+import com.sapphire.demo.mapper.UserMapper;
+import com.sapphire.demo.model.Reply;
+import com.sapphire.demo.model.User;
 
 @Service
 public class ReplyService {

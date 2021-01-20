@@ -1,6 +1,5 @@
 package com.sapphire.demo.controller;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sapphire.demo.mapper.AdminMapper;
 import com.sapphire.demo.model.Admin;
-import com.sapphire.demo.model.User;
 
 @Controller
 public class AdminController {

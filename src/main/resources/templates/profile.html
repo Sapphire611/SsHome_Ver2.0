@@ -42,7 +42,7 @@
 						href="/profile/replies">个人回答</a></li>
 					<li
 						th:class="${section == 'notices' } ? 'nav-link active':'nav-link'"><a
-						href="/profile/notices">他人答复</a></li>
+						href="/profile/notices">他人答复</a><span class="badge badge-danger" th:text=${countNewNotice}>-1</span></li>
 					<li
 						th:class="${section == 'settings' } ? 'nav-link active':'nav-link'"><a
 						href="/profile/settings">个人设置</a></li>
