@@ -39,20 +39,20 @@ public class ForumController {
         return "forum";
     }
     
-    @GetMapping("/forum/{forumName}")
-    // size = 一页显示7个问题
-    public String forumName(Model model,
-    					@PathVariable(name = "forumName") String forumName,
-                        @RequestParam(name = "page",defaultValue = "1") Integer page,
-                        @RequestParam(name = "size",defaultValue = "7") Integer size) {
-
-
-        PaginationDTO paginationDTO = questionService.list(page,size);
-        model.addAttribute("paginationDTO",paginationDTO);
-        
-        List<User> adminUsers = userMapper.findAdmin(); 
-        model.addAttribute("adminUsers",adminUsers);
-        
-        return "index";
-    }
+//    @GetMapping("/forum/{forumName}")
+//    // size = 一页显示7个问题
+//    public String forumName(Model model,
+//    					@PathVariable(name = "forumName") String forumName,
+//                        @RequestParam(name = "page",defaultValue = "1") Integer page,
+//                        @RequestParam(name = "size",defaultValue = "7") Integer size) {
+//
+//
+//        PaginationDTO paginationDTO = questionService.list(page,size);
+//        model.addAttribute("paginationDTO",paginationDTO);
+//        
+//        List<User> adminUsers = userMapper.findAdmin(); 
+//        model.addAttribute("adminUsers",adminUsers);
+//        
+//        return "index";
+//    }
 }

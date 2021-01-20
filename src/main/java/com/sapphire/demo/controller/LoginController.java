@@ -3,6 +3,7 @@ package com.sapphire.demo.controller;
 import com.sapphire.demo.mapper.UserMapper;
 import com.sapphire.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +21,17 @@ public class LoginController {
 
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Value("${url}")
+	private String url;
 
-	@GetMapping("/functions/login")
-	public String login() {
+	@GetMapping("/login")
+	public String login(Model model) {
+		model.addAttribute("url",url);
 		return "login";
 	}
 
-	@PostMapping("/functions/login")
+	@PostMapping("/login")
 	public String doLogin(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("username") String userName, @RequestParam("password") String password, Model model) {
 			User user = userMapper.loginByUserName(userName, password);

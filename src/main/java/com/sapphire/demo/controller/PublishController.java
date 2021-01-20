@@ -110,7 +110,7 @@ public class PublishController {
         question.setCreator(user.getId());
         questionService.createOrUpdate(question);
 
-        return "redirect:/";
+        return "redirect:/forum";
     }
 
 
