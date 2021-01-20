@@ -47,7 +47,15 @@ public class QuestionController {
 		User currentUser = (User) request.getSession().getAttribute("user");
 
 		if (currentUser == null) {
-			return "redirect:/login";
+			// 用于显示对应问题的内容和Publisher
+			QuestionDTO questionDTO = questionService.getById(id);
+			model.addAttribute("question", questionDTO);
+			
+			// 用于显示回复内容列表
+			PaginationDTO paginationDTO = replyService.list(id, page, size);
+			model.addAttribute("paginationDTO", paginationDTO);
+			
+			return "question2";
 		} else {
 
 			// 修改作者的阅读本文时间

@@ -33,7 +33,7 @@
 
 		<div
 			class="align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
-			<span class="mb-0 text-black lh-100">全部板块 >> 版主的个人板块 >> 某个问题</span> <a
+			<span class="mb-0 text-black lh-100">总板块 >> <span th:text="${question.getTitle()}"></span></span> <a
 				th:if="${question.user.getId() == session.user.getId()}"
 				th:href="@{'/publish/'+${question.getId()}}"
 				class="mb-0 text-black lh-100" style="float: right;"> &nbsp;
