@@ -13,7 +13,7 @@ public class PaginationDTO {
     private Integer page;
     private List<Integer> pages = new ArrayList<>();
     private Integer totalPage;
-    private Integer totalCount;
+    private Integer totalCount = 0;
     
     
 

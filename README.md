@@ -42,5 +42,3 @@
 
 ### mysql 修改密码
 > alter user 'root'@'localhost' identified by  '新密码';
-
-### 服务器mysql字段？

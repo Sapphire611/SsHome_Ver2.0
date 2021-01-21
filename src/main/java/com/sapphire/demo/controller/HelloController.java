@@ -20,15 +20,18 @@ public class HelloController {
 	@GetMapping("/")
 	public String hello(HttpServletRequest request, Model model) {
 		User currentUser = (User) request.getSession().getAttribute("user");
-		//  显示新消息数
+		// 显示新消息数
 		if (currentUser != null) {
 			PaginationDTO paginationQuestionDTO = replyService.listAtNotice(currentUser.getId(), 1, 7);
 			int countNewNotice = 0;
-			for (ReplyDTO reply : paginationQuestionDTO.getReplies()) {
-				if (reply.getGmtCreate() > reply.getGmtQuestionRead()) {
-					countNewNotice++;
+			if (paginationQuestionDTO.getTotalCount() != 0) {
+				for (ReplyDTO reply : paginationQuestionDTO.getReplies()) {
+					if (reply.getGmtCreate() > reply.getGmtQuestionRead()) {
+						countNewNotice++;
+					}
 				}
 			}
+
 			model.addAttribute("countNewNotice", countNewNotice);
 		}
 		// 显示新消息数 End
