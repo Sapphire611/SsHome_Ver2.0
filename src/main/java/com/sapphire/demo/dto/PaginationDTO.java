@@ -135,6 +135,16 @@ public class PaginationDTO {
 		this.totalCount = totalCount;
 	}
 
+	
+
+	@Override
+	public String toString() {
+		return "PaginationDTO [questions=" + questions.toString() + ", replies=" + replies + ", showPrevious=" + showPrevious
+				+ ", showFirstPage=" + showFirstPage + ", showNext=" + showNext + ", showEndPage=" + showEndPage
+				+ ", page=" + page + ", pages=" + pages + ", totalPage=" + totalPage + ", totalCount=" + totalCount
+				+ "]";
+	}
+
 
 
 	/**

@@ -33,7 +33,7 @@
 				<div class="media">
 					<div style="margin-left: 30px;" class="media-left">
 						<img class="media-object img-thumbnail mediaObject-userInfo"
-							th:src="${infoUser.getAvatarUrl()}">
+							th:src="${infoUser.getAvatarurl()}">
 					</div>
 
 					<div style="margin-left: 30px;" class="media-body ">
@@ -55,7 +55,7 @@
 
 			<div class="card-footer text-muted">
 				入站时间 : <span
-					th:text="${#dates.format(infoUser.getGmtCreate(),'yyyy-MM-dd HH:mm:ss')}"></span>
+					th:text="${#dates.format(infoUser.getGmtcreate(),'yyyy-MM-dd HH:mm:ss')}"></span>
 			</div>
 
 		</div>

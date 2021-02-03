@@ -10,19 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sapphire.demo.dto.PaginationDTO;
-import com.sapphire.demo.dto.ReplyDTO;
 import com.sapphire.demo.model.User;
 import com.sapphire.demo.service.QuestionService;
-import com.sapphire.demo.service.ReplyService;
 
 @Controller
 public class ProfileController {
 
 	@Autowired
 	private QuestionService questionService;
-
-	@Autowired
-	private ReplyService replyService;
 
 	@GetMapping("/profile/{action}")
 	public String profile(@PathVariable(name = "action") String action,
@@ -34,22 +29,6 @@ public class ProfileController {
 		if (currentUser == null) {
 			return "redirect:/login";
 		}
-
-		// 显示新消息数
-		if (currentUser != null) {
-			PaginationDTO paginationQuestionDTO = replyService.listAtNotice(currentUser.getId(), 1, 7);
-			int countNewNotice = 0;
-			if (paginationQuestionDTO.getTotalCount() != 0) {
-				for (ReplyDTO reply : paginationQuestionDTO.getReplies()) {
-					if (reply.getGmtCreate() > reply.getGmtQuestionRead()) {
-						countNewNotice++;
-					}
-				}
-			}
-
-			model.addAttribute("countNewNotice", countNewNotice);
-		}
-		// 显示新消息数 End
 
 		if ("questions".equals(action)) {
 			// Question 页面
@@ -64,10 +43,7 @@ public class ProfileController {
 			}
 
 		} else if ("replies".equals(action)) {
-			// Reply 页面
-			PaginationDTO paginationQuestionDTO = replyService.listAtProfile(currentUser.getId(), page, size);
-			model.addAttribute("paginationDTO", paginationQuestionDTO);
-			// System.out.println(paginationQuestionDTO.toString());
+			
 			model.addAttribute("section", "replies");
 			model.addAttribute("sectionName", "个人回复");
 		} else if ("personalInfo".equals(action)) {
@@ -81,23 +57,7 @@ public class ProfileController {
 
 			return "settings";
 		} else if ("notices".equals(action)) {
-			model.addAttribute("section", "notices");
-			model.addAttribute("sectionName", "他人答复");
-
-			// 设置分页
-			PaginationDTO paginationQuestionDTO = replyService.listAtNotice(currentUser.getId(), page, size);
-
-			int countNewNotice = 0;
-			for (ReplyDTO reply : paginationQuestionDTO.getReplies()) {
-				// System.out.println(reply.getGmtCreate());
-				// System.out.println(reply.getGmtQuestionRead());
-				if (reply.getGmtCreate() > reply.getGmtQuestionRead()) {
-					countNewNotice++;
-					reply.setQuestionTitle("[New] " + reply.getQuestionTitle());
-				}
-			}
-			model.addAttribute("paginationDTO", paginationQuestionDTO);
-			model.addAttribute("countNewNotice", countNewNotice);
+		
 		}
 
 		return "profile";

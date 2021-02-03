@@ -37,12 +37,12 @@
 					<li
 						th:class="${section == 'questions' } ? 'nav-link active':'nav-link'"><a
 						href="/profile/questions">个人提问</a></li>
-					<li
+					<!-- <li
 						th:class="${section == 'replies' } ? 'nav-link active':'nav-link'"><a
 						href="/profile/replies">个人回答</a></li>
 					<li
 						th:class="${section == 'notices' } ? 'nav-link active':'nav-link'"><a
-						href="/profile/notices">他人答复</a><span class="badge badge-danger" th:text=${countNewNotice}>-1</span></li>
+						href="/profile/notices">他人答复</a><span class="badge badge-danger" th:text=${countNewNotice}>-1</span></li> -->
 					<li
 						th:class="${section == 'settings' } ? 'nav-link active':'nav-link'"><a
 						href="/profile/settings">个人设置</a></li>
@@ -55,7 +55,7 @@
 					th:each="question : ${paginationDTO.questions}"
 					class="media text-muted pt-3">
 					<img class="media-object img-thumbnail mediaobject-index"
-						th:src="${question.user.avatarUrl}">
+						th:src="${question.user.avatarurl}">
 					<p style="margin-left: 16px;"
 						class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
 						<span class="badge badge-info" th:text="${question.getTag()}">-1</span>
@@ -74,13 +74,13 @@
 				</div>
 				<!-- 展示个人提问 End-->
 
-				<!-- 展示个人回答 & 他人答复-->
+				<!-- 展示个人回答 & 他人答复
 
 				<div th:if="${paginationDTO != null && {section} != setting}"
 					th:each="reply : ${paginationDTO.getReplies()}"
 					class="media text-muted pt-3">
 					<img class="media-object img-thumbnail mediaobject-index"
-						th:src="${reply.user.avatarUrl}">
+						th:src="${reply.user.avatarurl}">
 					<p class="border-bottom"
 						style="margin-left: 16px; margin-bottom: 0px;">
 					<h3>
@@ -93,7 +93,7 @@
 					</p>
 
 				</div>
-				<!-- 展示个人回答 & 他人答复 End-->
+				展示个人回答 & 他人答复 End-->
 
 				<!-- 分页部分 -->
 				<nav aria-label="Page navigation example" style="margin-top: 15px;">

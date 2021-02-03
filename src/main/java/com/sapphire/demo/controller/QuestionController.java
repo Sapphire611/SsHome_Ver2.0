@@ -1,5 +1,7 @@
 package com.sapphire.demo.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +11,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sapphire.demo.dto.PaginationDTO;
 import com.sapphire.demo.dto.QuestionDTO;
-import com.sapphire.demo.dto.ReplyDTO;
+import com.sapphire.demo.mapper.LikeRecordMapper;
 import com.sapphire.demo.mapper.QuestionMapper;
-import com.sapphire.demo.mapper.ReplyMapper;
+import com.sapphire.demo.mapper.ViewRecordMapper;
 import com.sapphire.demo.model.LikeRecord;
+import com.sapphire.demo.model.LikeRecordExample;
+import com.sapphire.demo.model.Question;
+import com.sapphire.demo.model.QuestionExample;
 import com.sapphire.demo.model.User;
 import com.sapphire.demo.model.ViewRecord;
+import com.sapphire.demo.model.ViewRecordExample;
 import com.sapphire.demo.service.QuestionService;
-import com.sapphire.demo.service.ReplyService;
 
 /**
  * @Author : Sapphire L
@@ -34,10 +38,10 @@ public class QuestionController {
 	private QuestionMapper questionMapper;
 
 	@Autowired
-	private ReplyService replyService;
+	private ViewRecordMapper viewRecordMapper;
 
 	@Autowired
-	private ReplyMapper replyMapper;
+	private LikeRecordMapper likeRecordMapper;
 
 	@GetMapping("/question/{id}")
 	public String question(@PathVariable(name = "id") Integer id,
@@ -50,37 +54,45 @@ public class QuestionController {
 			// 用于显示对应问题的内容和Publisher
 			QuestionDTO questionDTO = questionService.getById(id);
 			model.addAttribute("question", questionDTO);
-			
-			// 用于显示回复内容列表
-			PaginationDTO paginationDTO = replyService.list(id, page, size);
-			model.addAttribute("paginationDTO", paginationDTO);
-			
+
 			return "question2";
 		} else {
 
-			// 修改作者的阅读本文时间
-			if (currentUser.getId() == questionMapper.getCreatorById(id)) {
-				questionMapper.updateAuthorReadTime(System.currentTimeMillis(), id);
+			// 修改作者的阅读本文时间，这句话是根据主键找到当前问题的
+			Integer creator = questionMapper.selectByPrimaryKey(id).getCreator();
+
+			if (currentUser.getId() == creator) {
+				Question updatedQuestion = new Question();
+				updatedQuestion.setId(id);
+				updatedQuestion.setGmtauthorread(System.currentTimeMillis());
+				questionMapper.updateByPrimaryKeySelective(updatedQuestion);
 			}
 
 			// 判断当前用户是否已阅读，如果已阅读，浏览数不加一
-			boolean currentUser_view = false;
-			currentUser_view = judgeViewed(id, request, currentUser);
+			ViewRecordExample example = new ViewRecordExample();
+	
+			example.createCriteria().andUseridEqualTo(currentUser.getId()).andQuestionidEqualTo(id);
+			List<ViewRecord> selectByExample = viewRecordMapper.selectByExample(example);
 
-			if (currentUser_view == false) {
-				questionMapper.viewAdd(id); // 访问数 + 1
+			if (selectByExample.size() == 0) {
+				Question updatedQuestion = new Question();
+				updatedQuestion.setId(id);
+				updatedQuestion.setViewCount(questionMapper.selectByPrimaryKey(id).getViewCount() + 1);
+				questionMapper.updateByPrimaryKeySelective(updatedQuestion); // 1.访问数 + 1
+
 				ViewRecord viewRecord = new ViewRecord();
-				viewRecord.setQuestionId(id);
-				viewRecord.setUserId(currentUser.getId());
-				viewRecord.setGmtCreate(System.currentTimeMillis());
-				questionMapper.viewQuestion(viewRecord); // 写入
+				viewRecord.setQuestionid(id);
+				viewRecord.setUserid(currentUser.getId());
+				viewRecord.setGmtcreate(System.currentTimeMillis());
+				viewRecordMapper.insertSelective(viewRecord); // 2. 插入一条 ViewRecord
 			}
 
 			// 判断当前用户是否已点赞，如果点了，传一个“Button” -> 按钮变成绿色
-			boolean currentUser_like = false;
+			LikeRecordExample example2 = new LikeRecordExample();
+			example2.createCriteria().andUseridEqualTo(currentUser.getId()).andQuestionidEqualTo(id);
+			List<LikeRecord> selectByExample2 = likeRecordMapper.selectByExample(example2);
 
-			currentUser_like = judgeLike(id, request, currentUser);
-			if (currentUser_like == true) {
+			if (selectByExample2.size() != 0) {
 				model.addAttribute("Button", "Liked");
 			}
 
@@ -89,26 +101,10 @@ public class QuestionController {
 			model.addAttribute("question", questionDTO);
 
 			// 用于显示回复内容列表
-			PaginationDTO paginationDTO = replyService.list(id, page, size);
-			model.addAttribute("paginationDTO", paginationDTO);
+			// PaginationDTO paginationDTO = replyService.list(id, page, size);
+			// model.addAttribute("paginationDTO", paginationDTO);
 
 			model.addAttribute("currentUser", currentUser);
-
-			// 显示新消息数
-			if (currentUser != null) {
-				PaginationDTO paginationQuestionDTO = replyService.listAtNotice(currentUser.getId(), 1, 7);
-				int countNewNotice = 0;
-				if (paginationQuestionDTO.getTotalCount() != 0) {
-					for (ReplyDTO reply : paginationQuestionDTO.getReplies()) {
-						if (reply.getGmtCreate() > reply.getGmtQuestionRead()) {
-							countNewNotice++;
-						}
-					}
-				}
-
-				model.addAttribute("countNewNotice", countNewNotice);
-			}
-			// 显示新消息数 End
 
 			return "question";
 		}
@@ -118,16 +114,27 @@ public class QuestionController {
 	public String questionLike(@PathVariable(name = "id") Integer id, HttpServletRequest request, Model model) {
 
 		User currentUser = (User) request.getSession().getAttribute("user");
-		boolean currentUser_viewed = false;
-		currentUser_viewed = judgeLike(id, request, currentUser);
+		
+		// 判断当前用户是否已点赞，如果点了，传一个“Button” -> 按钮变成绿色
+		LikeRecordExample example2 = new LikeRecordExample();
+		example2.createCriteria().andUseridEqualTo(currentUser.getId()).andQuestionidEqualTo(id);
+		List<LikeRecord> selectByExample2 = likeRecordMapper.selectByExample(example2);
 
-		if (currentUser_viewed == false) {
+		if (selectByExample2.size() == 0) {
 			LikeRecord likeRecord = new LikeRecord();
-			likeRecord.setQuestionId(id);
-			likeRecord.setUserId(currentUser.getId());
-			likeRecord.setGmtCreate(System.currentTimeMillis());
-			questionMapper.likeAdd(id);
-			questionMapper.likeQuestion(likeRecord); // 写入
+			likeRecord.setQuestionid(id);
+			likeRecord.setUserid(currentUser.getId());
+			likeRecord.setGmtcreate(System.currentTimeMillis());
+			
+			// 1.点赞数 + 1 
+			Question updatedQuestion = new Question();
+			updatedQuestion.setId(id);
+			updatedQuestion.setLikeCount(questionMapper.selectByPrimaryKey(id).getLikeCount() + 1);
+			questionMapper.updateByPrimaryKeySelective(updatedQuestion);
+			
+			// 2.插入一条Like记录
+			likeRecordMapper.insert(likeRecord);
+			
 		} else {
 			// 重定向的话，设置Attribute无效～
 			// model.addAttribute("wrongMsg","Each User could only like once...");
@@ -136,15 +143,6 @@ public class QuestionController {
 		return "redirect:/question/" + id + "";
 	}
 
-	public Boolean judgeLike(Integer id, HttpServletRequest request, User currentUser) {
-		LikeRecord likeId = questionMapper.checkLikeQuestion(id, currentUser.getId());
-
-		boolean currentUser_like = false;
-		if (likeId != null) {
-			currentUser_like = true;
-		}
-		return currentUser_like;
-	}
 
 	@GetMapping("/question/deleteMyQuestion")
 	public String profileDelete(@RequestParam(value = "questionId", required = false) Integer questionId,
@@ -156,26 +154,19 @@ public class QuestionController {
 			return "redirect:/login";
 		} else {
 			// Question 页面 - 删除问题
-			questionMapper.deleteQuestion(questionId);
-			replyMapper.deleteByQuestionId(questionId);
+
+			// questionMapper.deleteQuestion(questionId);
+			questionMapper.deleteByPrimaryKey(questionId);
+
+			// replyMapper.deleteByQuestionId(questionId);
 			// System.out.println(questionId);
 			// PaginationDTO paginationQuestionDTO =
 			// questionService.list(currentUser.getId(),page,size);
 			// model.addAttribute("paginationDTO",paginationQuestionDTO);
 		}
 
-		return "redirect:/";
+		return "redirect:/forum";
 
 	}
 
-	public Boolean judgeViewed(Integer id, HttpServletRequest request, User currentUser) {
-		ViewRecord viewedId = questionMapper.checkViewQuestion(id, currentUser.getId());
-
-		boolean currentUser_view = false;
-		if (viewedId != null) {
-			currentUser_view = true;
-		}
-
-		return currentUser_view;
-	}
 }

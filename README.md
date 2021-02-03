@@ -1,4 +1,6 @@
-## My Demo About Spring —— SsHome(赛菲尔的窝)
+## SsHome_Ver2.0
+
+> https://www.bilibili.com/video/BV1r4411r7au?p=34
 
 - [视频地址](https://www.bilibili.com/video/BV1dK4y1b7YH)
 - [Bootstrap4](https://getbootstrap.net/docs/getting-started/introduction/)
@@ -42,3 +44,9 @@
 
 ### mysql 修改密码
 > alter user 'root'@'localhost' identified by  '新密码';
+
+### MyBatisGenerator 
+
+> source ~/.bash_profile
+
+> mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate

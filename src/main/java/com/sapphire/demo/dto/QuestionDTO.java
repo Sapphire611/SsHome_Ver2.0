@@ -2,21 +2,21 @@ package com.sapphire.demo.dto;
 
 import com.sapphire.demo.model.User;
 public class QuestionDTO {
-    private int id;
+    private Integer id;
     private String title;
     private String description;
     private String tag;
-    private Long gmtCreate;
-    private Long gmtModified;
+    private Long gmtcreate;
+    private Long gmtmodified;
     private Integer creator;
     private Integer viewCount;
     private Integer commentCount;
     private Integer likeCount;
     private User user;
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getTitle() {
@@ -37,17 +37,17 @@ public class QuestionDTO {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	public Long getGmtCreate() {
-		return gmtCreate;
+	public Long getGmtcreate() {
+		return gmtcreate;
 	}
-	public void setGmtCreate(Long gmtCreate) {
-		this.gmtCreate = gmtCreate;
+	public void setGmtcreate(Long gmtcreate) {
+		this.gmtcreate = gmtcreate;
 	}
-	public Long getGmtModified() {
-		return gmtModified;
+	public Long getGmtmodified() {
+		return gmtmodified;
 	}
-	public void setGmtModified(Long gmtModified) {
-		this.gmtModified = gmtModified;
+	public void setGmtmodified(Long gmtmodified) {
+		this.gmtmodified = gmtmodified;
 	}
 	public Integer getCreator() {
 		return creator;
@@ -79,7 +79,7 @@ public class QuestionDTO {
 	public void setUser(User user) {
 		this.user = user;
 	}
-    
+	
     
 
 }

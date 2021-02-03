@@ -1,10 +1,12 @@
 package com.sapphire.demo.controller;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,13 +15,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sapphire.demo.dto.PaginationDTO;
-import com.sapphire.demo.dto.ReplyDTO;
 import com.sapphire.demo.mapper.QuestionMapper;
 import com.sapphire.demo.mapper.UserMapper;
 import com.sapphire.demo.model.Question;
+import com.sapphire.demo.model.QuestionExample;
 import com.sapphire.demo.model.User;
 import com.sapphire.demo.service.QuestionService;
-import com.sapphire.demo.service.ReplyService;
 
 @Controller
 public class UserInfoController {
@@ -32,9 +33,6 @@ public class UserInfoController {
 
 	@Autowired
 	private QuestionService questionService;
-	
-	@Autowired
-	private ReplyService replyService;
 
 	@GetMapping("/userinfo/{userName}")
 
@@ -48,7 +46,7 @@ public class UserInfoController {
 			return "redirect:/login";
 		} else {
 			// 个人信息
-			User infoUser = userMapper.findByName(userName);
+			User infoUser = userMapper.selectByPrimaryKey(currentUser.getId());
 			model.addAttribute("infoUser", infoUser);
 
 			// 个人信息 - 相关问题分页
@@ -56,7 +54,12 @@ public class UserInfoController {
 			model.addAttribute("paginationDTO", paginationDTO);
 
 			// 个人信息 - 相关标签, 先得到个人相关问题
-			List<Question> questions = questionMapper.listByUser(infoUser.getId());
+			// List<Question> questions = questionMapper.listByUser(infoUser.getId());
+
+			QuestionExample example2 = new QuestionExample();
+			example2.createCriteria().andCreatorEqualTo(infoUser.getId());
+			List<Question> questions = questionMapper.selectByExample(example2);
+
 			HashSet<String> tags = new HashSet<String>();
 
 			for (Question question : questions) {
@@ -64,22 +67,6 @@ public class UserInfoController {
 			}
 
 			model.addAttribute("tags", tags);
-
-			// 显示新消息数
-			if (currentUser != null) {
-				PaginationDTO paginationQuestionDTO = replyService.listAtNotice(currentUser.getId(), 1, 7);
-				int countNewNotice = 0;
-				if (paginationQuestionDTO.getTotalCount() != 0) {
-					for (ReplyDTO reply : paginationQuestionDTO.getReplies()) {
-						if (reply.getGmtCreate() > reply.getGmtQuestionRead()) {
-							countNewNotice++;
-						}
-					}
-				}
-
-				model.addAttribute("countNewNotice", countNewNotice);
-			}
-			// 显示新消息数 End
 
 		}
 

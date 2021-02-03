@@ -2,6 +2,10 @@ package com.sapphire.demo.service;
 
 import com.sapphire.demo.mapper.UserMapper;
 import com.sapphire.demo.model.User;
+import com.sapphire.demo.model.UserExample;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,19 +20,29 @@ public class UserService {
     private UserMapper userMapper;
 
     public void createOrUpdate(User user) {
-        User dbUser = userMapper.findByaccountId(user.getAccountId());
-        if(dbUser == null){
+        // User dbUser = userMapper.findByaccountId(user.getAccountId());
+    	UserExample userExample = new UserExample();
+    	userExample.createCriteria().andAccountidEqualTo(user.getAccountid());
+    	List<User> users = userMapper.selectByExample(userExample);
+    	if(users.size() == 0){
             //insert
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
+            user.setGmtcreate(System.currentTimeMillis());
+            user.setGmtmodified(user.getGmtcreate());
             userMapper.insert(user);
         }else{
-            //update
-            dbUser.setGmtModified(System.currentTimeMillis());
-            dbUser.setName(user.getName());
-            dbUser.setToken(user.getToken());
-            dbUser.setAvatarUrl(user.getAvatarUrl());
-            userMapper.update(dbUser);
+        	// update
+            // dbUser = 取查询到到第一个结果（应该也只有一个结果
+        	User dbUser = users.get(0);
+        	
+        	UserExample example = new UserExample();
+        	example.createCriteria().andIdEqualTo(dbUser.getId());
+        	
+        	User updatedUser = new User();
+        	updatedUser.setGmtmodified(System.currentTimeMillis());
+        	updatedUser.setName(user.getName());
+        	updatedUser.setToken(user.getToken());
+        	updatedUser.setAvatarurl(user.getAvatarurl());
+            userMapper.updateByExampleSelective(updatedUser, userExample);
         }
     }
 }

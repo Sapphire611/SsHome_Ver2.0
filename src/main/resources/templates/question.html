@@ -21,7 +21,7 @@
 		<div
 			class="d-flex align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
 			<img class="media-object img-thumbnail mediaobject-index"
-				th:src="${question.user.avatarUrl}">
+				th:src="${question.user.avatarurl}">
 			<div style="margin-left: 16px;" class="lh-100">
 				<h6 class="mb-0 text-black lh-100"
 					th:text="'提问者 : ' + ${question.user.getName()}"></h6>
@@ -79,7 +79,7 @@
 
 			<!-- 管理员替你删除问题 -->
 			<span
-				th:if="${question.user.getId() != session.user.getId() && session.user.getAdminBoolean() == 1}"
+				th:if="${question.user.getId() != session.user.getId() && session.user.getAdminboolean() == 1}"
 				class="mb-0 text-red lh-100" style="float: right;"
 				data-toggle="modal" data-target="#deleteQuestion2"> <a
 				href="#">&nbsp;【删除问题】</a>
@@ -126,7 +126,7 @@
 			<p style="margin-bottom: 0px;" class="mediaText">
 				<span th:text="'>> '+${question.commentCount}"></span> comments • <span
 					th:text="${question.viewCount}"></span> views • <span
-					th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+					th:text="${#dates.format(question.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
 				<!-- 这是一个很早之前就写好的点赞按钮 -->
 			<div style="margin-bottom: 60px;">
 				<span> <a style="float: right" th:if="${Button} != null"
@@ -152,10 +152,10 @@
 		<div class="my-3 p-3 bg-white rounded">
 			<h5>Comments</h5>
 
-			<div th:if="${paginationDTO.replies != null} == true"
+			<!-- <div th:if="${paginationDTO.replies != null} == true"
 				th:each="reply : ${paginationDTO.replies}"
 				class="media text-muted pt-3">
-				<!-- <img class="media-object img-thumbnail mediaobject-index" th:src="${question.user.avatarUrl}"> -->
+				<img class="media-object img-thumbnail mediaobject-index" th:src="${question.user.avatarurl}">
 				<div class="media-left">
 					<a th:href="@{'/userinfo/' +${reply.user.getName()}}"> <img
 						class="media-object img-thumbnail mediaobject-reply"
@@ -167,7 +167,7 @@
 					<p style="font-weight: bold" th:text="${reply.user.name}"></p>
 					<p style="margin-bottom: 0px;" th:utext="${reply.description}"></p>
 					<hr>
-					<!-- 用户自行删除回复 条件：回复本人/问题发起者可以删除,管理员就则不显示2次了-->
+					用户自行删除回复 条件：回复本人/问题发起者可以删除,管理员就则不显示2次了
 					<form action="/question/deleteMyReply" method="get">
 						<span
 							th:if="${(question.user.getId() == session.user.getId() || reply.user.getId() == session.user.getId())}"
@@ -176,18 +176,18 @@
 							<button type="submit" class="btn btn-primary">删除回复</button>
 						</span>
 					</form>
-					<!-- 用户自行删除回复 End-->
+					用户自行删除回复 End
 
-					<!-- 管理员删除回复 -->
+					管理员删除回复
 					<form action="/question/deleteMyReply" method="get">
 					<span
-						th:if="${question.user.getId() != session.user.getId() && session.user.getAdminBoolean() == 1}"
+						th:if="${question.user.getId() != session.user.getId() && session.user.getAdminboolean() == 1}"
 						class="mb-0 text-green lh-100" style="float: right;"> <input
 						type="hidden" name="replyId" th:value="${reply.getId()}">
 						<button type="submit" class="btn btn-warning" style="margin-right:20px;">删除回复</button> 
 					</span>
 					</form>
-					<!-- 管理员删除回复 End-->
+					管理员删除回复 End
 
 
 				</div>
@@ -197,7 +197,7 @@
 				<p align="center" class="mediaText">No Comment</p>
 				<hr>
 			</div>
-			<!-- 分页部分 -->
+			分页部分
 			<nav aria-label="Page navigation example" style="margin-top: 15px;">
 				<ul class="pagination">
 					<li class="page-item"><a class="page-link"
@@ -225,7 +225,7 @@
 							<span aria-hidden="true">&raquo;</span>
 					</a></li>
 				</ul>
-			</nav>
+			</nav> -->
 			<!-- 分页部分 End-->
 
 		</div>
@@ -235,7 +235,6 @@
 				<h5 class="border-bottom border-gray pb-2 mb-0">
 					<p>回复问题</p>
 				</h5>
-
 
 				<div id="div1"></div>
 				<input type="hidden" name="questionId"

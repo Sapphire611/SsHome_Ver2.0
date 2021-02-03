@@ -10,14 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sapphire.demo.dto.PaginationDTO;
 import com.sapphire.demo.dto.QuestionDTO;
-import com.sapphire.demo.dto.ReplyDTO;
 import com.sapphire.demo.mapper.QuestionMapper;
 import com.sapphire.demo.model.Question;
 import com.sapphire.demo.model.User;
 import com.sapphire.demo.service.QuestionService;
-import com.sapphire.demo.service.ReplyService;
 
 @Controller
 public class PublishController {
@@ -28,13 +25,11 @@ public class PublishController {
 	@Autowired
 	private QuestionMapper questionMapper;
 
-	@Autowired
-	private ReplyService replyService;
 
 	@GetMapping("/publish/{id}")
 	public String edit(@PathVariable(name = "id") Integer id, Model model, HttpServletRequest request) {
 		User currentUser = (User) request.getSession().getAttribute("user");
-		Integer questionAuthorId = questionMapper.getCreatorById(id);
+		Integer questionAuthorId = questionMapper.selectByPrimaryKey(id).getId();
 
 		if (currentUser == null) {
 			return "redirect:/login";
@@ -59,22 +54,6 @@ public class PublishController {
 	public String publish(Model model, HttpServletRequest request) {
 		User currentUser = (User) request.getSession().getAttribute("user");
 
-		// 显示新消息数
-		if (currentUser != null) {
-			PaginationDTO paginationQuestionDTO = replyService.listAtNotice(currentUser.getId(), 1, 7);
-			int countNewNotice = 0;
-			if (paginationQuestionDTO.getTotalCount() != 0) {
-				for (ReplyDTO reply : paginationQuestionDTO.getReplies()) {
-					if (reply.getGmtCreate() > reply.getGmtQuestionRead()) {
-						countNewNotice++;
-					}
-				}
-			}
-
-			model.addAttribute("countNewNotice", countNewNotice);
-		}
-		// 显示新消息数 End
-
 		return "publish";
 	}
 
@@ -89,18 +68,6 @@ public class PublishController {
 		model.addAttribute("description", description);
 		model.addAttribute("tag", tag);
 
-		// 显示新消息数
-		if (currentUser != null) {
-			PaginationDTO paginationQuestionDTO = replyService.listAtNotice(currentUser.getId(), 1, 7);
-			int countNewNotice = 0;
-			for (ReplyDTO reply : paginationQuestionDTO.getReplies()) {
-				if (reply.getGmtCreate() > reply.getGmtQuestionRead()) {
-					countNewNotice++;
-				}
-			}
-			model.addAttribute("countNewNotice", countNewNotice);
-		}
-		// 显示新消息数 End
 
 		if (title == null || title == "") {
 			model.addAttribute("error", "Please input Title...");

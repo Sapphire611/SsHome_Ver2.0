@@ -2,10 +2,14 @@ package com.sapphire.demo.interceptor;
 
 import com.sapphire.demo.mapper.UserMapper;
 import com.sapphire.demo.model.User;
+import com.sapphire.demo.model.UserExample;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +28,16 @@ public class SessionInterceptor implements HandlerInterceptor {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("token")) {
                     String token = cookie.getValue();
-                    User user = userMapper.findByToken(token);
-                    if (user != null) {
-                        request.getSession().setAttribute("user", user);
+                    
+                    // 创建example，选择token和user_token一样的的User;
+					UserExample userExample = new UserExample();
+					userExample.createCriteria().andTokenEqualTo(token);
+					List<User> users = userMapper.selectByExample(userExample);
+                    
+                    if (users.size() != 0) {
+                        request.getSession().setAttribute("user", users.get(0));
                     }
+                    
                     break;
                 }
             }

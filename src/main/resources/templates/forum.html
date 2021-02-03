@@ -39,7 +39,7 @@
 			th:each="question : ${paginationDTO.questions}"
 			class="media text-muted pt-3">
 			<img class="media-object img-thumbnail mediaobject-index"
-				th:src="${question.user.avatarUrl}">
+				th:src="${question.user.avatarurl}">
 			<!-- <img class="mr-3" th:src="${question.user.avatarUrl}" alt="" width="48" height="48"> -->
 			<p style="margin-left: 16px;"
 				class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
@@ -52,7 +52,7 @@
 						th:text="${question.user.getName()}"></span></a> published an article
 					• <span th:text="${question.commentCount}"></span> comments • <span
 					th:text="${question.viewCount}"></span> views • <span
-					th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+					th:text="${#dates.format(question.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
 				</span>
 			</p>
 

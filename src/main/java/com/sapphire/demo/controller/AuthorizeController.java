@@ -60,17 +60,17 @@ public class AuthorizeController {
 			user.setName(githubUser.getLogin());
 			// user.setName(githubUser.getName());
 
-			user.setAccountId(String.valueOf(githubUser.getId())); // Long -> String 强制转换
+			user.setAccountid(String.valueOf(githubUser.getId())); // Long -> String 强制转换
 			// 一个随机六位数的密码～
 			// user.setPassword((int)(Math.random()*9+1)*100000+"");
 			user.setPassword(123456 + "");
-			user.setAvatarUrl(githubUser.getAvatar_url());
+			user.setAvatarurl(githubUser.getAvatar_url());
 			
 			// 这里有一个待完成的功能：下载头像并重命名存储到avatar文件夹中
 			// 网站似乎难以访问，方案：设置默认头像，让用户自行上传～
 			
 			user.setBio(githubUser.getBio());
-			user.setAdminBoolean(0);
+			user.setAdminboolean(0);
 			userService.createOrUpdate(user);
 
 			// Cookie & Session

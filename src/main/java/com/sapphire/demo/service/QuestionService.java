@@ -5,7 +5,10 @@ import com.sapphire.demo.dto.QuestionDTO;
 import com.sapphire.demo.mapper.QuestionMapper;
 import com.sapphire.demo.mapper.UserMapper;
 import com.sapphire.demo.model.Question;
+import com.sapphire.demo.model.QuestionExample;
 import com.sapphire.demo.model.User;
+
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,108 +18,118 @@ import java.util.List;
 
 @Service
 public class QuestionService {
-    @Autowired
-    private UserMapper userMapper;
+	@Autowired
+	private UserMapper userMapper;
 
-    @Autowired
-    private QuestionMapper questionMapper;
+	@Autowired
+	private QuestionMapper questionMapper;
 
-    public PaginationDTO list(Integer page, Integer size) {
+	public PaginationDTO list(Integer page, Integer size) {
 
-        PaginationDTO paginationDTO = new PaginationDTO();
-        Integer totalCount = questionMapper.count();
-        paginationDTO.setPagination(totalCount, page, size);
-        // 当前页小于1或者大于totalPage时,做出修正
-        if (page < 1) page = 1;
-        if (page > paginationDTO.getTotalPage()) page = paginationDTO.getTotalPage();
+		PaginationDTO paginationDTO = new PaginationDTO();
+		Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
+		paginationDTO.setPagination(totalCount, page, size);
+		// 当前页小于1或者大于totalPage时,做出修正
+		if (page < 1)
+			page = 1;
+		if (page > paginationDTO.getTotalPage())
+			page = paginationDTO.getTotalPage();
 
+		// size * (page - 1)
+		Integer offset = size * (page - 1);
+		
+		
+		QuestionExample example = new QuestionExample();
+		example.setOrderByClause("id desc");
+		List<Question> questions = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset,size));
+		List<QuestionDTO> questionDTOList = new ArrayList<>();
 
-        // size * (page - 1)
-        Integer offset = size * (page - 1);
-        List<Question> questions = questionMapper.list(offset, size);
-        List<QuestionDTO> questionDTOList = new ArrayList<>();
+		for (Question question : questions) {
+			User user = userMapper.selectByPrimaryKey(question.getCreator());
+			QuestionDTO questionDTO = new QuestionDTO();
+			BeanUtils.copyProperties(question, questionDTO);
+			questionDTO.setUser(user);
+			questionDTOList.add(questionDTO);
+		}
 
-        for (Question question : questions) {
-            User user = userMapper.findById(question.getCreator());
-            QuestionDTO questionDTO = new QuestionDTO();
-            BeanUtils.copyProperties(question, questionDTO);
-            questionDTO.setUser(user);
-            
-            if(question.getDescription().length() > 50) {
-            	questionDTO.setDescription(questionDTO.getDescription().substring(0, 50) + "...");
-            }
-            
-            questionDTOList.add(questionDTO);
-        }
+		paginationDTO.setQuestions(questionDTOList);
 
-        paginationDTO.setQuestions(questionDTOList);
+		return paginationDTO;
+	}
 
+	// Profile 页面显示 My Question
+	public PaginationDTO list(Integer userId, Integer page, Integer size) {
+		PaginationDTO paginationDTO = new PaginationDTO();
+		
+		// count()
+		QuestionExample example = new QuestionExample();
+		example.createCriteria().andCreatorEqualTo(userId);
+		Integer totalCount = (int)questionMapper.countByExample(example);
+		
+		paginationDTO.setPagination(totalCount, page, size);
+		// 当前页小于1或者大于totalPage时,做出修正
+		if (page < 1)
+			page = 1;
+		if (page > paginationDTO.getTotalPage())
+			page = paginationDTO.getTotalPage();
 
-        return paginationDTO;
-    }
+		// size * (page - 1)
+		Integer offset = size * (page - 1);
+		
+		List<Question> questions = new ArrayList<Question>();
+		if (totalCount != 0) {
+			QuestionExample example2 = new QuestionExample();
+			example2.createCriteria().andCreatorEqualTo(userId);
+			questions = questionMapper.selectByExampleWithRowbounds(example2, new RowBounds(offset,size));
+		}
 
-    // Profile 页面显示 My Question
-    public PaginationDTO list(Integer userId, Integer page, Integer size) {
-        PaginationDTO paginationDTO = new PaginationDTO();
-        Integer totalCount = questionMapper.countByUserId(userId);
-        paginationDTO.setPagination(totalCount, page, size);
-        // 当前页小于1或者大于totalPage时,做出修正
-        if (page < 1) page = 1;
-        if (page > paginationDTO.getTotalPage()) page = paginationDTO.getTotalPage();
+		List<QuestionDTO> questionDTOList = new ArrayList<>();
 
+		for (Question question : questions) {
+			User user = userMapper.selectByPrimaryKey(question.getCreator());
+			QuestionDTO questionDTO = new QuestionDTO();
+			BeanUtils.copyProperties(question, questionDTO);
+			questionDTO.setUser(user);
+			questionDTOList.add(questionDTO);
+		}
 
-        // size * (page - 1)
-        Integer offset = size * (page - 1);
-        
-        List<Question> questions = new ArrayList<Question>();
-        if(totalCount != 0) {
-        	questions = questionMapper.listByUserId(userId, offset, size);
-        }
-        
-        List<QuestionDTO> questionDTOList = new ArrayList<>();
+		paginationDTO.setQuestions(questionDTOList);
 
-        for (Question question : questions) {
-            User user = userMapper.findById(question.getCreator());
-            QuestionDTO questionDTO = new QuestionDTO();
-            BeanUtils.copyProperties(question, questionDTO);
-            
-            if(question.getDescription().length() > 50) {
-            	questionDTO.setDescription(questionDTO.getDescription().substring(0, 50) + "...");
-            }
-            questionDTO.setUser(user);
-            questionDTOList.add(questionDTO);
-        }
+		return paginationDTO;
+	}
 
-        paginationDTO.setQuestions(questionDTOList);
+	public QuestionDTO getById(Integer id) {
+		Question question = questionMapper.selectByPrimaryKey(id);
+		QuestionDTO questionDTO = new QuestionDTO();
+		BeanUtils.copyProperties(question, questionDTO);
+		User user = userMapper.selectByPrimaryKey(question.getCreator());
+		questionDTO.setUser(user);
 
+		return questionDTO;
+	}
 
-        return paginationDTO;
-    }
+	public void createOrUpdate(Question question) {
+		if (question.getId() == null) {
+			question.setGmtcreate(System.currentTimeMillis());
+			question.setGmtmodified(question.getGmtcreate());
+			question.setGmtauthorread(System.currentTimeMillis());
+			question.setCommentCount(0);
+			question.setViewCount(0);
+			question.setLikeCount(0);
+			
+			questionMapper.insert(question);
+		} else {
+			question.setGmtmodified(question.getGmtcreate());
 
-    public QuestionDTO getById(Integer id) {
-        Question question = questionMapper.getById(id);
-        QuestionDTO questionDTO = new QuestionDTO();
-        BeanUtils.copyProperties(question, questionDTO);
-        User user = userMapper.findById(question.getCreator());
-        questionDTO.setUser(user);
-
-        return questionDTO;
-    }
-
-    public void createOrUpdate(Question question) {
-        if (question.getId() == null) {
-            question.setGmtCreate(System.currentTimeMillis());
-            question.setGmtModified(question.getGmtCreate());
-            questionMapper.create(question);
-        } else {
-            question.setGmtModified(question.getGmtCreate());
-            
-            Question updateQuestion = questionMapper.getById(question.getId());
-            updateQuestion.setTitle(question.getTitle());
-            updateQuestion.setDescription(question.getDescription());
-            updateQuestion.setTag(question.getTag());
-            question.setGmtModified(System.currentTimeMillis());
-            questionMapper.update(question);
-        }
-    }
+			Question updateQuestion = new Question();
+			updateQuestion.setTitle(question.getTitle());
+			updateQuestion.setDescription(question.getDescription());
+			updateQuestion.setTag(question.getTag());
+			updateQuestion.setGmtmodified(System.currentTimeMillis());
+			
+			QuestionExample example = new QuestionExample();
+			example.createCriteria().andIdEqualTo(question.getId());
+			questionMapper.updateByExampleSelective(updateQuestion,example);
+		}
+	}
 }

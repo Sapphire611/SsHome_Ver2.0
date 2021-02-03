@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+		<!-- 加入这个插件后 select会携带分页方法 -->
+		<!-- context的子元素必须按照它给出的顺序 -->
+		<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
+
+		<commentGenerator>
+			<!-- 是否去除自动生成的注释 true:是 false:否 -->
+			<!-- <property name="suppressAllComments" value="true" /> -->
+			<!-- 是否去除所有自动生成的文件的时间戳，默认为false -->
+			<property name="suppressDate" value="true" />
+		</commentGenerator>
+
+		<!--数据库连接信息：驱动类、链接地址、用户名、密码 -->
+		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/SsHome" userId="root"
+			password="Rabbit611.">
+			<property name="nullCatalogMeansCurrent" value="true" />
+		</jdbcConnection>
+
+		<javaTypeResolver>
+			<!-- 类型解析器 -->
+			<!-- 默认false，把jdbc decimal 和 numeric 类型解析为integer -->
+			<!-- true，把jdbc decimal 和 numeric 类型解析为java.math.bigdecimal -->
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- 生成模型的包名和位置 -->
+		<javaModelGenerator
+			targetPackage="com.sapphire.demo.model" targetProject="src/main/java">
+			<!-- 是否让schema作为包后缀 -->
+			<property name="enableSubPackages" value="false" />
+			<!-- 从数据库返回的值被清理前后的空格 -->
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- 生成映射文件xml的包名和位置 -->
+		<sqlMapGenerator targetPackage="mapper"
+			targetProject="src/main/resources">
+			<property name="enableSubPackages" value="false" />
+		</sqlMapGenerator>
+
+		<!-- 生成Dao接口的包名和位置 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.sapphire.demo.mapper"
+			targetProject="src/main/java">
+			<property name="enableSubPackages" value="false" />
+		</javaClientGenerator>
+
+		<!-- 用于自动生成代码的数据库表；生成哪些表 -->
+		<table tableName="user" schema="SsHome" domainObjectName="User"></table>
+		<table tableName="question" schema="SsHome" domainObjectName="Question"></table>
+		<table tableName="likeRecord" schema="SsHome" domainObjectName="LikeRecord"></table>
+		<table tableName="viewRecord" schema="SsHome" domainObjectName="ViewRecord"></table>
+
+	</context>
+</generatorConfiguration>

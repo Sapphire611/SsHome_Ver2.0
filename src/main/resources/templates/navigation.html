@@ -10,14 +10,14 @@
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="true">
-				<span><img th:src="${session.user.getAvatarUrl()}" style="width:20px;height:20px;"></span> 
+				<span><img th:src="${session.user.getAvatarurl()}" style="width:20px;height:20px;"></span> 
 				<span class="badge badge-danger" th:text="${countNewNotice}" th:if="${countNewNotice != 0}">-1</span>
 				<span th:text="${session.user.getName()}">&nbsp;</span></a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="/profile/questions">个人提问</a> <a
+					<a class="dropdown-item" href="/profile/questions">个人中心</a> <!-- <a
 						class="dropdown-item" href="/profile/replies">个人回答</a> <a
 						class="dropdown-item" href="/profile/notices">他人答复<span style="margin-left:20px;" class="badge badge-danger" th:text="${countNewNotice}">-1</span></a> <a
-						class="dropdown-item" href="/profile/settings">个人设置</a>
+						class="dropdown-item" href="/profile/settings">个人设置</a> -->
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="/logout">登出</a>
 				</div></li>

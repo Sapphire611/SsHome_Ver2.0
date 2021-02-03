@@ -46,7 +46,7 @@
 		<div style="color: red;" class="text-center"
 			th:if="${wrongMsg} != null" th:text="${wrongMsg}">...</div>
 		<a
-			th:href="${'https://github.com/login/oauth/authorize?client_id=4ce03e6d08271639376f&redirect_uri=http://' + {url} + '/callback&scope=user&state=1'}">
+			th:href="${'https://github.com/login/oauth/authorize?client_id=' + {clientId} + '&redirect_uri=http://' + {url} + '/callback&scope=user&state=1'}">
 			<img src="/img/github.png" width="32" height="32"
 			style="margin-bottom: 15px;">
 		</a>
