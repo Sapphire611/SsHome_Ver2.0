@@ -82,7 +82,7 @@
 
 							<p class="card-text" th:text="${question.getDescription()}"></p>
 							<span class="text-muted"
-								th:text="'最近更新 ：' + ${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+								th:text="'最近更新 ：' + ${#dates.format(question.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
 
 						</div>
 					</div>

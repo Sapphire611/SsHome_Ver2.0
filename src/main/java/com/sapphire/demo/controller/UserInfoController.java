@@ -1,12 +1,10 @@
 package com.sapphire.demo.controller;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +18,7 @@ import com.sapphire.demo.mapper.UserMapper;
 import com.sapphire.demo.model.Question;
 import com.sapphire.demo.model.QuestionExample;
 import com.sapphire.demo.model.User;
+import com.sapphire.demo.model.UserExample;
 import com.sapphire.demo.service.QuestionService;
 
 @Controller
@@ -40,13 +39,11 @@ public class UserInfoController {
 			@RequestParam(name = "page", defaultValue = "1") Integer page,
 			@RequestParam(name = "size", defaultValue = "3") Integer size, HttpServletRequest request, Model model) {
 
-		User currentUser = (User) request.getSession().getAttribute("user");
-
-		if (currentUser == null) {
-			return "redirect:/login";
-		} else {
-			// 个人信息
-			User infoUser = userMapper.selectByPrimaryKey(currentUser.getId());
+			// 根据URL中的userName 找到个人信息对应用户
+			UserExample userExample = new UserExample();
+			userExample.createCriteria().andNameEqualTo(userName);
+			
+			User infoUser = userMapper.selectByExample(userExample).get(0);
 			model.addAttribute("infoUser", infoUser);
 
 			// 个人信息 - 相关问题分页
@@ -68,7 +65,7 @@ public class UserInfoController {
 
 			model.addAttribute("tags", tags);
 
-		}
+		
 
 		return "userinfo";
 	}
