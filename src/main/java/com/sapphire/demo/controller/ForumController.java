@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sapphire.demo.dto.PaginationDTO;
-import com.sapphire.demo.dto.QuestionDTO;
-import com.sapphire.demo.mapper.UserMapper;
-import com.sapphire.demo.model.User;
 import com.sapphire.demo.service.QuestionService;
 
 @Controller
@@ -19,9 +16,6 @@ public class ForumController {
 
 	@Autowired
 	private QuestionService questionService;
-
-	@Autowired
-	private UserMapper userMapper;
 
 	@GetMapping("/forum")
 	// size = 一页显示7个问题

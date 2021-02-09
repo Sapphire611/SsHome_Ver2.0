@@ -2,6 +2,8 @@ package com.sapphire.demo.service;
 
 import com.sapphire.demo.dto.PaginationDTO;
 import com.sapphire.demo.dto.QuestionDTO;
+import com.sapphire.demo.exception.CustomizeErrorCode;
+import com.sapphire.demo.exception.CustomizeException;
 import com.sapphire.demo.mapper.QuestionMapper;
 import com.sapphire.demo.mapper.UserMapper;
 import com.sapphire.demo.model.Question;
@@ -27,7 +29,7 @@ public class QuestionService {
 	public PaginationDTO list(Integer page, Integer size) {
 
 		PaginationDTO paginationDTO = new PaginationDTO();
-		Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
+		Integer totalCount = (int) questionMapper.countByExample(new QuestionExample());
 		paginationDTO.setPagination(totalCount, page, size);
 		// 当前页小于1或者大于totalPage时,做出修正
 		if (page < 1)
@@ -37,11 +39,10 @@ public class QuestionService {
 
 		// size * (page - 1)
 		Integer offset = size * (page - 1);
-		
-		
+
 		QuestionExample example = new QuestionExample();
 		example.setOrderByClause("id desc");
-		List<Question> questions = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset,size));
+		List<Question> questions = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, size));
 		List<QuestionDTO> questionDTOList = new ArrayList<>();
 
 		for (Question question : questions) {
@@ -58,14 +59,14 @@ public class QuestionService {
 	}
 
 	// Profile 页面显示 My Question
-	public PaginationDTO list(Integer userId, Integer page, Integer size) {
+	public PaginationDTO list(Long userId, Integer page, Integer size) {
 		PaginationDTO paginationDTO = new PaginationDTO();
-		
+
 		// count()
 		QuestionExample example = new QuestionExample();
 		example.createCriteria().andCreatorEqualTo(userId);
-		Integer totalCount = (int)questionMapper.countByExample(example);
-		
+		Integer totalCount = (int) questionMapper.countByExample(example);
+
 		paginationDTO.setPagination(totalCount, page, size);
 		// 当前页小于1或者大于totalPage时,做出修正
 		if (page < 1)
@@ -75,12 +76,12 @@ public class QuestionService {
 
 		// size * (page - 1)
 		Integer offset = size * (page - 1);
-		
+
 		List<Question> questions = new ArrayList<Question>();
 		if (totalCount != 0) {
 			QuestionExample example2 = new QuestionExample();
 			example2.createCriteria().andCreatorEqualTo(userId);
-			questions = questionMapper.selectByExampleWithRowbounds(example2, new RowBounds(offset,size));
+			questions = questionMapper.selectByExampleWithRowbounds(example2, new RowBounds(offset, size));
 		}
 
 		List<QuestionDTO> questionDTOList = new ArrayList<>();
@@ -98,8 +99,14 @@ public class QuestionService {
 		return paginationDTO;
 	}
 
-	public QuestionDTO getById(Integer id) {
+	public QuestionDTO getById(Long id) {
 		Question question = questionMapper.selectByPrimaryKey(id);
+
+		// 处理/question/[id]不存在的情况
+		if (question == null) {
+			throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+		}
+
 		QuestionDTO questionDTO = new QuestionDTO();
 		BeanUtils.copyProperties(question, questionDTO);
 		User user = userMapper.selectByPrimaryKey(question.getCreator());
@@ -116,7 +123,7 @@ public class QuestionService {
 			question.setCommentCount(0);
 			question.setViewCount(0);
 			question.setLikeCount(0);
-			
+
 			questionMapper.insert(question);
 		} else {
 			question.setGmtmodified(question.getGmtcreate());
@@ -126,10 +133,13 @@ public class QuestionService {
 			updateQuestion.setDescription(question.getDescription());
 			updateQuestion.setTag(question.getTag());
 			updateQuestion.setGmtmodified(System.currentTimeMillis());
-			
+
 			QuestionExample example = new QuestionExample();
 			example.createCriteria().andIdEqualTo(question.getId());
-			questionMapper.updateByExampleSelective(updateQuestion,example);
+			int updated = questionMapper.updateByExampleSelective(updateQuestion, example);
+
+			if (updated != 1)
+				throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
 		}
 	}
 }

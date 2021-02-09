@@ -27,9 +27,9 @@ public class PublishController {
 
 
 	@GetMapping("/publish/{id}")
-	public String edit(@PathVariable(name = "id") Integer id, Model model, HttpServletRequest request) {
+	public String edit(@PathVariable(name = "id") Long id, Model model, HttpServletRequest request) {
 		User currentUser = (User) request.getSession().getAttribute("user");
-		Integer questionAuthorId = questionMapper.selectByPrimaryKey(id).getId();
+		Long questionAuthorId = questionMapper.selectByPrimaryKey(id).getCreator();
 
 		if (currentUser == null) {
 			return "redirect:/login";
@@ -52,7 +52,6 @@ public class PublishController {
 
 	@GetMapping("/publish")
 	public String publish(Model model, HttpServletRequest request) {
-		User currentUser = (User) request.getSession().getAttribute("user");
 
 		return "publish";
 	}
@@ -61,7 +60,7 @@ public class PublishController {
 	public String dopublish(@RequestParam(value = "title", required = false) String title,
 			@RequestParam(value = "description", required = false) String description,
 			@RequestParam(value = "tag", required = false) String tag,
-			@RequestParam(value = "id", required = false) Integer id, HttpServletRequest request, Model model) {
+			@RequestParam(value = "id", required = false) Long id, HttpServletRequest request, Model model) {
 
 		User currentUser = (User) request.getSession().getAttribute("user");
 		model.addAttribute("title", title);

@@ -8,7 +8,7 @@ public class ViewRecord {
      *
      * @mbg.generated
      */
-    private Integer id;
+    private Long id;
 
     /**
      *
@@ -17,7 +17,7 @@ public class ViewRecord {
      *
      * @mbg.generated
      */
-    private Integer userid;
+    private Long userid;
 
     /**
      *
@@ -26,7 +26,7 @@ public class ViewRecord {
      *
      * @mbg.generated
      */
-    private Integer questionid;
+    private Long questionid;
 
     /**
      *
@@ -45,7 +45,7 @@ public class ViewRecord {
      *
      * @mbg.generated
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -57,7 +57,7 @@ public class ViewRecord {
      *
      * @mbg.generated
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -69,7 +69,7 @@ public class ViewRecord {
      *
      * @mbg.generated
      */
-    public Integer getUserid() {
+    public Long getUserid() {
         return userid;
     }
 
@@ -81,7 +81,7 @@ public class ViewRecord {
      *
      * @mbg.generated
      */
-    public void setUserid(Integer userid) {
+    public void setUserid(Long userid) {
         this.userid = userid;
     }
 
@@ -93,7 +93,7 @@ public class ViewRecord {
      *
      * @mbg.generated
      */
-    public Integer getQuestionid() {
+    public Long getQuestionid() {
         return questionid;
     }
 
@@ -105,7 +105,7 @@ public class ViewRecord {
      *
      * @mbg.generated
      */
-    public void setQuestionid(Integer questionid) {
+    public void setQuestionid(Long questionid) {
         this.questionid = questionid;
     }
 
@@ -132,12 +132,4 @@ public class ViewRecord {
     public void setGmtcreate(Long gmtcreate) {
         this.gmtcreate = gmtcreate;
     }
-
-	@Override
-	public String toString() {
-		return "ViewRecord [id=" + id + ", userid=" + userid + ", questionid=" + questionid + ", gmtcreate=" + gmtcreate
-				+ "]";
-	}
-    
-    
 }
