@@ -2,6 +2,7 @@ package com.sapphire.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sapphire.demo.enums.CommentTypeEnum;
 import com.sapphire.demo.exception.CustomizeErrorCode;
@@ -20,6 +21,7 @@ public class CommentService {
 	@Autowired
 	private QuestionMapper questionMapper;
 
+	@Transactional
 	public void insert(Comment comment) {
 		// 确保 ParentId 存在
 		if (comment.getParentId() == null || comment.getParentId() == 0) {
