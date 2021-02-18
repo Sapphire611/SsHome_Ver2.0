@@ -61,7 +61,7 @@ public class QuestionController {
 
 		if (currentUser != null) {
 
-			// 【后期应该无用，浏览数按照+1模式】修改作者的阅读本文时间，这句话是根据主键找到当前问题的
+			// 【后期应该无用，通知不该这么实现】修改作者的阅读本文时间，这句话是根据主键找到当前问题的
 			Long creator = questionMapper.selectByPrimaryKey(id).getCreator();
 
 			if (currentUser.getId() == creator) {
@@ -79,7 +79,7 @@ public class QuestionController {
 
 			// 判断当前用户是否已点赞，如果点了，传一个“Button” -> 按钮变成绿色
 			LikeRecordExample example2 = new LikeRecordExample();
-			example2.createCriteria().andUseridEqualTo(currentUser.getId()).andQuestionidEqualTo(id);
+			example2.createCriteria().andUseridEqualTo(currentUser.getId()).andSourceidEqualTo(id).andTypeEqualTo(1);
 			List<LikeRecord> selectByExample2 = likeRecordMapper.selectByExample(example2);
 
 			if (selectByExample2.size() != 0) {
@@ -100,12 +100,13 @@ public class QuestionController {
 
 		// 判断当前用户是否已点赞，如果点了，传一个“Button” -> 按钮变成绿色
 		LikeRecordExample example2 = new LikeRecordExample();
-		example2.createCriteria().andUseridEqualTo(currentUser.getId()).andQuestionidEqualTo(id);
+		example2.createCriteria().andUseridEqualTo(currentUser.getId()).andSourceidEqualTo(id).andTypeEqualTo(1);
 		List<LikeRecord> selectByExample2 = likeRecordMapper.selectByExample(example2);
 
 		if (selectByExample2.size() == 0) {
 			LikeRecord likeRecord = new LikeRecord();
-			likeRecord.setQuestionid(id);
+			likeRecord.setSourceid(id);
+			likeRecord.setType(1);
 			likeRecord.setUserid(currentUser.getId());
 			likeRecord.setGmtcreate(System.currentTimeMillis());
 
@@ -118,13 +119,36 @@ public class QuestionController {
 			// 2.插入一条Like记录
 			likeRecordMapper.insert(likeRecord);
 
-		} else {
-			// 重定向的话，设置Attribute无效～
-			// model.addAttribute("wrongMsg","Each User could only like once...");
 		}
 
 		return "redirect:/question/" + id + "";
 	}
+	
+	@GetMapping("/question/{id}/likeCancel")
+	public String questionLikeCancel(@PathVariable(name = "id") Long id, HttpServletRequest request, Model model) {
+
+		User currentUser = (User) request.getSession().getAttribute("user");
+
+		// 判断当前用户是否没有点赞，如果点了，传一个“Button” -> 按钮变成绿色
+		LikeRecordExample example2 = new LikeRecordExample();
+		example2.createCriteria().andUseridEqualTo(currentUser.getId()).andSourceidEqualTo(id).andTypeEqualTo(1);
+		List<LikeRecord> selectByExample2 = likeRecordMapper.selectByExample(example2);
+
+		if (selectByExample2.size() != 0) {
+			// 1.点赞数 - 1
+			Question updatedQuestion = new Question();
+			updatedQuestion.setId(id);
+			updatedQuestion.setLikeCount(questionMapper.selectByPrimaryKey(id).getLikeCount() - 1);
+			questionMapper.updateByPrimaryKeySelective(updatedQuestion);
+
+			// 2.删除对应的likeRecord
+			likeRecordMapper.deleteByPrimaryKey(selectByExample2.get(0).getId());
+
+		}
+
+		return "redirect:/question/" + id + "";
+	}
+	
 
 	@GetMapping("/question/deleteMyQuestion")
 	public String profileDelete(@RequestParam(value = "questionId", required = false) Long questionId,

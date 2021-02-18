@@ -20,7 +20,7 @@ import com.sapphire.demo.exception.CustomizeException;
 @ControllerAdvice
 public class CustomizeExceptionHandler extends ResponseEntityExceptionHandler {
 
-	// @ExceptionHandler(Exception.class)
+	@ExceptionHandler(Exception.class)
 	ModelAndView handle(Throwable e, Model model, HttpServletRequest request, HttpServletResponse response) {
 
 		String contentType = request.getContentType();

@@ -314,63 +314,63 @@ public class LikeRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andQuestionidIsNull() {
-            addCriterion("questionId is null");
+        public Criteria andSourceidIsNull() {
+            addCriterion("sourceId is null");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionidIsNotNull() {
-            addCriterion("questionId is not null");
+        public Criteria andSourceidIsNotNull() {
+            addCriterion("sourceId is not null");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionidEqualTo(Long value) {
-            addCriterion("questionId =", value, "questionid");
+        public Criteria andSourceidEqualTo(Long value) {
+            addCriterion("sourceId =", value, "sourceid");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionidNotEqualTo(Long value) {
-            addCriterion("questionId <>", value, "questionid");
+        public Criteria andSourceidNotEqualTo(Long value) {
+            addCriterion("sourceId <>", value, "sourceid");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionidGreaterThan(Long value) {
-            addCriterion("questionId >", value, "questionid");
+        public Criteria andSourceidGreaterThan(Long value) {
+            addCriterion("sourceId >", value, "sourceid");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionidGreaterThanOrEqualTo(Long value) {
-            addCriterion("questionId >=", value, "questionid");
+        public Criteria andSourceidGreaterThanOrEqualTo(Long value) {
+            addCriterion("sourceId >=", value, "sourceid");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionidLessThan(Long value) {
-            addCriterion("questionId <", value, "questionid");
+        public Criteria andSourceidLessThan(Long value) {
+            addCriterion("sourceId <", value, "sourceid");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionidLessThanOrEqualTo(Long value) {
-            addCriterion("questionId <=", value, "questionid");
+        public Criteria andSourceidLessThanOrEqualTo(Long value) {
+            addCriterion("sourceId <=", value, "sourceid");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionidIn(List<Long> values) {
-            addCriterion("questionId in", values, "questionid");
+        public Criteria andSourceidIn(List<Long> values) {
+            addCriterion("sourceId in", values, "sourceid");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionidNotIn(List<Long> values) {
-            addCriterion("questionId not in", values, "questionid");
+        public Criteria andSourceidNotIn(List<Long> values) {
+            addCriterion("sourceId not in", values, "sourceid");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionidBetween(Long value1, Long value2) {
-            addCriterion("questionId between", value1, value2, "questionid");
+        public Criteria andSourceidBetween(Long value1, Long value2) {
+            addCriterion("sourceId between", value1, value2, "sourceid");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionidNotBetween(Long value1, Long value2) {
-            addCriterion("questionId not between", value1, value2, "questionid");
+        public Criteria andSourceidNotBetween(Long value1, Long value2) {
+            addCriterion("sourceId not between", value1, value2, "sourceid");
             return (Criteria) this;
         }
 
@@ -431,6 +431,66 @@ public class LikeRecordExample {
 
         public Criteria andGmtcreateNotBetween(Long value1, Long value2) {
             addCriterion("gmtCreate not between", value1, value2, "gmtcreate");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(Integer value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(Integer value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(Integer value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(Integer value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<Integer> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<Integer> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(Integer value1, Integer value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
     }

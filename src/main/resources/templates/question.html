@@ -130,16 +130,16 @@
 					th:text="${#dates.format(question.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
 				<!-- 这是一个很早之前就写好的点赞按钮 -->
 			<div style="margin-bottom: 60px;">
-				<span> <a style="float: right" th:if="${session.user != null && Button != null}"
+				<span> <a style="float: right" th:if="${session.user != null && Button == null}"
 					th:href="@{${question.getId()} + '/like'}">
-						<button type="button" class="btn btn-success">
+						<button type="button" class="btn btn-default">
 							<span aria-hidden="true">👍</span>&nbsp;<span
 								th:text="${question.likeCount}"></span>
 						</button>
 				</a>
-				</span> <span><a style="float: right" th:if="${session.user != null && Button == null}"
-					th:href="@{${question.getId()} + '/like'}"><button
-							type="button" class="btn btn-default">
+				</span> <span><a style="float: right" th:if="${session.user != null && Button != null}"
+					th:href="@{${question.getId()} + '/likeCancel'}"><button
+							type="button" class="btn btn-success">
 							<span aria-hidden="true">👍</span>&nbsp;<span
 								th:text="${question.likeCount}"></span>
 						</button></a></span> </a>
