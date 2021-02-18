@@ -15,13 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.sapphire.demo.dto.QuestionDTO;
 import com.sapphire.demo.mapper.LikeRecordMapper;
 import com.sapphire.demo.mapper.QuestionMapper;
-import com.sapphire.demo.mapper.ViewRecordMapper;
 import com.sapphire.demo.model.LikeRecord;
 import com.sapphire.demo.model.LikeRecordExample;
 import com.sapphire.demo.model.Question;
 import com.sapphire.demo.model.User;
-import com.sapphire.demo.model.ViewRecord;
-import com.sapphire.demo.model.ViewRecordExample;
 import com.sapphire.demo.service.QuestionService;
 
 /**
@@ -38,14 +35,11 @@ public class QuestionController {
 	private QuestionMapper questionMapper;
 
 	@Autowired
-	private ViewRecordMapper viewRecordMapper;
-
-	@Autowired
 	private LikeRecordMapper likeRecordMapper;
-	
+
 	@Value("${url}")
 	private String url;
-	
+
 	@Value("${github.client.id}")
 	private String clientId;
 
@@ -56,23 +50,18 @@ public class QuestionController {
 
 		User currentUser = (User) request.getSession().getAttribute("user");
 
-		if (currentUser == null) {
-			// 用于显示对应问题的内容和Publisher
-			QuestionDTO questionDTO = questionService.getById(id);
-			model.addAttribute("question", questionDTO);
+		// 用于ajax异步登录
+		String login_url = "https://github.com/login/oauth/authorize?client_id=" + clientId + "&redirect_uri=http://"
+				+ url + "/callback&scope=user&state=1";
+		model.addAttribute("login_url", login_url);
 
-			return "question2";
-		} else {
-			
-			// 用于ajax异步登录
-			String login_url = "https://github.com/login/oauth/authorize?client_id=" + clientId + "&redirect_uri=http://" + url + "/callback&scope=user&state=1";
-			model.addAttribute("login_url",login_url);
-			
-			// 用于显示对应问题的内容和Publisher
-			QuestionDTO questionDTO = questionService.getById(id);
-			model.addAttribute("question", questionDTO);
+		// 用于显示对应问题的内容和Publisher
+		QuestionDTO questionDTO = questionService.getById(id);
+		model.addAttribute("question", questionDTO);
 
-			// 修改作者的阅读本文时间，这句话是根据主键找到当前问题的
+		if (currentUser != null) {
+
+			// 【后期应该无用，浏览数按照+1模式】修改作者的阅读本文时间，这句话是根据主键找到当前问题的
 			Long creator = questionMapper.selectByPrimaryKey(id).getCreator();
 
 			if (currentUser.getId() == creator) {
@@ -81,25 +70,12 @@ public class QuestionController {
 				updatedQuestion.setGmtauthorread(System.currentTimeMillis());
 				questionMapper.updateByPrimaryKeySelective(updatedQuestion);
 			}
-
-			// 判断当前用户是否已阅读，如果已阅读，浏览数不加一
-			ViewRecordExample example = new ViewRecordExample();
-
-			example.createCriteria().andUseridEqualTo(currentUser.getId()).andQuestionidEqualTo(id);
-			List<ViewRecord> selectByExample = viewRecordMapper.selectByExample(example);
-
-			if (selectByExample.size() == 0) {
-				Question updatedQuestion = new Question();
-				updatedQuestion.setId(id);
-				updatedQuestion.setViewCount(questionMapper.selectByPrimaryKey(id).getViewCount() + 1);
-				questionMapper.updateByPrimaryKeySelective(updatedQuestion); // 1.访问数 + 1
-
-				ViewRecord viewRecord = new ViewRecord();
-				viewRecord.setQuestionid(id);
-				viewRecord.setUserid(currentUser.getId());
-				viewRecord.setGmtcreate(System.currentTimeMillis());
-				viewRecordMapper.insertSelective(viewRecord); // 2. 插入一条 ViewRecord
-			}
+			
+			Question updatedQuestion = new Question();
+			updatedQuestion.setId(id);
+			updatedQuestion.setViewCount(questionMapper.selectByPrimaryKey(id).getViewCount() + 1);
+			questionMapper.updateByPrimaryKeySelective(updatedQuestion); // 访问数 + 1
+			
 
 			// 判断当前用户是否已点赞，如果点了，传一个“Button” -> 按钮变成绿色
 			LikeRecordExample example2 = new LikeRecordExample();
@@ -110,11 +86,11 @@ public class QuestionController {
 				model.addAttribute("Button", "Liked");
 			}
 
-
 			model.addAttribute("currentUser", currentUser);
 
-			return "question";
 		}
+		return "question";
+
 	}
 
 	@GetMapping("/question/{id}/like")

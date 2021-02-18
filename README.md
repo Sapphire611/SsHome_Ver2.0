@@ -33,3 +33,5 @@
 > source ~/.bash_profile
 
 > mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+
+NAVBAR LOGIN_URL == 全局

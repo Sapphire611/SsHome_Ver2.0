@@ -35,13 +35,13 @@
 			class="align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
 			<span class="mb-0 text-black lh-100">总板块 >> <span
 				th:text="${question.getTitle()}"></span></span> <a
-				th:if="${question.user.getId() == session.user.getId()}"
+				th:if="${session.user != null && question.user.getId() == session.user.getId()}"
 				th:href="@{'/publish/'+${question.getId()}}"
 				class="mb-0 text-black lh-100" style="float: right;"> &nbsp;
 				重新编辑 &nbsp; </a>
 
 			<!-- 用户自行删除问题 -->
-			<span th:if="${question.user.getId() == session.user.getId()}"
+			<span th:if="${session.user != null && question.user.getId() == session.user.getId()}"
 				class="mb-0 text-green lh-100" style="float: right;"
 				data-toggle="modal" data-target="#deleteQuestion1"> <a
 				href="#">&nbsp;删除问题&nbsp;</a>
@@ -80,7 +80,7 @@
 
 			<!-- 管理员替你删除问题 -->
 			<span
-				th:if="${question.user.getId() != session.user.getId() && session.user.getAdminboolean() == 1}"
+				th:if="${session.user != null && question.user.getId() != session.user.getId() && session.user.getAdminboolean() == 1}"
 				class="mb-0 text-red lh-100" style="float: right;"
 				data-toggle="modal" data-target="#deleteQuestion2"> <a
 				href="#">&nbsp;【删除问题】</a>
@@ -130,14 +130,14 @@
 					th:text="${#dates.format(question.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
 				<!-- 这是一个很早之前就写好的点赞按钮 -->
 			<div style="margin-bottom: 60px;">
-				<span> <a style="float: right" th:if="${Button} != null"
+				<span> <a style="float: right" th:if="${session.user != null && Button != null}"
 					th:href="@{${question.getId()} + '/like'}">
 						<button type="button" class="btn btn-success">
 							<span aria-hidden="true">👍</span>&nbsp;<span
 								th:text="${question.likeCount}"></span>
 						</button>
 				</a>
-				</span> <span><a style="float: right" th:if="${Button} == null"
+				</span> <span><a style="float: right" th:if="${session.user != null && Button == null}"
 					th:href="@{${question.getId()} + '/like'}"><button
 							type="button" class="btn btn-default">
 							<span aria-hidden="true">👍</span>&nbsp;<span
@@ -235,7 +235,7 @@
 		<!-- <form action="/reply" method="post"> -->
 		<div class="my-3 p-3 bg-white rounded shadow-sm">
 			<h5 class="border-bottom border-gray pb-2 mb-0">
-				<span><img th:src="${session.user.getAvatarurl()}"
+				<span th:if="${session.user != null}"><img th:src="${session.user.getAvatarurl()}"
 					class="media-object img-thumbnail mediaobject-index"
 					style="width: 50px; height: 50px;"><small
 					style="margin-left: 10px;" th:text="${session.user.getName()}"></small>
@@ -250,7 +250,7 @@
 			<input type="hidden" name="questionId" id="questionId"
 				th:value="${question.getId()}"> 
 			<input type="hidden"
-				name="userId" id="userId" th:value="${currentUser.getId()}">
+				name="userId" id="userId" th:if="${session.user != null}" th:value="${currentUser.getId()}">
 			<input type="hidden" name="description" id="description"
 				th:value="${description}">
 
