@@ -2,21 +2,21 @@ package com.sapphire.demo.dto;
 
 import com.sapphire.demo.model.User;
 public class QuestionDTO {
-    private Integer id;
+    private Long id;
     private String title;
     private String description;
     private String tag;
     private Long gmtcreate;
     private Long gmtmodified;
-    private Integer creator;
+    private Long creator;
     private Integer viewCount;
     private Integer commentCount;
     private Integer likeCount;
     private User user;
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getTitle() {
@@ -49,10 +49,10 @@ public class QuestionDTO {
 	public void setGmtmodified(Long gmtmodified) {
 		this.gmtmodified = gmtmodified;
 	}
-	public Integer getCreator() {
+	public Long getCreator() {
 		return creator;
 	}
-	public void setCreator(Integer creator) {
+	public void setCreator(Long creator) {
 		this.creator = creator;
 	}
 	public Integer getViewCount() {

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,12 @@ public class QuestionController {
 
 	@Autowired
 	private LikeRecordMapper likeRecordMapper;
+	
+	@Value("${url}")
+	private String url;
+	
+	@Value("${github.client.id}")
+	private String clientId;
 
 	@GetMapping("/question/{id}")
 	public String question(@PathVariable(name = "id") Long id,
@@ -56,7 +63,11 @@ public class QuestionController {
 
 			return "question2";
 		} else {
-
+			
+			// 用于ajax异步登录
+			String login_url = "https://github.com/login/oauth/authorize?client_id=" + clientId + "&redirect_uri=http://" + url + "/callback&scope=user&state=1";
+			model.addAttribute("login_url",login_url);
+			
 			// 用于显示对应问题的内容和Publisher
 			QuestionDTO questionDTO = questionService.getById(id);
 			model.addAttribute("question", questionDTO);
@@ -99,9 +110,6 @@ public class QuestionController {
 				model.addAttribute("Button", "Liked");
 			}
 
-			// 用于显示回复内容列表
-			// PaginationDTO paginationDTO = replyService.list(id, page, size);
-			// model.addAttribute("paginationDTO", paginationDTO);
 
 			model.addAttribute("currentUser", currentUser);
 

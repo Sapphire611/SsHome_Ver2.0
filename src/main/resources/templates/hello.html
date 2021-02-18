@@ -12,23 +12,17 @@
 	th:href="@{/css/home.css}" />
 <link type="text/css" rel="stylesheet" href="../static/css/carousel.css"
 	th:href="@{/css/carousel.css}" />
-<style>
-.bd-placeholder-img {
-	font-size: 1.125rem;
-	text-anchor: middle;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
-
-@media ( min-width : 768px) {
-	.bd-placeholder-img-lg {
-		font-size: 3.5rem;
-	}
-}
-</style>
 </head>
+
+<script type="text/javascript">
+	window.onload = function(){
+		var closable = window.localStorage.getItem("closable");
+		if(closable == "true"){
+			window.close();
+			window.localStorage.removeItem("closable");
+		}
+	}
+</script>
 
 <body>
 	<!-- import nav -->
