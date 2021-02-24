@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sapphire.demo.dto.CommentCreateDTO;
+import com.sapphire.demo.dto.CommentDTO;
 import com.sapphire.demo.dto.QuestionDTO;
 import com.sapphire.demo.mapper.LikeRecordMapper;
 import com.sapphire.demo.mapper.QuestionMapper;
@@ -19,6 +21,7 @@ import com.sapphire.demo.model.LikeRecord;
 import com.sapphire.demo.model.LikeRecordExample;
 import com.sapphire.demo.model.Question;
 import com.sapphire.demo.model.User;
+import com.sapphire.demo.service.CommentService;
 import com.sapphire.demo.service.QuestionService;
 
 /**
@@ -36,6 +39,9 @@ public class QuestionController {
 
 	@Autowired
 	private LikeRecordMapper likeRecordMapper;
+	
+	@Autowired
+	private CommentService commentService;
 
 	@Value("${url}")
 	private String url;
@@ -87,8 +93,12 @@ public class QuestionController {
 			}
 
 			model.addAttribute("currentUser", currentUser);
-
 		}
+		
+		// 根据问题id找到对应回复
+		List <CommentDTO> comments = commentService.listByQuestionId(id);
+		model.addAttribute("comments", comments);
+		
 		return "question";
 
 	}
