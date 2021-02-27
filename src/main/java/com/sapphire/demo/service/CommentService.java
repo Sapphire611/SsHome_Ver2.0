@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sapphire.demo.dto.CommentCreateDTO;
 import com.sapphire.demo.dto.CommentDTO;
 import com.sapphire.demo.enums.CommentTypeEnum;
 import com.sapphire.demo.exception.CustomizeErrorCode;

@@ -5,12 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
-<link type="text/css" rel="stylesheet"
-	href="/css/bootstrap-theme.min.css" />
 <link type="text/css" rel="stylesheet" href="/css/home.css" />
-<script src="/js/jquery-3.5.1.js" type="application/javascript"></script>
+<script src="/js/jquery-3.5.1.slim.min.js" type="application/javascript"></script>
 <script src="/js/bootstrap.min.js" type="application/javascript"></script>
-<script src="/js/bootstrap.bundle.min.js" type="application/javascript"></script>
 </head>
 <body class="bodyBg">
 	<!-- import nav -->
@@ -69,7 +66,7 @@
 							article • <span th:text="${question.commentCount}"></span>
 							comments • <span th:text="${question.viewCount}"></span> views •
 							<span
-							th:text="${#dates.format(question.getGmtModified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+							th:text="${#dates.format(question.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
 						</span>
 					</p>
 				</div>

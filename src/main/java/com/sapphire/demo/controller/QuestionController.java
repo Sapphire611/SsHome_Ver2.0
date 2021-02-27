@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sapphire.demo.dto.CommentCreateDTO;
 import com.sapphire.demo.dto.CommentDTO;
 import com.sapphire.demo.dto.QuestionDTO;
 import com.sapphire.demo.mapper.LikeRecordMapper;

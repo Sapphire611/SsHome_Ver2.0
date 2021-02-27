@@ -6,12 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
-<link type="text/css" rel="stylesheet"
-	href="/css/bootstrap-theme.min.css" />
 <link type="text/css" rel="stylesheet" href="/css/home.css" />
-<script src="/js/jquery-3.5.1.js" type="application/javascript"></script>
+<script src="/js/jquery-3.5.1.slim.min.js" type="application/javascript"></script>
 <script src="/js/bootstrap.min.js" type="application/javascript"></script>
-<script src="/js/bootstrap.bundle.min.js" type="application/javascript"></script>
+
 </head>
 
 <body class="bodyBg">
@@ -21,58 +19,58 @@
 	<!-- End -->
 
 	<main role="main" class="container">
-	<div
-		class="d-flex align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
-		<svg class="bi bi-pen" width="48" height="48" viewBox="0 0 16 16"
-			fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+		<div
+			class="d-flex align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
+			<svg class="bi bi-pen" width="48" height="48" viewBox="0 0 16 16"
+				fill="currentColor" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd"
-				d="M5.707 13.707a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391L10.086 2.5a2 2 0 0 1 2.828 0l.586.586a2 2 0 0 1 0 2.828l-7.793 7.793zM3 11l7.793-7.793a1 1 0 0 1 1.414 0l.586.586a1 1 0 0 1 0 1.414L5 13l-3 1 1-3z" />
+					d="M5.707 13.707a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391L10.086 2.5a2 2 0 0 1 2.828 0l.586.586a2 2 0 0 1 0 2.828l-7.793 7.793zM3 11l7.793-7.793a1 1 0 0 1 1.414 0l.586.586a1 1 0 0 1 0 1.414L5 13l-3 1 1-3z" />
   <path fill-rule="evenodd"
-				d="M9.854 2.56a.5.5 0 0 0-.708 0L5.854 5.855a.5.5 0 0 1-.708-.708L8.44 1.854a1.5 1.5 0 0 1 2.122 0l.293.292a.5.5 0 0 1-.707.708l-.293-.293z" />
+					d="M9.854 2.56a.5.5 0 0 0-.708 0L5.854 5.855a.5.5 0 0 1-.708-.708L8.44 1.854a1.5 1.5 0 0 1 2.122 0l.293.292a.5.5 0 0 1-.707.708l-.293-.293z" />
   <path
-				d="M13.293 1.207a1 1 0 0 1 1.414 0l.03.03a1 1 0 0 1 .03 1.383L13.5 4 12 2.5l1.293-1.293z" />
+					d="M13.293 1.207a1 1 0 0 1 1.414 0l.03.03a1 1 0 0 1 .03 1.383L13.5 4 12 2.5l1.293-1.293z" />
 </svg>
-		<div class="lh-100" style="margin-left: 15px;">
-			<h6 class="mb-0 text-black lh-100">发布问题</h6>
-			<small>给板块添砖加瓦</small>
+			<div class="lh-100" style="margin-left: 15px;">
+				<h6 class="mb-0 text-black lh-100">发布问题</h6>
+				<small>给板块添砖加瓦</small>
+			</div>
 		</div>
-	</div>
-	<form action="/publish" method="post">
-		<div class="my-3 p-3 bg-white rounded shadow-sm">
-			<h4 class="border-bottom border-gray pb-2 mb-0">
-				发布问题
-				</h6>
+		<form action="/publish" method="post">
+			<div class="my-3 p-3 bg-white rounded shadow-sm">
+				<h4 class="border-bottom border-gray pb-2 mb-0">
+					发布问题
+					</h6>
 
-				<div class="input-group mb-3" style="margin-top: 15px;">
-					<input type="hidden" name="id" th:value="${id}">
-					<div class="input-group-prepend">
-						<span class="input-group-text" id="basic-addon1">问题标题</span>
+					<div class="input-group mb-3" style="margin-top: 15px;">
+						<input type="hidden" name="id" th:value="${id}">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon1">问题标题</span>
+						</div>
+						<input type="text" class="form-control" placeholder="(长度小于25)"
+							aria-label="Title" th:value="${title}" name="title" id="title"
+							aria-describedby="basic-addon1">
 					</div>
-					<input type="text" class="form-control" placeholder="(长度小于25)"
-						aria-label="Title" th:value="${title}" name="title" id="title"
-						aria-describedby="basic-addon1">
-				</div>
 
-				<div class="input-group mb-3" style="margin-top: 15px;">
-					<div class="input-group-prepend">
-						<span class="input-group-text" id="basic-addon1">问题标签</span>
+					<div class="input-group mb-3" style="margin-top: 15px;">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon1">问题标签</span>
+						</div>
+						<input type="text" class="form-control" placeholder="(长度小于6)"
+							aria-label="Tag" th:value="${tag}" name="tag" id="tag"
+							aria-describedby="basic-addon1">
 					</div>
-					<input type="text" class="form-control" placeholder="(长度小于6)"
-						aria-label="Tag" th:value="${tag}" name="tag" id="tag"
-						aria-describedby="basic-addon1">
-				</div>
 
-				<div id="div1"></div>
+					<div id="div1"></div>
 
-				<input type="hidden" name="description" id="description"
-					th:value="${description}">
-				<div class="alert alert-danger" role="alert" th:text="${error}"
-					th:if="${error} != null">...</div>
-				<button style="margin-top: 10px;" Onclick="getText()" type="submit"
-					class="btn btn-success">Publish</button>
-		</div>
-	</form>
-	<!-- <button style="margin-top:10px;"  Onclick="reText()" class="btn btn-success">Retext</button> -->
+					<input type="hidden" name="description" id="description"
+						th:value="${description}">
+					<div class="alert alert-danger" role="alert" th:text="${error}"
+						th:if="${error} != null">...</div>
+					<button style="margin-top: 10px;" Onclick="getText()" type="submit"
+						class="btn btn-success">Publish</button>
+			</div>
+		</form>
+		<!-- <button style="margin-top:10px;"  Onclick="reText()" class="btn btn-success">Retext</button> -->
 	</main>
 
 
@@ -80,8 +78,7 @@
 	<!-- import bottom -->
 	<div th:insert="~{bottom :: bottom}"></div>
 	<!-- End -->
-	<script src="../static/js/wangEditor.min.js"
-		th:src="@{/js/wangEditor.min.js}" type="application/javascript"></script>
+	<script src="/js/wangEditor.min.js" type="application/javascript"></script>
 	<script type="text/javascript">
 		const E = window.wangEditor;
 		const editor = new E('#div1');
