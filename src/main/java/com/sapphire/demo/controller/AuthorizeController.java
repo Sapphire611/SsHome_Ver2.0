@@ -37,11 +37,11 @@ public class AuthorizeController {
 	private UserService userService;
 
 	@GetMapping("/callback")
-	//解决[Required String parameter 'code' is not present]
+	// 解决[Required String parameter 'code' is not present]
 	public String callback(@RequestParam(name = "code",required = false) String code, 
 				           @RequestParam(name = "state",required = false) String state,
 		HttpServletRequest request, HttpServletResponse response) {
-		AccessTokenDTO accessTokenDTO = new AccessTokenDTO(); // 通过accesstoken借口得到accesstoken
+		AccessTokenDTO accessTokenDTO = new AccessTokenDTO(); // 通过accesstoken接口得到accesstoken
 		accessTokenDTO.setClient_id(clientId);
 		accessTokenDTO.setClient_secret(clientSecret);
 		accessTokenDTO.setCode(code);

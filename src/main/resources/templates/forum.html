@@ -13,103 +13,124 @@
 	<!-- import nav -->
 	<div th:insert="~{navigation :: nav}"></div>
 	<!-- End -->
-
-	<main role="main" class="container">
-	<div
-		class="d-flex align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
-		<img class="media-object img-thumbnail mediaobject-index"
-			src="/img/sapphire611.jpeg">
-		<div style="margin-left: 16px;" class="lh-100">
-			<h6 class="mb-0 text-black lh-100">Made By Sapphire611</h6>
-			<small>For Sapphire & Sara —— 2017.12.11</small>
-		</div>
-	</div>
-
-	<div
-		class="align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
-		<span class="mb-0 text-black lh-100">当前位置 ：总板块</span> <span
-			class="mb-0 text-black lh-100" style="float: right;"> <a
-			href="/publish">+ 发布问题</a></span>
-	</div>
-
-	<!-- 板块问题 循环部分 -->
-	<div class="my-3 p-3 bg-white rounded shadow-sm">
-		<h6 class="border-bottom border-gray pb-2 mb-0">近期问题</h6>
-
-		<div th:if="${paginationDTO != null}"
-			th:each="question : ${paginationDTO.questions}"
-			class="media text-muted pt-3">
-			<img class="media-object img-thumbnail mediaobject-index"
-				th:src="${question.user.avatarurl}">
-			<!-- <img class="mr-3" th:src="${question.user.avatarUrl}" alt="" width="48" height="48"> -->
-			<p style="margin-left: 16px;"
-				class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-				<span class="badge badge-info" th:text="${question.getTag()}">-1</span>
-				<strong class="text-gray-dark"> <a
-					th:href="@{'/question/' +${question.getId()}}"
-					th:text="${question.title}" style="font-size: 14px;"></a>
-				</strong> <span class="d-block mediaText" style="margin-top: 5px;"> <a
-					th:href="@{'/userinfo/' +${question.user.getName()}}"><span
-						th:text="${question.user.getName()}"></span></a> published an article
-					• <span th:text="${question.commentCount}"></span> comments • <span
-					th:text="${question.viewCount}"></span> views • <span
-					th:text="${#dates.format(question.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
-				</span>
-			</p>
-
-		</div>
-		<!-- 分页部分 -->
-		<nav aria-label="Page navigation example" style="margin-top: 15px;">
-			<ul class="pagination">
-				<li class="page-item"><a class="page-link"
-					th:if="${paginationDTO.showFirstPage}" th:href="@{/(page=1)}"
-					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-				</a></li>
-				<li class="page-item"><a class="page-link"
-					th:if="${paginationDTO.showPrevious}"
-					th:href="@{/(page=${paginationDTO.page-1})}" aria-label="Previous">
-						<span aria-hidden="true">&lt;</span>
-				</a></li>
-				<li class="page-item"
-					th:class="${paginationDTO.page == page} ? 'active' : ''"
-					th:each="page : ${paginationDTO.pages}"><a class="page-link"
-					th:href="@{/(page=${page})}" th:text="${page}">1</a></li>
-				<li class="page-item"><a class="page-link"
-					th:if="${paginationDTO.showNext}"
-					th:href="@{/(page=${paginationDTO.page + 1})}" aria-label="Next">
-						<span aria-hidden="true">&gt;</span>
-				</a></li>
-				<li class="page-item"><a class="page-link"
-					th:if="${paginationDTO.showEndPage}"
-					th:href="@{/(page=${paginationDTO.totalPage})}" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-				</a></li>
-			</ul>
-		</nav>
-		<!-- 分页部分 End-->
-	</div>
-	<!-- 板块问题 循环部分 End-->
-
-	<div class="my-3 p-3 bg-white rounded shadow-sm">
-		<h6 class="border-bottom border-gray pb-2 mb-0">板块管理员</h6>
-		<!--  板块管理员 循环部分 -->
-		<div class="media text-muted pt-3" th:each="user : ${adminUsers}">
-			<img class="media-object img-thumbnail mediaobject-index"
-				th:src="${user.avatarUrl}">
-			<div style="margin-left: 16px;"
-				class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-				<div class="d-flex justify-content-between align-items-center w-100">
-					<strong class="text-gray-dark" th:text="${user.getName()}">-1</strong>
-					<a href="#">Follow</a>
+	<div class="container-fluid main">
+		<div class="row">
+			<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+				<div
+					class="d-flex align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
+					<img class="media-object img-thumbnail mediaobject-index"
+						src="/img/sapphire611.jpeg">
+					<div style="margin-left: 16px;" class="lh-100">
+						<h6 class="mb-0 text-black lh-100">Made By Sapphire611</h6>
+						<small>For Sapphire & Sara —— 2017.12.11</small>
+					</div>
 				</div>
-				<span class="d-block" th:text="${user.getBio()}">(Bio) -1</span>
+
+				<div
+					class="align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
+					<span class="mb-0 text-black lh-100">当前位置 ：总板块</span> <span
+						class="mb-0 text-black lh-100" style="float: right;"> <a
+						href="/publish">+ 发布问题</a></span>
+				</div>
+
+				<!-- 板块问题 循环部分 -->
+				<div class="my-3 p-3 bg-white rounded shadow-sm">
+					<h6 class="border-bottom border-gray pb-2 mb-0">近期问题</h6>
+
+					<div th:if="${paginationDTO != null}"
+						th:each="question : ${paginationDTO.questions}"
+						class="media text-muted pt-3">
+						<img class="media-object img-thumbnail mediaobject-index"
+							th:src="${question.user.avatarurl}">
+						<!-- <img class="mr-3" th:src="${question.user.avatarUrl}" alt="" width="48" height="48"> -->
+						<p style="margin-left: 16px;"
+							class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+							<span class="badge badge-info" th:text="${question.getTag()}">-1</span>
+							<strong class="text-gray-dark"> <a
+								th:href="@{'/question/' +${question.getId()}}"
+								th:text="${question.title}" style="font-size: 14px;"></a>
+							</strong> <span class="d-block mediaText" style="margin-top: 5px;">
+								<a th:href="@{'/userinfo/' +${question.user.getName()}}"><span
+									th:text="${question.user.getName()}"></span></a> published an
+								article • <span th:text="${question.commentCount}"></span>
+								comments • <span th:text="${question.viewCount}"></span> views •
+								<span
+								th:text="${' Last Modified : ' + #dates.format(question.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+							</span>
+						</p>
+
+					</div>
+					<!-- 分页部分 -->
+					<nav aria-label="Page navigation example" style="margin-top: 15px;">
+						<ul class="pagination">
+							<li class="page-item"><a class="page-link"
+								th:if="${paginationDTO.showFirstPage}" th:href="@{/(page=1)}"
+								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+							</a></li>
+							<li class="page-item"><a class="page-link"
+								th:if="${paginationDTO.showPrevious}"
+								th:href="@{/(page=${paginationDTO.page-1})}"
+								aria-label="Previous"> <span aria-hidden="true">&lt;</span>
+							</a></li>
+							<li class="page-item"
+								th:class="${paginationDTO.page == page} ? 'active' : ''"
+								th:each="page : ${paginationDTO.pages}"><a
+								class="page-link" th:href="@{/(page=${page})}" th:text="${page}">1</a></li>
+							<li class="page-item"><a class="page-link"
+								th:if="${paginationDTO.showNext}"
+								th:href="@{/(page=${paginationDTO.page + 1})}" aria-label="Next">
+									<span aria-hidden="true">&gt;</span>
+							</a></li>
+							<li class="page-item"><a class="page-link"
+								th:if="${paginationDTO.showEndPage}"
+								th:href="@{/(page=${paginationDTO.totalPage})}"
+								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+							</a></li>
+						</ul>
+					</nav>
+					<!-- 分页部分 End-->
+				</div>
+				<!-- 板块问题 循环部分 End-->
+
+				<div class="my-3 p-3 bg-white rounded shadow-sm">
+					<h6 class="border-bottom border-gray pb-2 mb-0">板块管理员</h6>
+					<!--  板块管理员 循环部分 -->
+					<div class="media text-muted pt-3" th:each="user : ${adminUsers}">
+						<img class="media-object img-thumbnail mediaobject-index"
+							th:src="${user.avatarUrl}">
+						<div style="margin-left: 16px;"
+							class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+							<div
+								class="d-flex justify-content-between align-items-center w-100">
+								<strong class="text-gray-dark" th:text="${user.getName()}">-1</strong>
+								<a href="#">Follow</a>
+							</div>
+							<span class="d-block" th:text="${user.getBio()}">(Bio) -1</span>
+						</div>
+					</div>
+					<!--  板块管理员 循环部分 -->
+				</div>
+
 			</div>
+
+			<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+				<div class="d-flex align-items-center p-3 my-3 bg-white rounded shadow-sm">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<h4>热门标签 & 话题</h4>
+						<img style="height:150px;" class="media-object img-thumbnail" src="/img/hello1.jpg">
+					</div>
+				</div>
+				
+				<div class="d-flex align-items-center p-3 my-3 bg-white rounded shadow-sm">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<img style="height: 150px;" class="media-object img-thumbnail" src="/img/ad.png">
+					</div>
+				</div>
+
+			</div>
+
 		</div>
-		<!--  板块管理员 循环部分 -->
 	</div>
-
-	</main>
-
 	<!-- import bottom -->
 	<div th:insert="~{bottom :: bottom}"></div>
 	<!-- End -->
