@@ -66,18 +66,6 @@ public class QuestionController {
 		model.addAttribute("question", questionDTO);
 
 		if (currentUser != null) {
-
-			// 【后期应该无用，通知不该这么实现】修改作者的阅读本文时间，这句话是根据主键找到当前问题的
-			Long creator = questionMapper.selectByPrimaryKey(id).getCreator();
-
-			if (currentUser.getId() == creator) {
-				Question updatedQuestion = new Question();
-				updatedQuestion.setId(id);
-				updatedQuestion.setGmtauthorread(System.currentTimeMillis());
-				questionMapper.updateByPrimaryKeySelective(updatedQuestion);
-			}
-			// 【后期应该无用，通知不该这么实现】修改作者的阅读本文时间，这句话是根据主键找到当前问题的
-			
 			Question updatedQuestion = new Question();
 			updatedQuestion.setId(id);
 			updatedQuestion.setViewCount(questionMapper.selectByPrimaryKey(id).getViewCount() + 1);

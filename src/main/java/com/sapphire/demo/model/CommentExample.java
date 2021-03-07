@@ -554,63 +554,63 @@ public class CommentExample {
             return (Criteria) this;
         }
 
-        public Criteria andLikecountIsNull() {
-            addCriterion("likeCount is null");
+        public Criteria andCommentcountIsNull() {
+            addCriterion("commentCount is null");
             return (Criteria) this;
         }
 
-        public Criteria andLikecountIsNotNull() {
-            addCriterion("likeCount is not null");
+        public Criteria andCommentcountIsNotNull() {
+            addCriterion("commentCount is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLikecountEqualTo(Long value) {
-            addCriterion("likeCount =", value, "likecount");
+        public Criteria andCommentcountEqualTo(Long value) {
+            addCriterion("commentCount =", value, "commentcount");
             return (Criteria) this;
         }
 
-        public Criteria andLikecountNotEqualTo(Long value) {
-            addCriterion("likeCount <>", value, "likecount");
+        public Criteria andCommentcountNotEqualTo(Long value) {
+            addCriterion("commentCount <>", value, "commentcount");
             return (Criteria) this;
         }
 
-        public Criteria andLikecountGreaterThan(Long value) {
-            addCriterion("likeCount >", value, "likecount");
+        public Criteria andCommentcountGreaterThan(Long value) {
+            addCriterion("commentCount >", value, "commentcount");
             return (Criteria) this;
         }
 
-        public Criteria andLikecountGreaterThanOrEqualTo(Long value) {
-            addCriterion("likeCount >=", value, "likecount");
+        public Criteria andCommentcountGreaterThanOrEqualTo(Long value) {
+            addCriterion("commentCount >=", value, "commentcount");
             return (Criteria) this;
         }
 
-        public Criteria andLikecountLessThan(Long value) {
-            addCriterion("likeCount <", value, "likecount");
+        public Criteria andCommentcountLessThan(Long value) {
+            addCriterion("commentCount <", value, "commentcount");
             return (Criteria) this;
         }
 
-        public Criteria andLikecountLessThanOrEqualTo(Long value) {
-            addCriterion("likeCount <=", value, "likecount");
+        public Criteria andCommentcountLessThanOrEqualTo(Long value) {
+            addCriterion("commentCount <=", value, "commentcount");
             return (Criteria) this;
         }
 
-        public Criteria andLikecountIn(List<Long> values) {
-            addCriterion("likeCount in", values, "likecount");
+        public Criteria andCommentcountIn(List<Long> values) {
+            addCriterion("commentCount in", values, "commentcount");
             return (Criteria) this;
         }
 
-        public Criteria andLikecountNotIn(List<Long> values) {
-            addCriterion("likeCount not in", values, "likecount");
+        public Criteria andCommentcountNotIn(List<Long> values) {
+            addCriterion("commentCount not in", values, "commentcount");
             return (Criteria) this;
         }
 
-        public Criteria andLikecountBetween(Long value1, Long value2) {
-            addCriterion("likeCount between", value1, value2, "likecount");
+        public Criteria andCommentcountBetween(Long value1, Long value2) {
+            addCriterion("commentCount between", value1, value2, "commentcount");
             return (Criteria) this;
         }
 
-        public Criteria andLikecountNotBetween(Long value1, Long value2) {
-            addCriterion("likeCount not between", value1, value2, "likecount");
+        public Criteria andCommentcountNotBetween(Long value1, Long value2) {
+            addCriterion("commentCount not between", value1, value2, "commentcount");
             return (Criteria) this;
         }
 

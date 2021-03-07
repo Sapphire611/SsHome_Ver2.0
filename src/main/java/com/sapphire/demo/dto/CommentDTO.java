@@ -16,11 +16,20 @@ public class CommentDTO {
 
 	private Long gmtmodified;
 
-	private Long likecount;
+	private Long commentcount;
 
 	private String content;
 
 	private User user;
+
+
+	public Long getCommentcount() {
+		return commentcount;
+	}
+
+	public void setCommentcount(Long commentcount) {
+		this.commentcount = commentcount;
+	}
 
 	public Long getId() {
 		return id;
@@ -68,14 +77,6 @@ public class CommentDTO {
 
 	public void setGmtmodified(Long gmtmodified) {
 		this.gmtmodified = gmtmodified;
-	}
-
-	public Long getLikecount() {
-		return likecount;
-	}
-
-	public void setLikecount(Long likecount) {
-		this.likecount = likecount;
 	}
 
 	public String getContent() {

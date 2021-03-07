@@ -119,7 +119,6 @@ public class QuestionService {
 		if (question.getId() == null) {
 			question.setGmtcreate(System.currentTimeMillis());
 			question.setGmtmodified(question.getGmtcreate());
-			question.setGmtauthorread(System.currentTimeMillis());
 			question.setCommentCount(0);
 			question.setViewCount(0);
 			question.setLikeCount(0);

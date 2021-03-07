@@ -39,7 +39,8 @@ public class CommentService {
 	@Transactional
 	public void insert(Comment comment) {
 		// 确保 ParentId 存在
-		if (comment.getParentId() == null || comment.getParentId() == 0) {
+		Long parentId = comment.getParentId();
+		if (parentId == null || parentId == 0) {
 			throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FOUND);
 		}
 
@@ -57,11 +58,16 @@ public class CommentService {
 				throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
 			}
 			
-			// 回复问题
+			// 确保问题本身还在
             Question question = questionMapper.selectByPrimaryKey(dbComment.getParentId());
             if (question == null) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
+            
+            // 二级回复数 + 1
+            dbComment.setCommentcount(dbComment.getCommentcount() + 1);
+            commentMapper.updateByPrimaryKey(dbComment);
+            
             
 			commentMapper.insert(comment);
 
@@ -77,7 +83,7 @@ public class CommentService {
 			commentMapper.insert(comment);
 			
 			
-			// 问题的回复数 + 1 ??
+			// 问题的回复数 + 1 
 			question.setCommentCount(question.getCommentCount() + 1);
 			questionMapper.updateByPrimaryKey(question);
 
@@ -126,6 +132,7 @@ public class CommentService {
 		// 获取对应问题id下的一级回复 
 		CommentExample example = new CommentExample(); 
 		example.createCriteria().andParentIdEqualTo(id).andTypeEqualTo(type.getType());
+		example.setOrderByClause("gmtCreate desc");
 		List<Comment> comments = commentMapper.selectByExample(example);
 		
 		if(comments.size() == 0) {

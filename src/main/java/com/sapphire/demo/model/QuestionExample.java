@@ -514,66 +514,6 @@ public class QuestionExample {
             return (Criteria) this;
         }
 
-        public Criteria andGmtauthorreadIsNull() {
-            addCriterion("gmtAuthorRead is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andGmtauthorreadIsNotNull() {
-            addCriterion("gmtAuthorRead is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andGmtauthorreadEqualTo(Long value) {
-            addCriterion("gmtAuthorRead =", value, "gmtauthorread");
-            return (Criteria) this;
-        }
-
-        public Criteria andGmtauthorreadNotEqualTo(Long value) {
-            addCriterion("gmtAuthorRead <>", value, "gmtauthorread");
-            return (Criteria) this;
-        }
-
-        public Criteria andGmtauthorreadGreaterThan(Long value) {
-            addCriterion("gmtAuthorRead >", value, "gmtauthorread");
-            return (Criteria) this;
-        }
-
-        public Criteria andGmtauthorreadGreaterThanOrEqualTo(Long value) {
-            addCriterion("gmtAuthorRead >=", value, "gmtauthorread");
-            return (Criteria) this;
-        }
-
-        public Criteria andGmtauthorreadLessThan(Long value) {
-            addCriterion("gmtAuthorRead <", value, "gmtauthorread");
-            return (Criteria) this;
-        }
-
-        public Criteria andGmtauthorreadLessThanOrEqualTo(Long value) {
-            addCriterion("gmtAuthorRead <=", value, "gmtauthorread");
-            return (Criteria) this;
-        }
-
-        public Criteria andGmtauthorreadIn(List<Long> values) {
-            addCriterion("gmtAuthorRead in", values, "gmtauthorread");
-            return (Criteria) this;
-        }
-
-        public Criteria andGmtauthorreadNotIn(List<Long> values) {
-            addCriterion("gmtAuthorRead not in", values, "gmtauthorread");
-            return (Criteria) this;
-        }
-
-        public Criteria andGmtauthorreadBetween(Long value1, Long value2) {
-            addCriterion("gmtAuthorRead between", value1, value2, "gmtauthorread");
-            return (Criteria) this;
-        }
-
-        public Criteria andGmtauthorreadNotBetween(Long value1, Long value2) {
-            addCriterion("gmtAuthorRead not between", value1, value2, "gmtauthorread");
-            return (Criteria) this;
-        }
-
         public Criteria andCreatorIsNull() {
             addCriterion("creator is null");
             return (Criteria) this;

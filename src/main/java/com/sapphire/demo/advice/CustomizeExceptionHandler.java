@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -20,7 +19,7 @@ import com.sapphire.demo.exception.CustomizeException;
 @ControllerAdvice
 public class CustomizeExceptionHandler extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler(Exception.class)
+	// @ExceptionHandler(Exception.class)
 	ModelAndView handle(Throwable e, Model model, HttpServletRequest request, HttpServletResponse response) {
 
 		String contentType = request.getContentType();
