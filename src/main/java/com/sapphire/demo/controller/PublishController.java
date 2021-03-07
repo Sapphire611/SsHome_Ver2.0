@@ -32,7 +32,7 @@ public class PublishController {
 		Long questionAuthorId = questionMapper.selectByPrimaryKey(id).getCreator();
 
 		if (currentUser == null) {
-			return "redirect:/login";
+			return "redirect:/";
 			// 这里似乎要防止别的用户进入这个地址，不然任何人都可以编辑问题
 		} else if (questionAuthorId != currentUser.getId()) {
 			return "redirect:/forum";

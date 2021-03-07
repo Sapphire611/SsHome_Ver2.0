@@ -49,7 +49,6 @@ public class AuthorizeController {
 		accessTokenDTO.setState(state);
 		String accessToken = githubProvider.getAccessToken(accessTokenDTO);
 		GithubUser githubUser = githubProvider.getUser(accessToken);// 通过accesstoken得到user
-		// System.out.println("Username = " + githubUser.getName());
 
 		if (githubUser != null) {
 			User user = new User();
@@ -58,12 +57,9 @@ public class AuthorizeController {
 
 			// 为了得到GitHub中能够对应搜索到的名字
 			user.setName(githubUser.getLogin());
-			// user.setName(githubUser.getName());
-
 			user.setAccountid(String.valueOf(githubUser.getId())); // Long -> String 强制转换
 			// 一个随机六位数的密码～
-			// user.setPassword((int)(Math.random()*9+1)*100000+"");
-			user.setPassword(123456 + "");
+			user.setPassword((int)(Math.random()*9+1)*100000+"");
 			user.setAvatarurl(githubUser.getAvatar_url());
 			
 			// 这里有一个待完成的功能：下载头像并重命名存储到avatar文件夹中

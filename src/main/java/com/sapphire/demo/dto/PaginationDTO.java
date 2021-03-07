@@ -169,7 +169,7 @@ public class PaginationDTO {
         this.page = page;
 
         pages.add(page);
-        /*排除当前页= 1，2，3，end-1,end-2,end-3 的页码前后情况*/
+        /* 排除当前页= 1，2，3，end-1,end-2,end-3 的页码前后情况 */
         for (int i = 1; i <= 3; i++) {
             if(page - i > 0){
                 pages.add(0,page - i); // 从头部插入

@@ -52,10 +52,17 @@ public class CommentService {
 			// 回复评论
 
 			// 确保回复本身还在
-			Comment dbComment = commentMapper.selectByPrimaryKey(comment.getId());
+			Comment dbComment = commentMapper.selectByPrimaryKey(comment.getParentId());
 			if (dbComment == null) {
 				throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
 			}
+			
+			// 回复问题
+            Question question = questionMapper.selectByPrimaryKey(dbComment.getParentId());
+            if (question == null) {
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
+            
 			commentMapper.insert(comment);
 
 		} else {
@@ -78,10 +85,47 @@ public class CommentService {
 
 	}
 
-	public List<CommentDTO> listByQuestionId(Long id) {
+	public List<CommentDTO> listByQuestionId(CommentTypeEnum type,Long id) {
 		// 获取对应问题id下的一级回复 
-		CommentExample example = new CommentExample();
-		example.createCriteria().andParentIdEqualTo(id).andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
+		CommentExample example = new CommentExample(); 
+		example.createCriteria().andParentIdEqualTo(id).andTypeEqualTo(type.getType());
+		List<Comment> comments = commentMapper.selectByExample(example);
+		
+		if(comments.size() == 0) {
+			return new ArrayList<>();
+		}
+		
+		// 获得去重的评论人
+		Set <Long> commentators = comments.stream().map(comment -> comment.getCommentator()).collect(Collectors.toSet());
+		
+		// 获得所有评论人
+		ArrayList<Long> userIds = new ArrayList<Long>();
+		userIds.addAll(commentators);
+		
+		UserExample userExample = new UserExample();
+		userExample.createCriteria().andIdIn(userIds);
+		List<User> users = userMapper.selectByExample(userExample);
+		
+		// 转换 comment 为 CommentDTO
+		Map<Long, User> userMap = users.stream().collect(Collectors.toMap(user -> user.getId(),user -> user));
+		
+		List<CommentDTO> commentDTOs = comments.stream().map(comment -> {
+			CommentDTO commentDTO = new CommentDTO();
+			BeanUtils.copyProperties(comment, commentDTO);
+			
+			commentDTO.setUser(userMap.get(comment.getCommentator()));
+			
+			return commentDTO;
+		}).collect(Collectors.toList());
+		
+		return commentDTOs;
+	}
+	
+	// 手动复制了一遍
+	public List<CommentDTO> listByTargetId(CommentTypeEnum type,Long id) {
+		// 获取对应问题id下的一级回复 
+		CommentExample example = new CommentExample(); 
+		example.createCriteria().andParentIdEqualTo(id).andTypeEqualTo(type.getType());
 		List<Comment> comments = commentMapper.selectByExample(example);
 		
 		if(comments.size() == 0) {

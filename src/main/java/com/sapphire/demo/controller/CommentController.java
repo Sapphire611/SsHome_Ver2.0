@@ -1,17 +1,22 @@
 package com.sapphire.demo.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sapphire.demo.dto.CommentCreateDTO;
+import com.sapphire.demo.dto.CommentDTO;
 import com.sapphire.demo.dto.ResultDTO;
+import com.sapphire.demo.enums.CommentTypeEnum;
 import com.sapphire.demo.exception.CustomizeErrorCode;
 import com.sapphire.demo.model.Comment;
 import com.sapphire.demo.model.User;
@@ -48,6 +53,14 @@ public class CommentController {
 		commentService.insert(comment);
 
 		return ResultDTO.okOf();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
+	public ResultDTO<List<CommentDTO>> comments(@PathVariable(name = "id") Long id) {
+		List<CommentDTO> commentDTOs = commentService.listByTargetId(CommentTypeEnum.COMMENT,id);
+		
+		return  ResultDTO.okOf(commentDTOs);
 	}
 
 }

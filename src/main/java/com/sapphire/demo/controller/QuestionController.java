@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sapphire.demo.dto.CommentDTO;
 import com.sapphire.demo.dto.QuestionDTO;
+import com.sapphire.demo.enums.CommentTypeEnum;
 import com.sapphire.demo.mapper.LikeRecordMapper;
 import com.sapphire.demo.mapper.QuestionMapper;
 import com.sapphire.demo.model.LikeRecord;
@@ -96,7 +97,7 @@ public class QuestionController {
 		}
 		
 		// 根据问题id找到对应回复
-		List <CommentDTO> comments = commentService.listByQuestionId(id);
+		List <CommentDTO> comments = commentService.listByQuestionId(CommentTypeEnum.QUESTION,id);
 		model.addAttribute("comments", comments);
 		
 		return "question";
