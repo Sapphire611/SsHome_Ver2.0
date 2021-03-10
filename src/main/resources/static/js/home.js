@@ -107,9 +107,5 @@ function collapseComments(e) {
 				subCommentContainer.prepend(mediaElement);
 			});
 		});
-
-		// comments.prepend(mediaLeftElement);
-
 	}
-
 }

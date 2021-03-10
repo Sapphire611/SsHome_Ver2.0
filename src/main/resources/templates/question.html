@@ -210,7 +210,7 @@
 							<button type="button"
 								class="btn btn-outline-primary btn-sm smallFloatRightbtn"
 								th:data-id="${comment.getId()}" onClick="collapseComments(this)">
-								<svg class="bi bi-chat-dots" width="1em" height="1em"
+								<svg class="bi bi-chat-dots" style="margin-bottom: 3px;" width="1em" height="1em"
 									viewBox="0 0 16 16" fill="currentColor"
 									xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd"
@@ -238,7 +238,7 @@
 									<span class="mediaText pull-right"
 										th:text="${#dates.format(comment.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
 								</div> -->
-								<!-- 二级评论Demo End-->
+								
 
 								<!-- 二级评论 回复框 -->
 								<hr>
@@ -254,7 +254,7 @@
 								<!-- 二级评论 回复框 End -->
 
 							</div>
-
+							<!-- 二级评论Demo End-->
 
 							<hr>
 						</div>

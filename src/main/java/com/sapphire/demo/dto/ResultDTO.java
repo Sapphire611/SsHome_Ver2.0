@@ -1,7 +1,5 @@
 package com.sapphire.demo.dto;
 
-import java.util.List;
-
 import com.sapphire.demo.exception.CustomizeErrorCode;
 import com.sapphire.demo.exception.CustomizeException;
 
@@ -19,7 +17,7 @@ public class ResultDTO<T> {
 		return resultDTO;
 	}
 
-	// 返回json格式的错误信息
+	// 返回json格式的正确信息
 	public static ResultDTO okOf() {
 		ResultDTO resultDTO = new ResultDTO();
 		resultDTO.setCode(200);
@@ -27,7 +25,7 @@ public class ResultDTO<T> {
 		return resultDTO;
 	}
 
-	// 返回
+	// 返回json格式的正确信息，还有回复列表
 	public static <T> ResultDTO okOf(T t) {
 		ResultDTO resultDTO = new ResultDTO();
 		resultDTO.setCode(200);

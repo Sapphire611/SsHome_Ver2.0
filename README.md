@@ -11,6 +11,20 @@
 - [彻底解决mysql中文乱码](https://blog.csdn.net/u012410733/article/details/61619656)
 - [Json Editor Online](http://jsonseditoronline.org/)
 
+---
+### 项目部署说明
+
+> https://blog.csdn.net/Sirius_hly/article/details/82631470
+
+- 1. 安装 Java、Mysql、Tomcat
+- 2. 运行 src/main/resourse/db/migration/boot.sql 没有数据项目会报错
+- 3. 自行创建 GitHub OAuth App
+- 4. 在application.properties 替换对应的clientId、ClientSecret、url、redirectURL等属性
+- 5. src/main/resoursetemplate/navagation/中等的登陆链接是全局的，需要手动修改
+- 6. 启动项目，如果是linux服务器，可参考下列命令用于ftp文件上传、部署
+
+---
+
 ### Port & Terminal
 - source ~/.bash_profile
 - mvn flyway:migrate
@@ -34,4 +48,4 @@
 
 > mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 
-NAVBAR LOGIN_URL == 全局
+- NAVBAR LOGIN_URL == 全局

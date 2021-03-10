@@ -5,7 +5,6 @@ import java.util.List;
 
 public class PaginationDTO {
     private List<QuestionDTO> questions;
-    private List<ReplyDTO> replies;
     private Boolean showPrevious;
     private Boolean showFirstPage;
     private Boolean showNext;
@@ -15,19 +14,6 @@ public class PaginationDTO {
     private Integer totalPage;
     private Integer totalCount = 0;
     
-    
-
-    public List<ReplyDTO> getReplies() {
-		return replies;
-	}
-
-
-
-	public void setReplies(List<ReplyDTO> replies) {
-		this.replies = replies;
-	}
-
-
 
 	public List<QuestionDTO> getQuestions() {
 		return questions;
@@ -134,17 +120,6 @@ public class PaginationDTO {
 	public void setTotalCount(Integer totalCount) {
 		this.totalCount = totalCount;
 	}
-
-	
-
-	@Override
-	public String toString() {
-		return "PaginationDTO [questions=" + questions.toString() + ", replies=" + replies + ", showPrevious=" + showPrevious
-				+ ", showFirstPage=" + showFirstPage + ", showNext=" + showNext + ", showEndPage=" + showEndPage
-				+ ", page=" + page + ", pages=" + pages + ", totalPage=" + totalPage + ", totalCount=" + totalCount
-				+ "]";
-	}
-
 
 
 	/**
