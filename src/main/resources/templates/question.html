@@ -13,7 +13,9 @@
 	overflow: auto;
 }
 
-li{list-style-type:none;}
+li {
+	list-style-type: none;
+}
 </style>
 
 </head>
@@ -24,47 +26,11 @@ li{list-style-type:none;}
 	<div class="container-fluid main">
 		<div class="row">
 			<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-				<div
-					class="d-flex align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
-					<img class="media-object img-thumbnail mediaobject-index"
-						th:src="${question.user.avatarurl}">
-					<div style="margin-left: 16px;" class="lh-100">
-						<h6 class="mb-0 text-black lh-100"
-							th:text="'提问者 : ' + ${question.user.getName()}"></h6>
-						<small th:text="${question.user.getBio()}"></small>
-					</div>
-
-					<br>
-				</div>
 
 				<div
 					class="align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
-					<span style="font-size: 19px;">总板块 >> <span
-						th:text="${question.getTitle()}"></span></span> <a
-						th:if="${session.user != null && question.user.getId() == session.user.getId()}"
-						th:href="@{'/publish/'+${question.getId()}}"
-						class="mb-0 text-black lh-100 smallFloatRightbtn"><button
-							type="button" class="btn btn-outline-primary btn-sm">重新编辑</button></a>
-
-					<!-- 用户自行删除问题 -->
-					<span
-						th:if="${session.user != null && question.user.getId() == session.user.getId()}"
-						class="mb-0 text-green lh-100 smallFloatRightbtn"
-						data-toggle="modal" data-target="#deleteQuestion1"> <a
-						href="#"><button type="button"
-								class="btn btn-outline-info btn-sm">删除问题</button></a>
-					</span>
-					<!-- 用户自行删除问题 End-->
-
-					<!-- 管理员替你删除问题 -->
-					<span
-						th:if="${session.user != null && question.user.getId() != session.user.getId() && session.user.getAdminboolean() == 1}"
-						class="mb-0 text-red lh-100 smallFloatRightbtn"
-						data-toggle="modal" data-target="#deleteQuestion2"> <a
-						href="#"><button type="button"
-								class="btn btn-outline-danger btn-sm">删除问题</button></a></a>
-					</span>
-					<!-- 管理员替你删除问题 End-->
+					<span style="font-size: 19px;"><a href="/forum">总板块</a> >> <span
+						th:text="${question.getTitle()}"></span></span>
 
 
 					<!-- 这是一个很早之前就写好的点赞按钮 -->
@@ -94,71 +60,6 @@ li{list-style-type:none;}
 
 
 					<!-- 点赞按钮End -->
-
-					<!-- Modal 用户自行删除问题-->
-					<div class="modal fade" id="deleteQuestion1" tabindex="-1"
-						role="dialog" aria-labelledby="exampleModalLabel"
-						aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">删除这个问题</h5>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									<span
-										th:text="'确定要删除你的问题 : [ '+ ${question.getTitle()} + ' ] 吗?'"></span>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-dismiss="modal">取消</button>
-									<form action="/question/deleteMyQuestion" method="get">
-										<input type="hidden" name="questionId"
-											th:value="${question.getId()}">
-										<button type="submit" class="btn btn-primary">确定!</button>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Modal 用户自行删除问题 End-->
-
-
-
-					<!-- Modal 管理员替你删除问题-->
-					<div class="modal fade" id="deleteQuestion2" tabindex="-1"
-						role="dialog" aria-labelledby="exampleModalLabel"
-						aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">删除这个问题</h5>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									<span
-										th:text="'Admin，确定要删除这个问题 : [ '+ ${question.getTitle()} + ' ] 吗?'"></span>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-dismiss="modal">取消</button>
-									<form action="/question/deleteMyQuestion" method="get">
-										<input type="hidden" name="questionId"
-											th:value="${question.getId()}">
-										<button type="submit" class="btn btn-primary">确定!</button>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Modal 管理员替你删除问题 End-->
-
 
 				</div>
 				<!-- Question 主题内容 -->
@@ -340,19 +241,58 @@ li{list-style-type:none;}
 				<!-- </form> -->
 			</div>
 			<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+				<!-- 提问人 -->
 				<div
-					class="d-flex align-items-center p-3 my-3 bg-white rounded shadow-sm">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<h4>相关问题</h4>
-							<!-- 相关问题展示 -->
-							<span th:each="related : ${relatedQuestions}"><a
-								th:href="@{'/question/'+ ${related.id}}"
-								th:text="${related.title}"></a>
-								<br>
-							</span>
+					class="d-flex align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
+					<img class="media-object img-thumbnail mediaobject-index"
+						th:src="${question.user.avatarurl}">
+					<div style="margin-left: 16px;" class="lh-100">
+						<h6 class="mb-0 text-black lh-100"
+							th:text="'提问者 : ' + ${question.user.getName()}"></h6>
+						<small th:text="${question.user.getBio()}"></small>
 					</div>
+
+					<br>
+
 				</div>
 
+				<!-- 操作栏相关-->
+				<div
+					class="d-flex align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm"
+					th:if="${session.user != null && (question.user.getId() == session.user.getId() ||session.user.getAdminboolean() == 1) }">
+					
+					<a
+						th:if="
+					${session.user !=null && question.user.getId()==
+					session.user.getId()}"
+						th:href="@{'/publish/'+${question.getId()}}"
+					class="mb-0 text-black lh-100">
+					<button type="button" class="btn btn-outline-primary btn-sm">重新编辑</button>
+					</a>
+					<!-- 用户自行删除问题 -->
+					<span
+						th:if="${session.user != null && question.user.getId() == session.user.getId()}"
+						class="mb-0 text-green lh-100 smallFloatRightbtn"
+						data-toggle="modal" data-target="#deleteQuestion1"> <a
+						href="#"><button type="button"
+								class="btn btn-outline-info btn-sm">删除问题</button></a>
+					</span>
+					<!-- 用户自行删除问题 End-->
+
+					<!-- 管理员替你删除问题 -->
+					<span
+						th:if="${session.user != null && question.user.getId() != session.user.getId() && session.user.getAdminboolean() == 1}"
+						class="mb-0 text-red lh-100 smallFloatRightbtn"
+						data-toggle="modal" data-target="#deleteQuestion2"> <a
+						href="#"><button type="button"
+								class="btn btn-outline-danger btn-sm">删除问题</button></a></a>
+					</span>
+					<!-- 管理员替你删除问题 End-->
+				</div>
+
+
+
+				<!-- 广告 -->
 				<div
 					class="d-flex align-items-center p-2 my-3 bg-white rounded shadow-sm">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -360,10 +300,86 @@ li{list-style-type:none;}
 							src="/img/ad.png">
 					</div>
 				</div>
+				<!-- 广告 End-->
+
+				<!-- 相关问题-->
+				<div
+					class="d-flex align-items-center p-3 my-3 bg-white rounded shadow-sm">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<h4>相关问题</h4>
+						<!-- 相关问题展示 -->
+						<span th:each="related : ${relatedQuestions}"><a
+							th:href="@{'/question/'+ ${related.id}}"
+							th:text="${related.title}"></a> <br> </span>
+					</div>
+				</div>
+				<!-- 相关问题 End-->
+
 			</div>
 
 		</div>
 	</div>
+
+	<!-- Modal 用户自行删除问题-->
+	<div class="modal fade" id="deleteQuestion1" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">删除这个问题</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<span th:text="'确定要删除你的问题 : [ '+ ${question.getTitle()} + ' ] 吗?'"></span>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">取消</button>
+					<form action="/question/deleteMyQuestion" method="get">
+						<input type="hidden" name="questionId"
+							th:value="${question.getId()}">
+						<button type="submit" class="btn btn-primary">确定!</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal 用户自行删除问题 End-->
+
+
+
+	<!-- Modal 管理员替你删除问题-->
+	<div class="modal fade" id="deleteQuestion2" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">删除这个问题</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<span
+						th:text="'Admin，确定要删除这个问题 : [ '+ ${question.getTitle()} + ' ] 吗?'"></span>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">取消</button>
+					<form action="/question/deleteMyQuestion" method="get">
+						<input type="hidden" name="questionId"
+							th:value="${question.getId()}">
+						<button type="submit" class="btn btn-primary">确定!</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal 管理员替你删除问题 End-->
 
 
 
