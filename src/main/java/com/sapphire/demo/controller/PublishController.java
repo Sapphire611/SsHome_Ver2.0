@@ -45,7 +45,7 @@ public class PublishController {
 			model.addAttribute("tag", question.getTag());
 			model.addAttribute("id", question.getId());
 
-			return "/publish";
+			return "publish";
 		}
 
 	}
@@ -70,22 +70,17 @@ public class PublishController {
 
 		if (title == null || title == "") {
 			model.addAttribute("error", "Please input Title...");
-			return "/publish";
+			return "publish";
 		}
 
 		if (description == null || description == "") {
 			model.addAttribute("error", "Please input Description...");
-			return "/publish";
+			return "publish";
 		}
 
 		if (tag == null || tag == "") {
 			model.addAttribute("error", "Please input tags...");
-			return "/publish";
-		}
-
-		if (tag.length() > 6) {
-			model.addAttribute("error", "too long for tags...");
-			return "/publish";
+			return "publish";
 		}
 
 		if (currentUser == null) {

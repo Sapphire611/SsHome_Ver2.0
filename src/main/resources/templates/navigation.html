@@ -3,26 +3,11 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<a class="navbar-brand" href="/">SsHome&nbsp;&nbsp;</a>
 
-	<div class="collapse navbar-collapse">
-		<ul class="navbar-nav">
-			<li class="nav-item" th:if="${session.user == null}"><a class="nav-link" href="https://github.com/login/oauth/authorize?client_id=0bf2f93d51164f7779d9&redirect_uri=http://localhost/callback&scope=user&state=1">登陆&nbsp;</a></li>
-			<li class="nav-item dropdown" th:if="${session.user != null}">
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-				role="button" data-toggle="dropdown" aria-haspopup="true"
-				aria-expanded="true">
-				<span><img th:src="${session.user.getAvatarurl()}" style="width:20px;height:20px;"></span> 
-				<span class="badge badge-danger" th:text="${countNewNotice}" th:if="${countNewNotice != 0}">-1</span>
-				<span th:text="${session.user.getName()}">&nbsp;</span></a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="/profile/questions">个人中心</a> <!-- <a
-						class="dropdown-item" href="/profile/replies">个人回答</a> <a
-						class="dropdown-item" href="/profile/notices">他人答复<span style="margin-left:20px;" class="badge badge-danger" th:text="${countNewNotice}">-1</span></a> <a
-						class="dropdown-item" href="/profile/settings">个人设置</a> -->
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="/logout">登出</a>
-				</div></li>
+	<div class="collapse navbar-collapse"></div>
 
-			<li class="nav-item dropdown"><a
+	<form th:if="${session.user != null}" class="form-inline">
+		<ul class="navbar-nav">
+			<!-- <li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> &nbsp;&nbsp;导航 </a>
@@ -31,16 +16,40 @@
 						class="dropdown-item" href="#">排行榜</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="#">关于作者</a>
+				</div></li> -->
+			<li class="nav-item dropdown" th:if="${session.user != null}"><a
+				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="true"> <span><img
+						th:src="${session.user.getAvatarurl()}"
+						style="width: 20px; height: 20px;"></span> <span
+					class="badge badge-danger" th:text="${countNewNotice}"
+					th:if="${countNewNotice != 0}">-1</span> <span
+					th:text="${session.user.getName()}">&nbsp;</span></a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="/profile/questions">个人中心</a>
+					<!-- <a
+						class="dropdown-item" href="/profile/replies">个人回答</a> <a
+						class="dropdown-item" href="/profile/notices">他人答复<span style="margin-left:20px;" class="badge badge-danger" th:text="${countNewNotice}">-1</span></a> <a
+						class="dropdown-item" href="/profile/settings">个人设置</a> -->
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="/logout">登出</a>
 				</div></li>
+
 		</ul>
+	</form>
 
-	</div>
-
-	<form class="form-inline">
+	<!-- <form th:if="${session.user != null}" class="form-inline">
 		<input class="form-control mr-sm-2" type="search" placeholder="Search"
 			aria-label="Search">
 		<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+	</form> -->
+
+	<form th:if="${session.user == null}" class="form-inline">
+		<a class="nav-link btn btn-outline-light"
+			href="https://github.com/login/oauth/authorize?client_id=4ce03e6d08271639376f&redirect_uri=http://localhost/callback&scope=user&state=1">登陆&nbsp;</a>
 	</form>
+
 </nav>
 
 </div>

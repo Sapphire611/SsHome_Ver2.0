@@ -27,10 +27,14 @@
 				</div>
 
 				<div
-					class="align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
-					<span class="mb-0 text-black lh-100">当前位置 ：总板块</span> <span
-						class="mb-0 text-black lh-100" style="float: right;"> <a
-						href="/publish">+ 发布问题</a></span>
+					class="align-items-center p-3 my-3 text-black-50 bg-white rounded">
+					<div class="input-group">
+						<input type="text" class="form-control rounded" placeholder="搜索问题...">
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary rounded" type="button">搜索🔍</button>
+							<button style="margin-left:30px;" class="btn btn-outline-info rounded" onClick="publish()" type="button">发布新问题</button>
+						</div>
+					</div>
 				</div>
 
 				<!-- 板块问题 循环部分 -->
@@ -45,8 +49,11 @@
 						<!-- <img class="mr-3" th:src="${question.user.avatarUrl}" alt="" width="48" height="48"> -->
 						<p style="margin-left: 16px;"
 							class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-							<span class="badge badge-info" th:text="${question.getTag()}">-1</span>
-							<strong class="text-gray-dark"> <a
+							<span class="badge badge-pill badge-info"
+								style="margin-right: 5px;"
+								th:each="tag : ${question.getTag().split(',')}"> <span
+								class="badge badge-info" th:text="${tag}">-1</span>
+							</span> <strong class="text-gray-dark"> <a
 								th:href="@{'/question/' +${question.getId()}}"
 								th:text="${question.title}" style="font-size: 14px;"></a>
 							</strong> <span class="d-block mediaText" style="margin-top: 5px;">
@@ -64,26 +71,28 @@
 					<nav aria-label="Page navigation example" style="margin-top: 15px;">
 						<ul class="pagination">
 							<li class="page-item"><a class="page-link"
-								th:if="${paginationDTO.showFirstPage}" th:href="@{/(page=1)}"
-								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+								th:if="${paginationDTO.showFirstPage}"
+								th:href="@{/forum/(page=1)}" aria-label="Previous"> <span
+									aria-hidden="true">&laquo;</span>
 							</a></li>
 							<li class="page-item"><a class="page-link"
 								th:if="${paginationDTO.showPrevious}"
-								th:href="@{/(page=${paginationDTO.page-1})}"
+								th:href="@{/forum/(page=${paginationDTO.page-1})}"
 								aria-label="Previous"> <span aria-hidden="true">&lt;</span>
 							</a></li>
 							<li class="page-item"
 								th:class="${paginationDTO.page == page} ? 'active' : ''"
 								th:each="page : ${paginationDTO.pages}"><a
-								class="page-link" th:href="@{/(page=${page})}" th:text="${page}">1</a></li>
+								class="page-link" th:href="@{/forum/(page=${page})}"
+								th:text="${page}">1</a></li>
 							<li class="page-item"><a class="page-link"
 								th:if="${paginationDTO.showNext}"
-								th:href="@{/(page=${paginationDTO.page + 1})}" aria-label="Next">
-									<span aria-hidden="true">&gt;</span>
+								th:href="@{/forum/(page=${paginationDTO.page + 1})}"
+								aria-label="Next"> <span aria-hidden="true">&gt;</span>
 							</a></li>
 							<li class="page-item"><a class="page-link"
 								th:if="${paginationDTO.showEndPage}"
-								th:href="@{/(page=${paginationDTO.totalPage})}"
+								th:href="@{/forum/(page=${paginationDTO.totalPage})}"
 								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 							</a></li>
 						</ul>
@@ -114,14 +123,18 @@
 			</div>
 
 			<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-				<div class="d-flex align-items-center p-3 my-3 bg-white rounded shadow-sm">
+				<div
+					class="d-flex align-items-center p-3 my-3 bg-white rounded shadow-sm">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<h4>热门标签 & 话题</h4>
-						<img style="height:150px;" class="media-object img-thumbnail" src="/img/hello1.jpg">
+						<h4>热门问题</h4>
+						<span th:each="hot : ${hotQuestions}"><a
+							th:href="@{'/question/'+ ${hot.id}}" th:text="${hot.title}"></a>
+							<br> </span>
 					</div>
 				</div>
-				
-				<div class="d-flex align-items-center p-2 my-3 bg-white rounded shadow-sm">
+
+				<div
+					class="d-flex align-items-center p-2 my-3 bg-white rounded shadow-sm">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<img class="media-object img-thumbnail" src="/img/ad.png">
 					</div>
@@ -136,6 +149,10 @@
 	<!-- End -->
 	<script src="js/jquery-3.5.1.slim.min.js" type="application/javascript"></script>
 	<script src="/js/bootstrap.min.js" type="application/javascript"></script>
-
+	<script>
+	function publish(){
+		window.location.href="publish";
+	}
+	</script>
 </body>
 </html>
