@@ -7,9 +7,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="/css/home.css" />
+<script src="/js/home.js" type="application/javascript"></script>
 <script src="/js/jquery-3.5.1.slim.min.js" type="application/javascript"></script>
 <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 
+<style type="text/css">
+.tab-pane{
+	display:none;
+}
+
+.active{
+	display:inline;
+}
+</style>
 </head>
 
 <body class="bodyBg">
@@ -56,12 +66,42 @@
 							<span class="input-group-text" id="basic-addon1">问题标签</span>
 						</div>
 						<input type="text" class="form-control" placeholder="(用逗号分割)"
-							aria-label="Tag" th:value="${tag}" name="tag" id="tag"
-							autocomplete="off">
+							th:value="${tag}" name="tag" id="tag" autocomplete="off"
+							onclick="showSelectTag()">
 					</div>
 
+
+					<!-- Test -->
+					<div id="select-tag" style="display:none;margin-bottom:10px;" class="card text-center">
+						<div class="card-header">
+							<ul class="nav nav-tabs card-header-tabs">
+								<li role="presentation"
+									th:each="selectCategory,selectCategoryStat: ${tags}"
+									th:class="${selectCategoryStat.first ? 'nav-item active':'nav-item'}">
+									<a class="nav-link"
+									th:href="${'#'+selectCategory.categoryName}"
+									aria-controls="home" role="tab" data-toggle="tab"
+									th:text="${selectCategory.categoryName}"></a>
+								</li>
+							</ul>
+						</div>
+						<div class="card-body">
+							<div role="tabpanel" th:id="${selectCategory.categoryName}"
+								th:each="selectCategory: ${tags}"
+								th:class="${selectCategoryStat.first ? 'active tab-pane':'tab-pane'}">
+								<span> <span th:each="selectTag: ${selectCategory.tags}">
+										<span class="community-tag" onclick="selectTag(this)"
+										th:data-tag="${selectTag}" th:text="${' '+selectTag}">
+									</span>
+								</span>
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Test End-->
 					<div id="div1"></div>
-					
+
 					<input type="hidden" name="description" id="description"
 						th:value="${description}">
 					<div class="alert alert-danger" role="alert" th:text="${error}"

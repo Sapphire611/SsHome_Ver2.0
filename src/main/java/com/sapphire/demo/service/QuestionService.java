@@ -122,7 +122,7 @@ public class QuestionService {
 		return questionDTO;
 	}
 
-	public void createOrUpdate(Question question) {
+	public int createOrUpdate(Question question) {
 		if (question.getId() == null) {
 			question.setGmtcreate(System.currentTimeMillis());
 			question.setGmtmodified(question.getGmtcreate());
@@ -131,6 +131,7 @@ public class QuestionService {
 			question.setLikeCount(0);
 
 			questionMapper.insert(question);
+			return 1;
 		} else {
 			question.setGmtmodified(question.getGmtcreate());
 
@@ -147,6 +148,8 @@ public class QuestionService {
 			if (updated != 1)
 				throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
 		}
+		
+		return 2;
 	}
 
 	public List<QuestionDTO> selectRelated(QuestionDTO queryDTO) {

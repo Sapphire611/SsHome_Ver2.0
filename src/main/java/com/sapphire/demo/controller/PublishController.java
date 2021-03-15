@@ -2,6 +2,7 @@ package com.sapphire.demo.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sapphire.demo.cache.TagCache;
 import com.sapphire.demo.dto.QuestionDTO;
 import com.sapphire.demo.mapper.QuestionMapper;
 import com.sapphire.demo.model.Question;
@@ -24,7 +26,6 @@ public class PublishController {
 
 	@Autowired
 	private QuestionMapper questionMapper;
-
 
 	@GetMapping("/publish/{id}")
 	public String edit(@PathVariable(name = "id") Long id, Model model, HttpServletRequest request) {
@@ -44,6 +45,7 @@ public class PublishController {
 			model.addAttribute("description", question.getDescription());
 			model.addAttribute("tag", question.getTag());
 			model.addAttribute("id", question.getId());
+			model.addAttribute("tags", TagCache.get());
 
 			return "publish";
 		}
@@ -52,7 +54,7 @@ public class PublishController {
 
 	@GetMapping("/publish")
 	public String publish(Model model, HttpServletRequest request) {
-
+		model.addAttribute("tags", TagCache.get());
 		return "publish";
 	}
 
@@ -66,7 +68,7 @@ public class PublishController {
 		model.addAttribute("title", title);
 		model.addAttribute("description", description);
 		model.addAttribute("tag", tag);
-
+		model.addAttribute("tags", TagCache.get());
 
 		if (title == null || title == "") {
 			model.addAttribute("error", "Please input Title...");
@@ -83,6 +85,13 @@ public class PublishController {
 			return "publish";
 		}
 
+		// 标签校验
+		String invalid = TagCache.filterInvalid(tag);
+		if (StringUtils.isNotBlank(invalid)) {
+			model.addAttribute("error", "输入非法标签:" + invalid);
+			return "publish";
+		}
+
 		if (currentUser == null) {
 			model.addAttribute("error", "Please Login first...");
 			return "publish";
@@ -95,9 +104,16 @@ public class PublishController {
 		// System.out.println(question.getDescription());
 		question.setTag(tag.trim());
 		question.setCreator(currentUser.getId());
-		questionService.createOrUpdate(question);
+		
+		// 1 = 发送新问题 2 = 更新问题
+		int flag = questionService.createOrUpdate(question);
 
-		return "redirect:/question/" + id;
+		if(flag == 1) {
+			return "redirect:/forum/" ;
+		}else {
+			return "redirect:/question/" + id;
+		}
+		
 	}
 
 }

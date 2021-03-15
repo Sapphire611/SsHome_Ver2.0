@@ -49,11 +49,11 @@
 						<!-- <img class="mr-3" th:src="${question.user.avatarUrl}" alt="" width="48" height="48"> -->
 						<p style="margin-left: 16px;"
 							class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-							<span class="badge badge-pill badge-info"
+							<!-- <span class="badge badge-pill badge-info"
 								style="margin-right: 5px;"
 								th:each="tag : ${question.getTag().split(',')}"> <span
 								class="badge badge-info" th:text="${tag}">-1</span>
-							</span> <strong class="text-gray-dark"> <a
+							</span> --> <strong class="text-gray-dark"> <a
 								th:href="@{'/question/' +${question.getId()}}"
 								th:text="${question.title}" style="font-size: 14px;"></a>
 							</strong> <span class="d-block mediaText" style="margin-top: 5px;">
