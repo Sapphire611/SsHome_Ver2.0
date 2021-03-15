@@ -44,6 +44,7 @@ public class ProfileController {
 
 		} else if ("replies".equals(action)) {
 			
+			model.addAttribute("paginationDTO", null);
 			model.addAttribute("section", "replies");
 			model.addAttribute("sectionName", "个人回复");
 		} else if ("personalInfo".equals(action)) {
@@ -55,7 +56,7 @@ public class ProfileController {
 			User infoUser = currentUser;
 			model.addAttribute("infoUser", infoUser);
 
-			return "settings";
+			return "profile";
 		} else if ("notices".equals(action)) {
 		
 		}
