@@ -70,7 +70,9 @@ public class AuthorizeController {
 			userService.createOrUpdate(user);
 
 			// Cookie & Session
-			response.addCookie(new Cookie("token", token)); // 把Token放入Cookie中
+			Cookie cookie = new Cookie("token", token);
+			cookie.setMaxAge(60 * 60 * 24 * 30 * 6);
+			response.addCookie(cookie); // 把Token放入Cookie中
 
 			request.getSession().setAttribute("githubUser", githubUser);
 			return "redirect:/";

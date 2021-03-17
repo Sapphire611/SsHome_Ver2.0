@@ -33,17 +33,27 @@ public class QuestionService {
 	@Autowired
     private QuestionExtMapper questionExtMapper;
 
-	public PaginationDTO list(Integer page, Integer size) {
+	public PaginationDTO<QuestionDTO> list(Integer page, Integer size) {
 
-		PaginationDTO paginationDTO = new PaginationDTO();
+		PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<QuestionDTO>();
 		Integer totalCount = (int) questionMapper.countByExample(new QuestionExample());
-		paginationDTO.setPagination(totalCount, page, size);
+		
+		Integer totalPage;
+		if (totalCount % size == 0) {
+            totalPage = totalCount / size;
+        } else {
+            totalPage = totalCount / size + 1;
+        }
+		
+		
 		// 当前页小于1或者大于totalPage时,做出修正
 		if (page < 1)
 			page = 1;
-		if (page > paginationDTO.getTotalPage())
-			page = paginationDTO.getTotalPage();
+		if (page > totalPage)
+			page = totalPage;
 
+		paginationDTO.setTotalCount(totalCount);
+		paginationDTO.setPagination(totalPage, page); 
 		// size * (page - 1)
 		Integer offset = size * (page - 1);
 
@@ -60,29 +70,39 @@ public class QuestionService {
 			questionDTOList.add(questionDTO);
 		}
 
-		paginationDTO.setQuestions(questionDTOList);
+		paginationDTO.setData(questionDTOList);
 
 		return paginationDTO;
 	}
 
 	// Profile 页面显示 My Question
-	public PaginationDTO list(Long userId, Integer page, Integer size) {
-		PaginationDTO paginationDTO = new PaginationDTO();
+	public PaginationDTO<QuestionDTO> list(Long userId, Integer page, Integer size) {
+		PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<QuestionDTO>();
 
 		// count()
 		QuestionExample example = new QuestionExample();
 		example.createCriteria().andCreatorEqualTo(userId);
 		Integer totalCount = (int) questionMapper.countByExample(example);
 
-		paginationDTO.setPagination(totalCount, page, size);
+		paginationDTO.setPagination(totalCount, page);
+		
+		Integer totalPage;
+		
+		if (totalCount % size == 0) {
+            totalPage = totalCount / size;
+        } else {
+            totalPage = totalCount / size + 1;
+        }
+		
 		// 当前页小于1或者大于totalPage时,做出修正
 		if (page < 1)
 			page = 1;
-		if (page > paginationDTO.getTotalPage())
-			page = paginationDTO.getTotalPage();
+		if (page > totalPage)
+			page = totalPage;
+
 
 		// size * (page - 1)
-		Integer offset = size * (page - 1);
+		Integer offset =  page < 1 ? 0 : size * (page - 1);
 
 		List<Question> questions = new ArrayList<Question>();
 		if (totalCount != 0) {
@@ -101,7 +121,7 @@ public class QuestionService {
 			questionDTOList.add(questionDTO);
 		}
 
-		paginationDTO.setQuestions(questionDTOList);
+		paginationDTO.setData(questionDTOList);
 
 		return paginationDTO;
 	}
@@ -122,7 +142,7 @@ public class QuestionService {
 		return questionDTO;
 	}
 
-	public void createOrUpdate(Question question) {
+	public int createOrUpdate(Question question) {
 		if (question.getId() == null) {
 			question.setGmtcreate(System.currentTimeMillis());
 			question.setGmtmodified(question.getGmtcreate());
@@ -131,6 +151,7 @@ public class QuestionService {
 			question.setLikeCount(0);
 
 			questionMapper.insert(question);
+			return 1;
 		} else {
 			question.setGmtmodified(question.getGmtcreate());
 
@@ -147,6 +168,8 @@ public class QuestionService {
 			if (updated != 1)
 				throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
 		}
+		
+		return 2;
 	}
 
 	public List<QuestionDTO> selectRelated(QuestionDTO queryDTO) {

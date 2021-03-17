@@ -17,7 +17,7 @@
 > https://blog.csdn.net/Sirius_hly/article/details/82631470
 
 - 1. 安装 Java、Mysql、Tomcat
-- 2. 运行 src/main/resourse/db/migration/boot.sql 没有数据项目会报错
+- 2. 运行 src/main/resourse/db/migration/home.sql 没有数据项目会报错(source home.sql 即可，不想用migrate)
 - 3. 自行创建 GitHub OAuth App
 - 4. 在application.properties 替换对应的clientId、ClientSecret、url、redirectURL等属性
 - 5. src/main/resoursetemplate/navagation/中等的登陆链接是全局的，需要手动修改

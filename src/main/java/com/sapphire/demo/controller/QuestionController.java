@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.sapphire.demo.dto.CommentDTO;
 import com.sapphire.demo.dto.QuestionDTO;
 import com.sapphire.demo.enums.CommentTypeEnum;
+import com.sapphire.demo.mapper.CommentMapper;
 import com.sapphire.demo.mapper.LikeRecordMapper;
 import com.sapphire.demo.mapper.QuestionMapper;
+import com.sapphire.demo.model.CommentExample;
 import com.sapphire.demo.model.LikeRecord;
 import com.sapphire.demo.model.LikeRecordExample;
 import com.sapphire.demo.model.Question;
@@ -42,6 +44,9 @@ public class QuestionController {
 	
 	@Autowired
 	private CommentService commentService;
+	
+	@Autowired
+	private CommentMapper commentMapper;
 
 	@Value("${url}")
 	private String url;
@@ -160,7 +165,19 @@ public class QuestionController {
 		if (currentUser == null) {
 			return "redirect:/login";
 		} else {
+			// 1.删除对应的点赞记录
+			LikeRecordExample example = new LikeRecordExample();
+			example.createCriteria().andSourceidEqualTo(questionId);
+			likeRecordMapper.deleteByExample(example);
+			
+			// 2.删除对应的问题
 			questionMapper.deleteByPrimaryKey(questionId);
+			
+			// 3.删除对应问题的所有评论
+			CommentExample example2 = new CommentExample();
+			example2.createCriteria().andParentIdEqualTo(questionId);
+			commentMapper.deleteByExample(example2);
+			
 		}
 
 		return "redirect:/forum";

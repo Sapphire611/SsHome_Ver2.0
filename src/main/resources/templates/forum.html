@@ -42,18 +42,18 @@
 					<h6 class="border-bottom border-gray pb-2 mb-0">近期问题</h6>
 
 					<div th:if="${paginationDTO != null}"
-						th:each="question : ${paginationDTO.questions}"
+						th:each="question : ${paginationDTO.data}"
 						class="media text-muted pt-3">
 						<img class="media-object img-thumbnail mediaobject-index"
 							th:src="${question.user.avatarurl}">
 						<!-- <img class="mr-3" th:src="${question.user.avatarUrl}" alt="" width="48" height="48"> -->
 						<p style="margin-left: 16px;"
 							class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-							<span class="badge badge-pill badge-info"
+							<!-- <span class="badge badge-pill badge-info"
 								style="margin-right: 5px;"
 								th:each="tag : ${question.getTag().split(',')}"> <span
 								class="badge badge-info" th:text="${tag}">-1</span>
-							</span> <strong class="text-gray-dark"> <a
+							</span> --> <strong class="text-gray-dark"> <a
 								th:href="@{'/question/' +${question.getId()}}"
 								th:text="${question.title}" style="font-size: 14px;"></a>
 							</strong> <span class="d-block mediaText" style="margin-top: 5px;">
@@ -147,7 +147,7 @@
 	<!-- import bottom -->
 	<div th:insert="~{bottom :: bottom}"></div>
 	<!-- End -->
-	<script src="js/jquery-3.5.1.slim.min.js" type="application/javascript"></script>
+	<script src="/js/jquery-3.5.1.slim.min.js" type="application/javascript"></script>
 	<script src="/js/bootstrap.min.js" type="application/javascript"></script>
 	<script>
 	function publish(){

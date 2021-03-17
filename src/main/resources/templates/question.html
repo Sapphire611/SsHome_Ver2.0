@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="/css/home.css" />
+<link type="text/css" rel="stylesheet" href="/css/editormd.preview.css" />
+<link type="text/css" rel="stylesheet" href="/css/editormd.css" />
 <style type="text/css">
 .smallFloatRightbtn {
 	margin-left: 10px;
@@ -29,8 +31,8 @@ li {
 
 				<div
 					class="align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
-					<span style="font-size: 19px;"><a href="/forum">讨论板块</a> >> <span
-						th:text="${question.getTitle()}"></span></span>
+					<span style="font-size: 19px;"><a href="/forum">讨论板块</a> >>
+						<span th:text="${question.getTitle()}"></span></span>
 
 
 					<!-- 这是一个很早之前就写好的点赞按钮 -->
@@ -66,8 +68,11 @@ li {
 				<div class="my-3 p-3 bg-white rounded shadow-sm">
 					<h3 class="border-bottom border-gray pb-2 mb-0"
 						th:text="${question.getTitle()}"></h3>
-					<p id="questionDes" th:utext="${question.getDescription()}"></p>
-
+					<div id="question-markdown-view">
+						<!-- Server-side output Markdown text -->
+						<textarea id="questionDes" style="display: none;"
+							th:text="${question.getDescription()}">### Hello world!</textarea>
+					</div>
 					<br> <span class="badge badge-info" style="margin-right: 5px;"
 						th:each="tag : ${question.getTag().split(',')}"> <svg
 							class="bi bi-tag" width="1em" height="1em" viewBox="0 0 16 16"
@@ -110,10 +115,11 @@ li {
 							style="margin-left: 15px; margin-right: 15px;">
 							<p style="font-weight: bold" th:text="${comment.user.getName()}"></p>
 							<p style="margin-bottom: 0px;" th:utext="${comment.getContent()}"></p>
-							<br> <span class="mediaText pull-right"
+							<span class="mediaText pull-right"
 								th:text="${#dates.format(comment.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+							<br> 
 							<button type="button"
-								class="btn btn-outline-info btn-sm smallFloatRightbtn">
+								class="btn btn-outline-info btn-sm">
 								<span><svg class="bi bi-heart" width="1em" height="1em"
 										viewBox="0 0 16 16" fill="currentColor"
 										xmlns="http://www.w3.org/2000/svg">
@@ -123,7 +129,7 @@ li {
 							</button>
 
 							<button type="button"
-								class="btn btn-outline-primary btn-sm smallFloatRightbtn"
+								class="btn btn-outline-primary btn-sm"
 								th:data-id="${comment.getId()}" onClick="collapseComments(this)">
 								<svg class="bi bi-chat-dots" style="margin-bottom: 3px;"
 									width="1em" height="1em" viewBox="0 0 16 16"
@@ -136,24 +142,11 @@ li {
 								<span th:text="${comment.getCommentcount()}"></span>
 
 							</button>
-
+							
+							
 							<!-- 二级评论Demo -->
 							<div class="collapse" style="margin-top: 20px;"
 								th:id="${'comment-' + comment.getId()}">
-
-								<!-- <div class="media">
-									<a th:href="@{'/userinfo/' + '1'}"> <img
-										class="media-object img-thumbnail" src="/img/sapphire611.jpeg"
-										style="height: 50px;">
-									</a>
-									<div class="media-body">
-										<h6 class="media-heading" style="margin-left: 10px;">Sapphire611</h6>
-										<p style="margin-left: 10px;">真的假的啊哈哈哈</p>
-									</div>
-									<span class="mediaText pull-right"
-										th:text="${#dates.format(comment.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
-								</div> -->
-
 
 								<!-- 二级评论 回复框 -->
 								<hr>
@@ -176,37 +169,6 @@ li {
 					</div>
 					<!-- 一个回复Demo End-->
 
-					<!-- 
-			分页部分
-			<nav aria-label="Page navigation example" style="margin-top: 15px;">
-				<ul class="pagination">
-					<li class="page-item"><a class="page-link"
-						th:if="${paginationDTO.showFirstPage}" th:href="@{/(page=1)}"
-						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-					</a></li>
-					<li class="page-item"><a class="page-link"
-						th:if="${paginationDTO.showPrevious}"
-						th:href="@{'/question/' + ${question.getId()} + '?page=' + ${paginationDTO.page-1}}"
-						aria-label="Previous"> <span aria-hidden="true">&lt;</span>
-					</a></li>
-					<li class="page-item"
-						th:class="${paginationDTO.page == page} ? 'active' : ''"
-						th:each="page : ${paginationDTO.pages}"><a class="page-link"
-						th:href="@{'/question/' + ${question.getId()} + '?page=' + ${page}}"
-						th:text="${page}">1</a></li>
-					<li class="page-item"><a class="page-link"
-						th:if="${paginationDTO.showNext}"
-						th:href="@{'/question/' + ${question.getId()} + '?page=' + ${paginationDTO.page+1}}"
-						aria-label="Next"> <span aria-hidden="true">&gt;</span>
-					</a></li>
-					<li class="page-item"><a class="page-link"
-						th:if="${paginationDTO.showEndPage}"
-						th:href="@{/(page=${paginationDTO.totalPage})}" aria-label="Next">
-							<span aria-hidden="true">&raquo;</span>
-					</a></li>
-				</ul>
-			</nav> -->
-					<!-- 分页部分 End-->
 
 				</div>
 
@@ -260,14 +222,14 @@ li {
 				<div
 					class="d-flex align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm"
 					th:if="${session.user != null && (question.user.getId() == session.user.getId() ||session.user.getAdminboolean() == 1) }">
-					
+
 					<a
 						th:if="
 					${session.user !=null && question.user.getId()==
 					session.user.getId()}"
 						th:href="@{'/publish/'+${question.getId()}}"
-					class="mb-0 text-black lh-100">
-					<button type="button" class="btn btn-outline-primary btn-sm">重新编辑</button>
+						class="mb-0 text-black lh-100">
+						<button type="button" class="btn btn-outline-primary btn-sm">重新编辑</button>
 					</a>
 					<!-- 用户自行删除问题 -->
 					<span
@@ -391,6 +353,18 @@ li {
 	<script src="/js/home.js" type="application/javascript"></script>
 	<script src="/js/jquery-3.5.1.js" type="application/javascript"></script>
 	<script src="/js/bootstrap.min.js" type="application/javascript"></script>
+	<script src="/js/editormd.js"></script>
+	<script src="/lib/marked.min.js"></script>
+	<script src="/lib/prettify.min.js"></script>
+	<script type="text/javascript">
+    $(function() {
+	    var testView = editormd.markdownToHTML("question-markdown-view", {
+            // markdown : "[TOC]\n### Hello world!\n## Heading 2", // Also, you can dynamic set Markdown text
+            // htmlDecode : true,  // Enable / disable HTML tag encode.
+            // htmlDecode : "style,script,iframe",  // Note: If enabled, you should filter some dangerous HTML tags for website security.
+        });
+    });
+	</script>
 	<script src="/js/wangEditor.min.js" type="application/javascript"></script>
 	<script type="text/javascript">
 		const E = window.wangEditor;
@@ -398,6 +372,7 @@ li {
 		// 或者 const editor = new E( document.getElementById('div1') );
 		editor.create();
 	</script>
+
 
 </body>
 </html>

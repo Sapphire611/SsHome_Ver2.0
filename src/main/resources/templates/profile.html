@@ -17,10 +17,12 @@
 	<main role="main" class="container">
 		<div
 			class="d-flex align-items-center p-3 my-3 text-black-50 bg-white rounded shadow-sm">
-			<svg class="bi bi-people media-object img-thumbnail mediaobject-index" width="1em" height="1em"
-				viewBox="0 0 16 16" fill="currentColor"
+			<svg
+				class="bi bi-people media-object img-thumbnail mediaobject-index"
+				width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
 				xmlns="http://www.w3.org/2000/svg">
-  			<path fill-rule="evenodd" d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.995-.944v-.002.002zM7.022 13h7.956a.274.274 0 0 0 .014-.002l.008-.002c-.002-.264-.167-1.03-.76-1.72C13.688 10.629 12.718 10 11 10c-1.717 0-2.687.63-3.24 1.276-.593.69-.759 1.457-.76 1.72a1.05 1.05 0 0 0 .022.004zm7.973.056v-.002.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10c-1.668.02-2.615.64-3.16 1.276C1.163 11.97 1 12.739 1 13h3c0-1.045.323-2.086.92-3zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
+  			<path fill-rule="evenodd"
+					d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.995-.944v-.002.002zM7.022 13h7.956a.274.274 0 0 0 .014-.002l.008-.002c-.002-.264-.167-1.03-.76-1.72C13.688 10.629 12.718 10 11 10c-1.717 0-2.687.63-3.24 1.276-.593.69-.759 1.457-.76 1.72a1.05 1.05 0 0 0 .022.004zm7.973.056v-.002.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10c-1.668.02-2.615.64-3.16 1.276C1.163 11.97 1 12.739 1 13h3c0-1.045.323-2.086.92-3zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
 			</svg>
 
 			<div style="margin-left: 16px;" class="lh-100">
@@ -35,12 +37,9 @@
 					<li
 						th:class="${section == 'questions' } ? 'nav-link active':'nav-link'"><a
 						href="/profile/questions">个人提问</a></li>
-					<!-- <li
-						th:class="${section == 'replies' } ? 'nav-link active':'nav-link'"><a
-						href="/profile/replies">个人回答</a></li>
 					<li
-						th:class="${section == 'notices' } ? 'nav-link active':'nav-link'"><a
-						href="/profile/notices">他人答复</a><span class="badge badge-danger" th:text=${countNewNotice}>-1</span></li> -->
+						th:class="${section == 'replies' } ? 'nav-link active':'nav-link'"><a
+						href="/profile/replies">他人回复<span style="font-size: 13px;" class="badge badge-pill badge-danger" th:text="${session.unreadCount}">-1</span></a></li>
 					<li
 						th:class="${section == 'settings' } ? 'nav-link active':'nav-link'"><a
 						href="/profile/settings">个人设置</a></li>
@@ -49,52 +48,121 @@
 
 			<div class="card-body">
 				<!-- 展示个人提问 -->
-				<div th:if="${paginationDTO != null && {section} != settings}"
-					th:each="question : ${paginationDTO.questions}"
-					class="media text-muted pt-3">
-					<img class="media-object img-thumbnail mediaobject-index"
-						th:src="${question.user.avatarurl}">
-					<p style="margin-left: 16px;"
-						class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-						<span class="badge badge-info" th:text="${question.getTag()}">-1</span>
-						<strong class="text-gray-dark"> <a
-							th:href="@{'/question/' +${question.getId()}}"
-							th:text="${question.title}" style="font-size: 14px;"></a>
-						</strong> <span class="d-block mediaText" style="margin-top: 5px;">
-							<a th:href="@{'/userinfo/' +${question.user.getName()}}"><span
-								th:text="${question.user.getName()}"></span></a> published an
-							article • <span th:text="${question.commentCount}"></span>
-							comments • <span th:text="${question.viewCount}"></span> views •
-							<span
-							th:text="${#dates.format(question.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
-						</span>
-					</p>
+				<div th:if="${paginationDTO != null && section == 'questions'}">
+					<div th:each="question : ${paginationDTO.data}"
+						class="media text-muted pt-3">
+						<img class="media-object img-thumbnail mediaobject-index"
+							th:src="${question.user.avatarurl}">
+						<p style="margin-left: 16px;"
+							class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+							<strong class="text-gray-dark"> <a
+								th:href="@{'/question/' +${question.getId()}}"
+								th:text="${question.title}" style="font-size: 14px;"></a>
+							</strong> <a th:href="@{'/publish/'+${question.getId()}}"
+								class="mb-0 text-black lh-100">
+								<button type="button" style="float: right"
+									class="btn btn-outline-primary btn-sm">重新编辑</button>
+							</a> <span class="d-block mediaText" style="margin-top: 5px;">
+								<a th:href="@{'/userinfo/' +${question.user.getName()}}"><span
+									th:text="${question.user.getName()}"></span></a> published an
+								article • <span th:text="${question.commentCount}"></span>
+								comments • <span th:text="${question.viewCount}"></span> views •
+								<span
+								th:text="${#dates.format(question.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+							</span>
+						</p>
+					</div>
 				</div>
 				<!-- 展示个人提问 End-->
 
-				<!-- 展示个人回答 & 他人答复
+				<!-- 展示他人回答 -->
 
-				<div th:if="${paginationDTO != null && {section} != setting}"
-					th:each="reply : ${paginationDTO.getReplies()}"
-					class="media text-muted pt-3">
-					<img class="media-object img-thumbnail mediaobject-index"
-						th:src="${reply.user.avatarurl}">
-					<p class="border-bottom"
-						style="margin-left: 16px; margin-bottom: 0px;">
-					<h3>
-						<a th:href="@{'/question/' +${reply.getQuestionId()}}"
-							th:text="${reply.getQuestionTitle()}" style="font-size: 14px;"></a>
-					</h3>
-
-					<div style="margin-top: 10px; margin-left: 20px;"
-						th:utext="${reply.getDescription()}"></div>
-					</p>
-
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+					th:if="${paginationDTO != null && section == 'replies'}">
+					<div class="media" th:each="notification : ${paginationDTO.data}">
+						<div class="media-body">
+							<p class="media-heading">
+								<span class="badge badge-danger"
+									th:if="${notification.status == 0}">New</span> 
+									<a
+									style="font-size:14px;" th:href="@{'/notification/'+ ${notification.id}}"> <span
+									th:text="${notification.notifiername +' ' + notification.typeName + ' '}"></span>
+									<span th:text="${notification.outertitle}"></span>
+								</a>
+								<span style="margin-top:8px;" class="d-block mediaText"
+								th:text="${#dates.format(notification.getGmtcreate(),'yyyy-MM-dd HH:mm:ss')}"></span>
+							</p>
+							<hr>
+						</div>
+					</div>
 				</div>
-				展示个人回答 & 他人答复 End-->
+				<!-- 展示他人回答 End-->
+
+
+				<!-- 展示个人设置 -->
+				<div th:if="${section == 'settings'}">
+					<h4>修改个人信息</h4>
+					<hr>
+					<form action="/profile/settings/changeInfo" method="post">
+						<div class="input-group flex-nowrap">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="addon-wrapping">个性签名</span>
+							</div>
+							<input type="text" class="form-control" th:value=${bio}
+								name="bio" id="bio" th:placeholder="${infoUser.getBio()}">
+						</div>
+						<button style="float: right; margin-top: 10px;" type="submit"
+							class="btn btn-success">Edit</button>
+					</form>
+
+
+					<!-- <form action="/profile/settings/changePassword" method="post">
+					<h3 style="margin-top: 50px;">
+						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><span
+							style="font-family: inherit">修改密码</span>
+					</h3>
+					<hr>
+					<div style="margin-top: 10px;" class="input-group flex-nowrap">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="addon-wrapping">旧密码</span>
+						</div>
+						<input type="text" class="form-control" th:value=${oldPassword}
+							name="oldPassword" id="oldPassword" placeholder="默认密码在您的消息箱中...">
+					</div>
+
+					<div style="margin-top: 10px;" class="input-group flex-nowrap">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="addon-wrapping">新密码</span>
+						</div>
+						<input type="text" class="form-control" th:value=${newPassword}
+							name="newPassword" id="newPassword" placeholder="...">
+					</div>
+
+					<div style="margin-top: 10px;" class="input-group flex-nowrap">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="addon-wrapping">再次输入新密码</span>
+						</div>
+						<input type="text" class="form-control"
+							th:value=${newPasswordAgain} name="newPasswordAgain"
+							id="newPasswordAgain" placeholder="...">
+					</div>
+
+					<div class="alert alert-danger" role="alert" th:text="${error2}"
+						th:if="${error2} != null">...</div>
+					<div class="alert alert-success" role="alert" th:text="${success2}"
+						th:if="${success2} != null">...</div>
+					<button style="float: right; margin-top: 10px;" type="submit"
+						class="btn btn-success">Change Password</button>
+					<br>
+					<hr>
+				</form> -->
+					<!-- 展示个人设置 End-->
+				</div>
+
 
 				<!-- 分页部分 -->
-				<nav aria-label="Page navigation example" style="margin-top: 15px;">
+				<nav aria-label="Page navigation example"
+					th:if="${paginationDTO != null}" style="margin-top: 15px;">
 					<ul class="pagination">
 						<li class="page-item"><a class="page-link"
 							th:if="${paginationDTO.showFirstPage}" th:href="@{/(page=1)}"
@@ -122,12 +190,12 @@
 					</ul>
 				</nav>
 				<!-- 分页部分 End-->
-
-
 			</div>
+
+
+
 		</div>
-
-
+		</div>
 	</main>
 
 	<!-- import bottom -->

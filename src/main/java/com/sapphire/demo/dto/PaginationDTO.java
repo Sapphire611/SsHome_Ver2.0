@@ -3,8 +3,8 @@ package com.sapphire.demo.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaginationDTO {
-    private List<QuestionDTO> questions;
+public class PaginationDTO<T> {
+    private List<T> data;
     private Boolean showPrevious;
     private Boolean showFirstPage;
     private Boolean showNext;
@@ -15,14 +15,14 @@ public class PaginationDTO {
     private Integer totalCount = 0;
     
 
-	public List<QuestionDTO> getQuestions() {
-		return questions;
+	public List<T> getData() {
+		return data;
 	}
 
 
 
-	public void setQuestions(List<QuestionDTO> questions) {
-		this.questions = questions;
+	public void setData(List<T> data) {
+		this.data = data;
 	}
 
 
@@ -127,23 +127,18 @@ public class PaginationDTO {
      @param page = 当前页面
      @param size = 单页问题容量
      */
-    public void setPagination(Integer totalCount, Integer page, Integer size) {
-        this.totalCount = totalCount; // 个人总问题数，用于输出到Badge
+    public void setPagination(Integer totalPage, Integer page) {
+    	 this.totalPage = totalPage;
+         this.page = page;
 
-        // 根据总问题数和单页容量计算出页面数
-        if(totalCount % size == 0){
-            this.totalPage = totalCount / size;
-        }else{
-            this.totalPage = totalCount / size + 1;
-        }
-
+         pages.add(page);
 
         // 当前页小于1或者大于totalPage时,做出修正
         if(page < 1) page = 1;
         if(page > totalPage) page = totalPage;
         this.page = page;
 
-        pages.add(page);
+        
         /* 排除当前页= 1，2，3，end-1,end-2,end-3 的页码前后情况 */
         for (int i = 1; i <= 3; i++) {
             if(page - i > 0){
