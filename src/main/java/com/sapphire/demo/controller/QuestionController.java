@@ -160,6 +160,12 @@ public class QuestionController {
 		if (currentUser == null) {
 			return "redirect:/login";
 		} else {
+			// 1.删除对应的点赞记录
+			LikeRecordExample example = new LikeRecordExample();
+			example.createCriteria().andSourceidEqualTo(questionId);
+			likeRecordMapper.deleteByExample(example);
+			
+			// 2.删除对应的问题
 			questionMapper.deleteByPrimaryKey(questionId);
 		}
 

@@ -50,7 +50,7 @@ public class CommentController {
 		comment.setGmtmodified(comment.getGmtcreate());
 		comment.setCommentator(currentUser.getId());
 		comment.setCommentcount(0L);
-		commentService.insert(comment);
+		commentService.insert(comment,currentUser);
 
 		return ResultDTO.okOf();
 	}

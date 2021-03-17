@@ -42,7 +42,7 @@
 					<h6 class="border-bottom border-gray pb-2 mb-0">近期问题</h6>
 
 					<div th:if="${paginationDTO != null}"
-						th:each="question : ${paginationDTO.questions}"
+						th:each="question : ${paginationDTO.data}"
 						class="media text-muted pt-3">
 						<img class="media-object img-thumbnail mediaobject-index"
 							th:src="${question.user.avatarurl}">
@@ -147,7 +147,7 @@
 	<!-- import bottom -->
 	<div th:insert="~{bottom :: bottom}"></div>
 	<!-- End -->
-	<script src="js/jquery-3.5.1.slim.min.js" type="application/javascript"></script>
+	<script src="/js/jquery-3.5.1.slim.min.js" type="application/javascript"></script>
 	<script src="/js/bootstrap.min.js" type="application/javascript"></script>
 	<script>
 	function publish(){

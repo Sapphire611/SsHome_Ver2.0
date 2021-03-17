@@ -39,11 +39,7 @@
 						href="/profile/questions">个人提问</a></li>
 					<li
 						th:class="${section == 'replies' } ? 'nav-link active':'nav-link'"><a
-						href="/profile/replies">回复</a></li>
-					<!--
-					<li
-						th:class="${section == 'notices' } ? 'nav-link active':'nav-link'"><a
-						href="/profile/notices">他人答复</a><span class="badge badge-danger" th:text=${countNewNotice}>-1</span></li> -->
+						href="/profile/replies">他人回复<span style="font-size: 13px;" class="badge badge-pill badge-danger" th:text="${session.unreadCount}">-1</span></a></li>
 					<li
 						th:class="${section == 'settings' } ? 'nav-link active':'nav-link'"><a
 						href="/profile/settings">个人设置</a></li>
@@ -53,13 +49,12 @@
 			<div class="card-body">
 				<!-- 展示个人提问 -->
 				<div th:if="${paginationDTO != null && section == 'questions'}">
-					<div th:each="question : ${paginationDTO.questions}"
+					<div th:each="question : ${paginationDTO.data}"
 						class="media text-muted pt-3">
 						<img class="media-object img-thumbnail mediaobject-index"
 							th:src="${question.user.avatarurl}">
 						<p style="margin-left: 16px;"
 							class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-							<span class="badge badge-info" th:text="${question.getTag()}">-1</span>
 							<strong class="text-gray-dark"> <a
 								th:href="@{'/question/' +${question.getId()}}"
 								th:text="${question.title}" style="font-size: 14px;"></a>
@@ -76,50 +71,52 @@
 								th:text="${#dates.format(question.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
 							</span>
 						</p>
+					</div>
+				</div>
+				<!-- 展示个人提问 End-->
+
+				<!-- 展示他人回答 -->
+
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+					th:if="${paginationDTO != null && section == 'replies'}">
+					<div class="media" th:each="notification : ${paginationDTO.data}">
+						<div class="media-body">
+							<p class="media-heading">
+								<span class="badge badge-danger"
+									th:if="${notification.status == 0}">New</span> 
+									<a
+									style="font-size:14px;" th:href="@{'/notification/'+ ${notification.id}}"> <span
+									th:text="${notification.notifiername +' ' + notification.typeName + ' '}"></span>
+									<span th:text="${notification.outertitle}"></span>
+								</a>
+								<span style="margin-top:8px;" class="d-block mediaText"
+								th:text="${#dates.format(notification.getGmtcreate(),'yyyy-MM-dd HH:mm:ss')}"></span>
+							</p>
+							<hr>
 						</div>
 					</div>
-					<!-- 展示个人提问 End-->
-
-					<!-- 展示个人回答 & 他人答复
-
-				<div th:if="${paginationDTO != null && {section} != setting}"
-					th:each="reply : ${paginationDTO.getReplies()}"
-					class="media text-muted pt-3">
-					<img class="media-object img-thumbnail mediaobject-index"
-						th:src="${reply.user.avatarurl}">
-					<p class="border-bottom"
-						style="margin-left: 16px; margin-bottom: 0px;">
-					<h3>
-						<a th:href="@{'/question/' +${reply.getQuestionId()}}"
-							th:text="${reply.getQuestionTitle()}" style="font-size: 14px;"></a>
-					</h3>
-
-					<div style="margin-top: 10px; margin-left: 20px;"
-						th:utext="${reply.getDescription()}"></div>
-					</p>
-
 				</div>
-				展示个人回答 & 他人答复 End-->
-				
-				
+				<!-- 展示他人回答 End-->
+
+
 				<!-- 展示个人设置 -->
 				<div th:if="${section == 'settings'}">
 					<h4>修改个人信息</h4>
-				<hr>
-				<form action="/profile/settings/changeInfo" method="post">
-					<div class="input-group flex-nowrap">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="addon-wrapping">个性签名</span>
+					<hr>
+					<form action="/profile/settings/changeInfo" method="post">
+						<div class="input-group flex-nowrap">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="addon-wrapping">个性签名</span>
+							</div>
+							<input type="text" class="form-control" th:value=${bio}
+								name="bio" id="bio" th:placeholder="${infoUser.getBio()}">
 						</div>
-						<input type="text" class="form-control" th:value=${bio} name="bio"
-							id="bio" th:placeholder="${infoUser.getBio()}">
-					</div>
-					<button style="float: right; margin-top: 10px;" type="submit"
-						class="btn btn-success">Edit</button>
-				</form>
+						<button style="float: right; margin-top: 10px;" type="submit"
+							class="btn btn-success">Edit</button>
+					</form>
 
 
-				<form action="/profile/settings/changePassword" method="post">
+					<!-- <form action="/profile/settings/changePassword" method="post">
 					<h3 style="margin-top: 50px;">
 						<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><span
 							style="font-family: inherit">修改密码</span>
@@ -158,45 +155,47 @@
 						class="btn btn-success">Change Password</button>
 					<br>
 					<hr>
-				</form>
-				<!-- 展示个人设置 End-->
+				</form> -->
+					<!-- 展示个人设置 End-->
 				</div>
-				
+
+
+				<!-- 分页部分 -->
+				<nav aria-label="Page navigation example"
+					th:if="${paginationDTO != null}" style="margin-top: 15px;">
+					<ul class="pagination">
+						<li class="page-item"><a class="page-link"
+							th:if="${paginationDTO.showFirstPage}" th:href="@{/(page=1)}"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						</a></li>
+						<li class="page-item"><a class="page-link"
+							th:if="${paginationDTO.showPrevious}"
+							th:href="@{/(page=${paginationDTO.page-1})}"
+							aria-label="Previous"> <span aria-hidden="true">&lt;</span>
+						</a></li>
+						<li class="page-item"
+							th:class="${paginationDTO.page == page} ? 'active' : ''"
+							th:each="page : ${paginationDTO.pages}"><a class="page-link"
+							th:href="@{/(page=${page})}" th:text="${page}">1</a></li>
+						<li class="page-item"><a class="page-link"
+							th:if="${paginationDTO.showNext}"
+							th:href="@{/(page=${paginationDTO.page + 1})}" aria-label="Next">
+								<span aria-hidden="true">&gt;</span>
+						</a></li>
+						<li class="page-item"><a class="page-link"
+							th:if="${paginationDTO.showEndPage}"
+							th:href="@{/(page=${paginationDTO.totalPage})}" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+						</a></li>
+					</ul>
+				</nav>
+				<!-- 分页部分 End-->
 			</div>
 
-					<!-- 分页部分 -->
-					<nav aria-label="Page navigation example" th:if="${paginationDTO != null}" style="margin-top: 15px;">
-						<ul class="pagination">
-							<li class="page-item"><a class="page-link"
-								th:if="${paginationDTO.showFirstPage}" th:href="@{/(page=1)}"
-								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-							</a></li>
-							<li class="page-item"><a class="page-link"
-								th:if="${paginationDTO.showPrevious}"
-								th:href="@{/(page=${paginationDTO.page-1})}"
-								aria-label="Previous"> <span aria-hidden="true">&lt;</span>
-							</a></li>
-							<li class="page-item"
-								th:class="${paginationDTO.page == page} ? 'active' : ''"
-								th:each="page : ${paginationDTO.pages}"><a
-								class="page-link" th:href="@{/(page=${page})}" th:text="${page}">1</a></li>
-							<li class="page-item"><a class="page-link"
-								th:if="${paginationDTO.showNext}"
-								th:href="@{/(page=${paginationDTO.page + 1})}" aria-label="Next">
-									<span aria-hidden="true">&gt;</span>
-							</a></li>
-							<li class="page-item"><a class="page-link"
-								th:if="${paginationDTO.showEndPage}"
-								th:href="@{/(page=${paginationDTO.totalPage})}"
-								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-							</a></li>
-						</ul>
-					</nav>
-					<!-- 分页部分 End-->
 
 
-				</div>
-			</div>
+		</div>
+		</div>
 	</main>
 
 	<!-- import bottom -->

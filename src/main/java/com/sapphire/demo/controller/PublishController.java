@@ -108,6 +108,7 @@ public class PublishController {
 		// 1 = 发送新问题 2 = 更新问题
 		int flag = questionService.createOrUpdate(question);
 
+		// 根据功能跳转至不同路径
 		if(flag == 1) {
 			return "redirect:/forum/" ;
 		}else {

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sapphire.demo.dto.PaginationDTO;
+import com.sapphire.demo.dto.QuestionDTO;
 import com.sapphire.demo.mapper.QuestionExtMapper;
 import com.sapphire.demo.mapper.UserMapper;
 import com.sapphire.demo.model.Question;
@@ -37,7 +38,7 @@ public class ForumController {
 
 		// User currentUser = (User) request.getSession().getAttribute("user");
 
-		PaginationDTO paginationDTO = questionService.list(page, size);
+		PaginationDTO<QuestionDTO> paginationDTO = questionService.list(page, size);
 		model.addAttribute("paginationDTO", paginationDTO);
 
 		

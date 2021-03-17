@@ -59,6 +59,7 @@
 		<table tableName="likeRecord" schema="SsHome" domainObjectName="LikeRecord"></table>
 		<table tableName="viewRecord" schema="SsHome" domainObjectName="ViewRecord"></table>
 		<table tableName="comment" schema="SsHome" domainObjectName="Comment"></table>
+		<table tableName="notification" schema="SsHome" domainObjectName="Notification"></table>
 
 	</context>
 </generatorConfiguration>
