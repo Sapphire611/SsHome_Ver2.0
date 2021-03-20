@@ -49,6 +49,40 @@ function comment2target(targetId, type, content) {
 	});
 }
 
+/* 删除一级评论 */
+function deleteComment1(e) {
+	var id = parseInt(e.getAttribute("data-id"));
+	deleteComment(id, 1);
+}
+
+/* 删除评论 重构 */
+function deleteComment(id, type) {
+	console.log(id);
+	console.log(typeof(id));
+	console.log(type);
+	var isAccepted = confirm("您确定要删除这条评论吗？");
+	if (isAccepted) {
+		$.ajax({
+			type: "POST",
+			url: "/commentDelete",
+			contentType: "application/json",
+			data: JSON.stringify({
+				"id": id,
+				"type": type
+			}),
+			success: function(response) {
+				if (response.code == 200) {
+					window.location.reload();
+				} else {
+					alert(response.message);
+
+				}
+			},
+			dataType: "json"
+		});
+	}
+}
+
 /* 展开二级评论 */
 function collapseComments(e) {
 	var id = e.getAttribute("data-id");
@@ -61,88 +95,88 @@ function collapseComments(e) {
 	// 还是要判断一下当前展开状态
 	var collapse = $("#comment-" + id).is('.show');
 	var subCommentContainer = $("#comment-" + id);
-	
+
 	// 只有展开状态、子元素状态等于2的时候才追加内容（2是因为一个div和一个hr）
 	if (collapse == true && subCommentContainer.children().length == 2) {
 		// console.log(subCommentContainer.children().length);
 		$.getJSON("/comment/" + id, function(data) {
 			$.each(data.data.reverse(), function(index, comment) {
-				
+
 				var dateElement = $("<span/>", {
-					"class" : "mediaText pull-right",
+					"class": "mediaText pull-right",
 					"html": moment(comment.gmtcreate).format('YYYY-MM-DD hh:mm:ss')
 				});
-				
+
 				var pElement = $("<div/>", {
-					"style" : "margin-left: 10px; font-size:14px",
+					"style": "margin-left: 10px; font-size:14px",
 					html: comment.content
 				});
-				
+
 				var h6Element = $("<h6/>", {
-					"class" : "media-heading",
-					"style" : "margin-left: 10px",
+					"class": "media-heading",
+					"style": "margin-left: 10px",
 					html: comment.user.name
 				});
-				
+
 				var mediaBodyElement = $("<div/>", {
 					"class": "media-body",
 				}).append(h6Element).append(pElement);
-				
+
 				var imgElement = $("<img/>", {
 					"class": "media-object img-thumbnail",
-					"src" : comment.user.avatarurl,
-					"style" : "height: 50px;"
+					"src": comment.user.avatarurl,
+					"style": "height: 50px;"
 				});
-				
+
 				var aElement = $("<a/>", {
 					"href": '/userinfo/' + comment.user.name,
 				}).append(imgElement);
-				
+
 				var mediaElement = $("<div/>", {
 					"class": "media",
-					"style" : "margin-top: 10px",
+					"style": "margin-top: 10px",
 					// html: comment.content
 				}).append(aElement).append(mediaBodyElement).append(dateElement);
-				
+
 				subCommentContainer.prepend(mediaElement);
-				
+
 			});
 		});
 	}
 }
 
 function showSelectTag() {
-    $("#select-tag").show();
+	$("#select-tag").show();
 }
 
 function selectTag(e) {
-    var value = e.getAttribute("data-tag");
-    var previous = $("#tag").val();
+	var value = e.getAttribute("data-tag");
+	var previous = $("#tag").val();
 
-    if (previous) {
-        var index = 0;
-        var appear = false; //记录value是否已经作为一个独立的标签出现过
-        while (true) {
-            index = previous.indexOf(value, index); //value字符串在previous中出现的位置
-            if (index == -1) break;
-            //判断previous中出现的value是否是另一个标签的一部分
-            //即value的前一个和后一个字符都是逗号","或者没有字符时，才说明value是一个独立的标签
-            if ((index == 0 || previous.charAt(index - 1) == ",")
-                && (index + value.length == previous.length || previous.charAt(index + value.length) == ",")
-               ) {
-                appear = true;
-                break;
-            }
-            index++; //用于搜索下一个出现位置
-        }
-        if (!appear) {
-            //若value没有作为一个独立的标签出现过
-            $("#tag").val(previous + ',' + value);
-        }
-    }
-    else {
-        $("#tag").val(value);
-    }
+	if (previous) {
+		var index = 0;
+		var appear = false; //记录value是否已经作为一个独立的标签出现过
+		while (true) {
+			index = previous.indexOf(value, index); //value字符串在previous中出现的位置
+			if (index == -1) break;
+			//判断previous中出现的value是否是另一个标签的一部分
+			//即value的前一个和后一个字符都是逗号","或者没有字符时，才说明value是一个独立的标签
+			if ((index == 0 || previous.charAt(index - 1) == ",")
+				&& (index + value.length == previous.length || previous.charAt(index + value.length) == ",")
+			) {
+				appear = true;
+				break;
+			}
+			index++; //用于搜索下一个出现位置
+		}
+		if (!appear) {
+			//若value没有作为一个独立的标签出现过
+			$("#tag").val(previous + ',' + value);
+		}
+	}
+	else {
+		$("#tag").val(value);
+	}
 }
 
 

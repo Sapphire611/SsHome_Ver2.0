@@ -19,6 +19,8 @@ public class CommentDTO {
 	private Long commentcount;
 
 	private String content;
+	
+	private Integer likeCount;
 
 	private User user;
 
@@ -29,6 +31,14 @@ public class CommentDTO {
 
 	public void setCommentcount(Long commentcount) {
 		this.commentcount = commentcount;
+	}
+
+	public Integer getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(Integer likeCount) {
+		this.likeCount = likeCount;
 	}
 
 	public Long getId() {
