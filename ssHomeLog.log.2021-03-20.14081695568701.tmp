@@ -1,0 +1,8 @@
+2021-03-20 15:03:39.193  INFO 2354 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 80 (http)
+2021-03-20 15:03:39.205  INFO 2354 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-03-20 15:03:39.206  INFO 2354 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.35]
+2021-03-20 15:03:39.265  INFO 2354 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-03-20 15:03:39.266  INFO 2354 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1014 ms
+2021-03-20 15:03:39.974  INFO 2354 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-03-20 15:03:40.010  INFO 2354 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 80 (http) with context path ''
+2021-03-20 15:03:40.019  INFO 2354 --- [restartedMain] com.sapphire.demo.DemoApplication        : Started DemoApplication in 2.08 seconds (JVM running for 2.576)

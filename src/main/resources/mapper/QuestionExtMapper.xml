@@ -1,33 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sapphire.demo.mapper.QuestionExtMapper">
-    <resultMap id="BaseResultMap" type="com.sapphire.demo.model.Question">
-        <id column="ID" jdbcType="INTEGER" property="id"/>
-        <result column="TITLE" jdbcType="VARCHAR" property="title"/>
-        <result column="GMT_CREATE" jdbcType="BIGINT" property="gmtCreate"/>
-        <result column="GMT_MODIFIED" jdbcType="BIGINT" property="gmtModified"/>
-        <result column="CREATOR" jdbcType="INTEGER" property="creator"/>
-        <result column="COMMENT_COUNT" jdbcType="INTEGER" property="commentCount"/>
-        <result column="VIEW_COUNT" jdbcType="INTEGER" property="viewCount"/>
-        <result column="LIKE_COUNT" jdbcType="INTEGER" property="likeCount"/>
-        <result column="TAG" jdbcType="VARCHAR" property="tag"/>
-<!--         <result column="STICKY" jdbcType="INTEGER" property="sticky" /> -->
-    </resultMap>
-    
-	<select id="selectRelated" parameterType="com.sapphire.demo.model.Question" resultMap="BaseResultMap">
-        select * from QUESTION
-        <where>
-            <if test="id != null">
-                and id != #{id}
-            </if>
-            <if test="tag != null and tag != ''">
-                and tag regexp #{tag}
-            </if>
-        </where>
-        order by gmtCreate desc limit 5
-    </select>
-    
-    <select id="selectHot" resultMap="BaseResultMap">
-        select * from QUESTION order by view_count desc limit 5
-    </select>
+	<resultMap id="BaseResultMap"
+		type="com.sapphire.demo.model.Question">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="TITLE" jdbcType="VARCHAR" property="title" />
+		<result column="GMT_CREATE" jdbcType="BIGINT"
+			property="gmtCreate" />
+		<result column="GMT_MODIFIED" jdbcType="BIGINT"
+			property="gmtModified" />
+		<result column="CREATOR" jdbcType="INTEGER" property="creator" />
+		<result column="COMMENT_COUNT" jdbcType="INTEGER"
+			property="commentCount" />
+		<result column="VIEW_COUNT" jdbcType="INTEGER"
+			property="viewCount" />
+		<result column="LIKE_COUNT" jdbcType="INTEGER"
+			property="likeCount" />
+		<result column="TAG" jdbcType="VARCHAR" property="tag" />
+		<!-- <result column="STICKY" jdbcType="INTEGER" property="sticky" /> -->
+	</resultMap>
+
+	<select id="selectRelated"
+		parameterType="com.sapphire.demo.model.Question"
+		resultMap="BaseResultMap">
+		select * from QUESTION
+		<where>
+			<if test="id != null">
+				and id != #{id}
+			</if>
+			<if test="tag != null and tag != ''">
+				and tag regexp #{tag}
+			</if>
+		</where>
+		order by gmtCreate desc limit 5
+	</select>
+
+	<select id="selectHot" resultMap="BaseResultMap">
+		select * from QUESTION order by
+		view_count desc limit 5
+	</select>
+
+	<select id="countBySearch"
+		parameterType="com.sapphire.demo.dto.QuestionQueryDTO"
+		resultType="java.lang.Integer">
+		select count(*) from QUESTION
+		<where>
+			<if test="search != null and search != ''">
+				and title regexp #{search}
+			</if>
+			<!-- <if test="tag != null and tag != ''">
+				and tag regexp #{tag}
+			</if>
+			<if test="sort != null and sort != '' and sort == 'no'">
+				and comment_count = 0
+			</if>
+			<if test="time != null and time != ''">
+				and gmt_create > #{time}
+			</if>
+			<if test="1 == 1">
+				and sticky = 0
+			</if> -->
+		</where>
+	</select>
+
+	<select id="selectBySearch"
+		parameterType="com.sapphire.demo.dto.QuestionQueryDTO"
+		resultMap="BaseResultMap">
+		select * from QUESTION
+		<where>
+			<if test="search != null and search != ''">
+				and title regexp #{search}
+			</if>
+			<!-- <if test="tag != null and tag != ''">
+				and tag regexp #{tag}
+			</if> -->
+			<!-- <if test="sort != null and sort != '' and sort == 'no'">
+				and comment_count = 0
+			</if>
+			<if test="time != null and time != ''">
+				and gmt_create > #{time}
+			</if>
+			<if test="1 == 1">
+				and sticky = 0
+			</if> -->
+		</where>
+		<!-- <if test="sort == null or sort == ''">
+			order by gmt_create desc
+		</if>
+		<if test="sort != null and sort != '' and sort == 'new'">
+			order by gmt_create desc
+		</if>
+		<if test="sort != null and sort != '' and sort == 'no'">
+			order by gmt_create desc
+		</if>
+		<if
+			test="sort != null and sort != '' and (sort == 'hot' || sort == 'hot7' || sort == 'hot30')">
+			order by comment_count desc
+		</if> -->
+		order by gmtModified desc limit #{page},#{size}
+	</select>
 </mapper>

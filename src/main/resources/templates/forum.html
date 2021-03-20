@@ -28,130 +28,134 @@
 
 				<div
 					class="align-items-center p-3 my-3 text-black-50 bg-white rounded">
-					<div class="input-group">
-						<input type="text" style="margin-right:8px;" class="form-control rounded" placeholder="搜索问题...">
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary rounded" type="button">搜索🔍</button>
-							<button style="margin-left:30px;" class="btn btn-outline-info rounded" onClick="publish()" type="button">发布新问题</button>
-						</div>
-					</div>
+					<form action="/forum" method="get">
+						<div class="input-group">
+							<input type="text" style="margin-right: 8px;" name="search"
+								class="form-control rounded" placeholder="搜索问题...">
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary rounded" type="submit">搜索🔍</button>
+					</form>
+					<button style="margin-left: 30px;"
+						class="btn btn-outline-info rounded" onClick="publish()"
+						type="button">发布新问题</button>
 				</div>
+			</div>
+		</div>
 
-				<!-- 板块问题 循环部分 -->
-				<div class="my-3 p-3 bg-white rounded shadow-sm">
-					<h6 class="border-bottom border-gray pb-2 mb-0">近期问题</h6>
+		<!-- 板块问题 循环部分 -->
+		<div class="my-3 p-3 bg-white rounded shadow-sm">
+			<h6 class="border-bottom border-gray pb-2 mb-0">近期问题</h6>
 
-					<div th:if="${paginationDTO != null}"
-						th:each="question : ${paginationDTO.data}"
-						class="media text-muted pt-3">
-						<img class="media-object img-thumbnail mediaobject-index"
-							th:src="${question.user.avatarurl}">
-						<!-- <img class="mr-3" th:src="${question.user.avatarUrl}" alt="" width="48" height="48"> -->
-						<p style="margin-left: 16px;"
-							class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-							<!-- <span class="badge badge-pill badge-info"
+			<div th:if="${paginationDTO != null}"
+				th:each="question : ${paginationDTO.data}"
+				class="media text-muted pt-3">
+				<img class="media-object img-thumbnail mediaobject-index"
+					th:src="${question.user.avatarurl}">
+				<!-- <img class="mr-3" th:src="${question.user.avatarUrl}" alt="" width="48" height="48"> -->
+				<p style="margin-left: 16px;"
+					class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+					<!-- <span class="badge badge-pill badge-info"
 								style="margin-right: 5px;"
 								th:each="tag : ${question.getTag().split(',')}"> <span
 								class="badge badge-info" th:text="${tag}">-1</span>
-							</span> --> <strong class="text-gray-dark"> <a
-								th:href="@{'/question/' +${question.getId()}}"
-								th:text="${question.title}" style="font-size: 14px;"></a>
-							</strong> <span class="d-block mediaText" style="margin-top: 5px;">
-								<a th:href="@{'/userinfo/' +${question.user.getName()}}"><span
-									th:text="${question.user.getName()}"></span></a> published an
-								article • <span th:text="${question.commentCount}"></span>
-								comments • <span th:text="${question.viewCount}"></span> views •
-								<span
-								th:text="${' Last Modified : ' + #dates.format(question.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
-							</span>
-						</p>
-
-					</div>
-					<!-- 分页部分 -->
-					<nav aria-label="Page navigation example" style="margin-top: 15px;">
-						<ul class="pagination">
-							<li class="page-item"><a class="page-link"
-								th:if="${paginationDTO.showFirstPage}"
-								th:href="@{/forum/(page=1)}" aria-label="Previous"> <span
-									aria-hidden="true">&laquo;</span>
-							</a></li>
-							<li class="page-item"><a class="page-link"
-								th:if="${paginationDTO.showPrevious}"
-								th:href="@{/forum/(page=${paginationDTO.page-1})}"
-								aria-label="Previous"> <span aria-hidden="true">&lt;</span>
-							</a></li>
-							<li class="page-item"
-								th:class="${paginationDTO.page == page} ? 'active' : ''"
-								th:each="page : ${paginationDTO.pages}"><a
-								class="page-link" th:href="@{/forum/(page=${page})}"
-								th:text="${page}">1</a></li>
-							<li class="page-item"><a class="page-link"
-								th:if="${paginationDTO.showNext}"
-								th:href="@{/forum/(page=${paginationDTO.page + 1})}"
-								aria-label="Next"> <span aria-hidden="true">&gt;</span>
-							</a></li>
-							<li class="page-item"><a class="page-link"
-								th:if="${paginationDTO.showEndPage}"
-								th:href="@{/forum/(page=${paginationDTO.totalPage})}"
-								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-							</a></li>
-						</ul>
-					</nav>
-					<!-- 分页部分 End-->
-				</div>
-				<!-- 板块问题 循环部分 End-->
-
-				<div class="my-3 p-3 bg-white rounded shadow-sm">
-					<h6 class="border-bottom border-gray pb-2 mb-0">板块管理员</h6>
-					<!--  板块管理员 循环部分 -->
-					<div class="media text-muted pt-3" th:each="user : ${adminUsers}">
-						<img class="media-object img-thumbnail mediaobject-index"
-							th:src="${user.avatarurl}">
-						<div style="margin-left: 16px;"
-							class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-							<div
-								class="d-flex justify-content-between align-items-center w-100">
-								<strong class="text-gray-dark" th:text="${user.getName()}">-1</strong>
-								<a href="#">Follow</a>
-							</div>
-							<span class="d-block" th:text="${user.getBio()}">(Bio) -1</span>
-						</div>
-					</div>
-					<!--  板块管理员 循环部分 -->
-				</div>
+							</span> -->
+					<strong class="text-gray-dark"> <a
+						th:href="@{'/question/' +${question.getId()}}"
+						th:text="${question.title}" style="font-size: 14px;"></a>
+					</strong> <span class="d-block mediaText" style="margin-top: 5px;"> <a
+						th:href="@{'/userinfo/' +${question.user.getName()}}"><span
+							th:text="${question.user.getName()}"></span></a> published an article
+						• <span th:text="${question.commentCount}"></span> comments • <span
+						th:text="${question.viewCount}"></span> views • <span
+						th:text="${' Last Modified : ' + #dates.format(question.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
+					</span>
+				</p>
 
 			</div>
-
-			<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-				<div
-					class="d-flex align-items-center p-3 my-3 bg-white rounded shadow-sm">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<h4>热门问题</h4>
-						<span th:each="hot : ${hotQuestions}"><a
-							th:href="@{'/question/'+ ${hot.id}}" th:text="${hot.title}"></a>
-							<br> </span>
-					</div>
-				</div>
-
-				<div
-					class="d-flex align-items-center p-2 my-3 bg-white rounded shadow-sm">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<img class="media-object img-thumbnail" src="/img/ad.png">
-					</div>
-				</div>
-
-			</div>
-
+			<!-- 分页部分 -->
+			<nav aria-label="Page navigation example" style="margin-top: 15px;">
+				<ul class="pagination">
+					<li class="page-item"><a class="page-link"
+						th:if="${paginationDTO.showFirstPage}"
+						th:href="@{/forum/(page=1,search=${search})}" aria-label="Previous"> <span
+							aria-hidden="true">&laquo;</span>
+					</a></li>
+					<li class="page-item"><a class="page-link"
+						th:if="${paginationDTO.showPrevious}"
+						th:href="@{/forum/(page=${paginationDTO.page-1},search=${search})}"
+						aria-label="Previous"> <span aria-hidden="true">&lt;</span>
+					</a></li>
+					<li class="page-item"
+						th:class="${paginationDTO.page == page} ? 'active' : ''"
+						th:each="page : ${paginationDTO.pages}"><a class="page-link"
+						th:href="@{/forum/(page=${page},search=${search})}" th:text="${page}">1</a></li>
+					<li class="page-item"><a class="page-link"
+						th:if="${paginationDTO.showNext}"
+						th:href="@{/forum/(page=${paginationDTO.page + 1},search=${search})}"
+						aria-label="Next"> <span aria-hidden="true">&gt;</span>
+					</a></li>
+					<li class="page-item"><a class="page-link"
+						th:if="${paginationDTO.showEndPage}"
+						th:href="@{/forum/(page=${paginationDTO.totalPage},search=${search})}"
+						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+					</a></li>
+				</ul>
+			</nav>
+			<!-- 分页部分 End-->
 		</div>
+		<!-- 板块问题 循环部分 End-->
+
+		<div class="my-3 p-3 bg-white rounded shadow-sm">
+			<h6 class="border-bottom border-gray pb-2 mb-0">板块管理员</h6>
+			<!--  板块管理员 循环部分 -->
+			<div class="media text-muted pt-3" th:each="user : ${adminUsers}">
+				<img class="media-object img-thumbnail mediaobject-index"
+					th:src="${user.avatarurl}">
+				<div style="margin-left: 16px;"
+					class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+					<div
+						class="d-flex justify-content-between align-items-center w-100">
+						<strong class="text-gray-dark" th:text="${user.getName()}">-1</strong>
+					</div>
+					<span class="d-block" th:text="${user.getBio()}">(Bio) -1</span>
+				</div>
+			</div>
+			<!--  板块管理员 循环部分 -->
+		</div>
+
+	</div>
+
+	<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+		<div
+			class="d-flex align-items-center p-3 my-3 bg-white rounded shadow-sm">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<h4>热门问题</h4>
+				<span th:each="hot : ${hotQuestions}"><a
+					th:href="@{'/question/'+ ${hot.id}}" th:text="${hot.title}"></a> <br>
+				</span>
+			</div>
+		</div>
+
+		<div
+			class="d-flex align-items-center p-2 my-3 bg-white rounded shadow-sm">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<img class="media-object img-thumbnail" src="/img/ad.png">
+			</div>
+		</div>
+
+	</div>
+
+	</div>
 	</div>
 	<!-- import bottom -->
 	<div th:insert="~{bottom :: bottom}"></div>
 	<!-- End -->
-	<script src="/js/jquery-3.5.1.slim.min.js" type="application/javascript"></script>
+	<script src="/js/jquery-3.5.1.slim.min.js"
+		type="application/javascript"></script>
 	<script src="/js/bootstrap.min.js" type="application/javascript"></script>
 	<script>
 	function publish(){
-		window.location.href="publish";
+		window.location.href="/publish";
 	}
 	</script>
 </body>

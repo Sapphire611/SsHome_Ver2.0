@@ -41,15 +41,10 @@
 		</ul>
 	</form>
 
-	<!-- <form th:if="${session.user != null}" class="form-inline">
-		<input class="form-control mr-sm-2" type="search" placeholder="Search"
-			aria-label="Search">
-		<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
-	</form> -->
 
 	<form th:if="${session.user == null}" class="form-inline">
 		<a class="nav-link btn btn-outline-light"
-			href="https://github.com/login/oauth/authorize?client_id=4ce03e6d08271639376f&redirect_uri=http://localhost/callback&scope=user&state=1">登陆&nbsp;</a>
+			th:href="https://github.com/login/oauth/authorize?client_id=4ce03e6d08271639376f&redirect_uri=http://localhost/callback&scope=user&state=1">登陆&nbsp;</a>
 	</form>
 
 </nav>

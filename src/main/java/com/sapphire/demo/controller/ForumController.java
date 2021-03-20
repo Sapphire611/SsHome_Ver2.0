@@ -34,12 +34,14 @@ public class ForumController {
 	@GetMapping("/forum")
 	// size = 一页显示7个问题
 	public String forum(Model model, @RequestParam(name = "page", defaultValue = "1") Integer page,
-			@RequestParam(name = "size", defaultValue = "7") Integer size, HttpServletRequest request) {
+									 @RequestParam(name = "size", defaultValue = "7") Integer size, 
+									 @RequestParam(name = "search", required = false) String search,HttpServletRequest request) {
 
 		// User currentUser = (User) request.getSession().getAttribute("user");
 
-		PaginationDTO<QuestionDTO> paginationDTO = questionService.list(page, size);
+		PaginationDTO<QuestionDTO> paginationDTO = questionService.list(search,page, size);
 		model.addAttribute("paginationDTO", paginationDTO);
+		model.addAttribute("search", search);
 
 		
 		// 创建管理员列表
@@ -48,14 +50,7 @@ public class ForumController {
 		List<User> adminUsers = userMapper.selectByExample(example);
 		model.addAttribute("adminUsers", adminUsers);
 		
-		// 热门问题，按照访问量排列
-//		QuestionExample hotExample = new QuestionExample();
-//		hotExample.setOrderByClause("view_count desc");	
-//		List <Question> hotQuestions = questionMapper.selectByExample(hotExample);
-//		// 不写Mapper了，手动取5个
-//		List <Question> hot5Questions = hotQuestions.subList(1, 6); 
-//		model.addAttribute("hotQuestions", hot5Questions);
-		
+		// 热门问题，按照访问量排列		
 		List<Question> hotQuestions = questionExtMapper.selectHot();
 		model.addAttribute("hotQuestions", hotQuestions);
 

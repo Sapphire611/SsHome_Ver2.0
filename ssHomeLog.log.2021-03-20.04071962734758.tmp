@@ -1,0 +1,8 @@
+2021-03-20 15:03:24.361  INFO 2307 --- [http-nio-80-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-03-20 15:03:24.363  INFO 2307 --- [http-nio-80-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-03-20 15:03:24.369  INFO 2307 --- [http-nio-80-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2021-03-20 15:03:34.746  INFO 2307 --- [RMI TCP Connection(5)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2021-03-20 15:03:38.213  INFO 2354 --- [restartedMain] com.sapphire.demo.DemoApplication        : Starting DemoApplication on MBA-Sapphire611.local with PID 2354 (/Users/sapphire/git/SsHome_Ver2.0/target/classes started by sapphire in /Users/sapphire/git/SsHome_Ver2.0)
+2021-03-20 15:03:38.215  INFO 2354 --- [restartedMain] com.sapphire.demo.DemoApplication        : No active profile set, falling back to default profiles: default
+2021-03-20 15:03:38.251  INFO 2354 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-03-20 15:03:38.252  INFO 2354 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'

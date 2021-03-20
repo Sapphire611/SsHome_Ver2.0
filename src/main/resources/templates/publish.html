@@ -95,10 +95,10 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<div id="test-editor">
-						<textarea style="display: none;" name="description" id="description"
-							th:text="${description}"></textarea>
+						<textarea style="display: none;" name="description"
+							id="description" th:text="${description}"></textarea>
 					</div>
 					<div class="alert alert-danger" role="alert" th:text="${error}"
 						th:if="${error} != null">...</div>
@@ -128,7 +128,10 @@
             path   : "/lib/",
             delay: 0,
             watch: false,
-            placeholder: "请输入问题描述",
+            placeholder: "请输入问题描述...",
+            imageUpload: true,
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL: "/file/upload",
         });
     });
 </script>

@@ -1,0 +1,23 @@
+{"properties": [
+  {
+    "name": "ucloud.ufile.public-key",
+    "type": "java.lang.String",
+    "description": "A description for 'ucloud.ufile.public-key'"
+  },
+  {
+    "name": "ucloud.ufile.private-key",
+    "type": "java.lang.String",
+    "description": "A description for 'ucloud.ufile.private-key'"
+  },
+  {
+    "name": "ucloud.ufile.bucketName",
+    "type": "java.lang.String",
+    "description": "A description for 'ucloud.ufile.bucketName'"
+  },
+  {
+    "name": "ucloud.ufile.region",
+    "type": "java.lang.String",
+    "description": "A description for 'ucloud.ufile.region'"
+  }
+
+]}

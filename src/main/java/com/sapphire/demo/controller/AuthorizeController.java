@@ -18,6 +18,9 @@ import com.sapphire.demo.model.User;
 import com.sapphire.demo.provider.GithubProvider;
 import com.sapphire.demo.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class AuthorizeController {
 
@@ -78,6 +81,7 @@ public class AuthorizeController {
 			return "redirect:/";
 		} else {
 			// Login failed
+			log.error("callback get github error,{}", githubUser);
 			return "redirect:/";
 		}
 	}
