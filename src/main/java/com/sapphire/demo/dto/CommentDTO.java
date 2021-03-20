@@ -21,6 +21,8 @@ public class CommentDTO {
 	private String content;
 	
 	private Integer likeCount;
+	
+	private Integer isLiked;
 
 	private User user;
 
@@ -103,6 +105,14 @@ public class CommentDTO {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Integer getIsLiked() {
+		return isLiked;
+	}
+
+	public void setIsLiked(Integer isLiked) {
+		this.isLiked = isLiked;
 	}
 
 }

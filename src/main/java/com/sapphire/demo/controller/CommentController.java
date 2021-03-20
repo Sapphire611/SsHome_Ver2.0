@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +23,12 @@ import com.sapphire.demo.enums.CommentTypeEnum;
 import com.sapphire.demo.exception.CustomizeErrorCode;
 import com.sapphire.demo.exception.CustomizeException;
 import com.sapphire.demo.mapper.CommentMapper;
+import com.sapphire.demo.mapper.LikeRecordMapper;
 import com.sapphire.demo.mapper.QuestionMapper;
 import com.sapphire.demo.model.Comment;
 import com.sapphire.demo.model.CommentExample;
+import com.sapphire.demo.model.LikeRecord;
+import com.sapphire.demo.model.LikeRecordExample;
 import com.sapphire.demo.model.Question;
 import com.sapphire.demo.model.QuestionExample;
 import com.sapphire.demo.model.User;
@@ -40,6 +45,9 @@ public class CommentController {
 
 	@Autowired
 	private QuestionMapper questionMapper;
+	
+	@Autowired
+	private LikeRecordMapper likeRecordMapper;
 	
 	@ResponseBody
 	@RequestMapping(value = "/comment", method = RequestMethod.POST)
@@ -111,5 +119,59 @@ public class CommentController {
 			throw new CustomizeException(CustomizeErrorCode.TYPE_PARAM_WRONG);
 		}
 		
+	}
+	
+	@GetMapping("/comment/{id}/like/{questionId}")
+	public String commentLike(@PathVariable(name = "id") Long id, HttpServletRequest request,@PathVariable(name = "questionId") Long questionId) {
+
+		User currentUser = (User) request.getSession().getAttribute("user");
+
+		LikeRecordExample example2 = new LikeRecordExample();
+		example2.createCriteria().andUseridEqualTo(currentUser.getId()).andSourceidEqualTo(id).andTypeEqualTo(CommentTypeEnum.COMMENT.getType());
+		List<LikeRecord> selectByExample2 = likeRecordMapper.selectByExample(example2);
+
+		if (selectByExample2.size() == 0) {
+			LikeRecord likeRecord = new LikeRecord();
+			likeRecord.setSourceid(id);
+			likeRecord.setType(CommentTypeEnum.COMMENT.getType());
+			likeRecord.setUserid(currentUser.getId());
+			likeRecord.setGmtcreate(System.currentTimeMillis());
+
+			// 1.点赞数 + 1
+			Comment updatedComment = new Comment();
+			updatedComment.setId(id);
+			updatedComment.setLikeCount(commentMapper.selectByPrimaryKey(id).getLikeCount() + 1);
+			commentMapper.updateByPrimaryKeySelective(updatedComment);
+
+			// 2.插入一条Like记录
+			likeRecordMapper.insert(likeRecord);
+
+		}
+
+		return "redirect:/question/" + questionId + "";
+	}
+	
+	@GetMapping("/comment/{id}/likeCancel/{questionId}")
+	public String commentLikeCancel(@PathVariable(name = "id") Long id, HttpServletRequest request,@PathVariable(name = "questionId") Long questionId) {
+
+		User currentUser = (User) request.getSession().getAttribute("user");
+
+		LikeRecordExample example2 = new LikeRecordExample();
+		example2.createCriteria().andUseridEqualTo(currentUser.getId()).andSourceidEqualTo(id).andTypeEqualTo(CommentTypeEnum.COMMENT.getType());
+		List<LikeRecord> selectByExample2 = likeRecordMapper.selectByExample(example2);
+
+		if (selectByExample2.size() != 0) {
+			// 1.点赞数 - 1
+			Comment updatedComment = new Comment();
+			updatedComment.setId(id);
+			updatedComment.setLikeCount(commentMapper.selectByPrimaryKey(id).getLikeCount() - 1);
+			commentMapper.updateByPrimaryKeySelective(updatedComment);
+
+			// 2.删除对应的likeRecord
+			likeRecordMapper.deleteByPrimaryKey(selectByExample2.get(0).getId());
+
+		}
+
+		return "redirect:/question/" + questionId + "";
 	}
 }

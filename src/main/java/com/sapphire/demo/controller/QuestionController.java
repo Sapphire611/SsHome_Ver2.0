@@ -90,7 +90,7 @@ public class QuestionController {
 		}
 		
 		// 根据问题id找到对应回复
-		List <CommentDTO> comments = commentService.listByQuestionId(CommentTypeEnum.QUESTION,id);
+		List <CommentDTO> comments = commentService.listByQuestionId(CommentTypeEnum.QUESTION,id,currentUser);
 		model.addAttribute("comments", comments);
 		
 		List<QuestionDTO> relatedQuestions = questionService.selectRelated(questionDTO);
@@ -100,19 +100,18 @@ public class QuestionController {
 	}
 
 	@GetMapping("/question/{id}/like")
-	public String questionLike(@PathVariable(name = "id") Long id, HttpServletRequest request, Model model) {
+	public String questionLike(@PathVariable(name = "id") Long id, HttpServletRequest request) {
 
 		User currentUser = (User) request.getSession().getAttribute("user");
 
-		// 判断当前用户是否已点赞，如果点了，传一个“Button” -> 按钮变成绿色
 		LikeRecordExample example2 = new LikeRecordExample();
-		example2.createCriteria().andUseridEqualTo(currentUser.getId()).andSourceidEqualTo(id).andTypeEqualTo(1);
+		example2.createCriteria().andUseridEqualTo(currentUser.getId()).andSourceidEqualTo(id).andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
 		List<LikeRecord> selectByExample2 = likeRecordMapper.selectByExample(example2);
 
 		if (selectByExample2.size() == 0) {
 			LikeRecord likeRecord = new LikeRecord();
 			likeRecord.setSourceid(id);
-			likeRecord.setType(1);
+			likeRecord.setType(CommentTypeEnum.QUESTION.getType());
 			likeRecord.setUserid(currentUser.getId());
 			likeRecord.setGmtcreate(System.currentTimeMillis());
 
@@ -131,13 +130,13 @@ public class QuestionController {
 	}
 	
 	@GetMapping("/question/{id}/likeCancel")
-	public String questionLikeCancel(@PathVariable(name = "id") Long id, HttpServletRequest request, Model model) {
+	public String questionLikeCancel(@PathVariable(name = "id") Long id, HttpServletRequest request) {
 
 		User currentUser = (User) request.getSession().getAttribute("user");
 
 		// 判断当前用户是否没有点赞，如果点了，传一个“Button” -> 按钮变成绿色
 		LikeRecordExample example2 = new LikeRecordExample();
-		example2.createCriteria().andUseridEqualTo(currentUser.getId()).andSourceidEqualTo(id).andTypeEqualTo(1);
+		example2.createCriteria().andUseridEqualTo(currentUser.getId()).andSourceidEqualTo(id).andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
 		List<LikeRecord> selectByExample2 = likeRecordMapper.selectByExample(example2);
 
 		if (selectByExample2.size() != 0) {
