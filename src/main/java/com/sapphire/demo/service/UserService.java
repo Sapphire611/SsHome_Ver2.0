@@ -38,6 +38,7 @@ public class UserService {
         	example.createCriteria().andIdEqualTo(dbUser.getId());
         	
         	User updatedUser = new User();
+        	updatedUser.setEmail(user.getEmail());
         	updatedUser.setGmtmodified(System.currentTimeMillis());
         	updatedUser.setName(user.getName());
         	updatedUser.setToken(user.getToken());

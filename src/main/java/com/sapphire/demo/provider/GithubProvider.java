@@ -41,9 +41,12 @@ public class GithubProvider {
 		try {
 			Response response = client.newCall(request).execute();
 			String string = response.body().string();
+			// "html_url":"https://github.com/Sapphire611" 这个不用加字段
+			// "email":"806990525@qq.com"
+			System.out.println(string);
 			// 不需要自己解析了,json -> class
 			GithubUser githubUser = JSON.parseObject(string, GithubUser.class);
-			System.out.println(githubUser.toString());
+			// System.out.println(githubUser.toString());
 			return githubUser;
 
 		} catch (IOException e) {

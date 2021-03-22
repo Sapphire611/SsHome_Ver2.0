@@ -38,7 +38,13 @@
 								<p class="card-text text-muted">
 									<span th:text="${infoUser.getBio()}"></span>
 								</p>
-								<a href="#" class="btn btn-primary">Follow</a>
+								<a th:href="${'https://github.com/' + infoUser.getName()}"
+									class="btn btn-outline-secondary"><img
+									src="/img/github.png" width="20" height="20"
+									style="margin-bottom: 3px; margin-right: 5px;">在Github上关注Ta</a>
+								<a th:if="${infoUser.getEmail() != null}"
+									th:href="${'mailto:' + infoUser.getEmail()}" target="_top"
+									class="btn btn-outline-info">📧&nbsp;给Ta发邮件</a>
 							</div>
 						</div>
 
@@ -58,8 +64,6 @@
 				<ul class="nav nav-tabs card-header-tabs">
 					<li class="nav-item"><a class="nav-link active" href="#">近期提问</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="#">其他功能1</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">其他功能2</a></li>
 				</ul>
 			</div>
 			<div class="card-body">
@@ -71,8 +75,7 @@
 							<a th:href="@{'/question/' +${question.getId()}}">
 								<h4 class="media-heading" th:text="${question.title}"></h4>
 							</a>
-
-							<p class="card-text" th:text="${question.getDescription()}"></p>
+							<p th:text="${#strings.abbreviate(question.getDescription(),25)}"></p>
 							<span class="text-muted"
 								th:text="'最近更新 ：' + ${#dates.format(question.getGmtmodified(),'yyyy-MM-dd HH:mm:ss')}"></span>
 

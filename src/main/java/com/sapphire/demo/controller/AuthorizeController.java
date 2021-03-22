@@ -61,15 +61,10 @@ public class AuthorizeController {
 			// 为了得到GitHub中能够对应搜索到的名字
 			user.setName(githubUser.getLogin());
 			user.setAccountid(String.valueOf(githubUser.getId())); // Long -> String 强制转换
-			// 一个随机六位数的密码～
-			user.setPassword((int)(Math.random()*9+1)*100000+"");
 			user.setAvatarurl(githubUser.getAvatar_url());
-			
-			// 这里有一个待完成的功能：下载头像并重命名存储到avatar文件夹中
-			// 网站似乎难以访问，方案：设置默认头像，让用户自行上传～
-			
 			user.setBio(githubUser.getBio());
 			user.setAdminboolean(0);
+			user.setEmail(githubUser.getEmail());
 			userService.createOrUpdate(user);
 
 			// Cookie & Session

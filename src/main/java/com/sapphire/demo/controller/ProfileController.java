@@ -29,8 +29,7 @@ public class ProfileController {
 	public String profile(@PathVariable(name = "action") String action,
 			@RequestParam(name = "page", defaultValue = "1") Integer page,
 			@RequestParam(name = "size", defaultValue = "7") Integer size, HttpServletRequest request, Model model) {
-
-		// User user = (User) model.getAttribute("user");
+		
 		User currentUser = (User) request.getSession().getAttribute("user");
 		if (currentUser == null) {
 			return "redirect:/login";

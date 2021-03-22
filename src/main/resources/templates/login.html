@@ -16,7 +16,7 @@
 <body>
 	<form class="form-signin" method="post" action="/login">
 		<div class="text-center mb-4">
-			<img class="mr-3" src="/img/piper.jpeg" alt="" width="72" height="72"
+			<img class="mr-3" src="/img/sapphire611.jpeg" alt="" width="72" height="72"
 				style="margin-bottom: 10px;"> <br>
 			<h1 class="h3 mb-3 font-weight-normal">SsHome - Login</h1>
 			<p>
@@ -26,35 +26,23 @@
 			</p>
 		</div>
 
-		<div class="form-label-group">
-			<input type="text" id="inputAdminId" class="form-control"
-				name="username" placeholder="AdminId"> <label>AdminId</label>
-		</div>
-
-		<div class="form-label-group">
-			<input type="password" id="inputPassword" class="form-control"
-				placeholder="Password" name="password"> <label>Password</label>
-		</div>
-		<div style="color: red;" class="text-center"
-			th:if="${wrongMsg} != null" th:text="${wrongMsg}">...</div>
-		<a
+		<a class="text-center"
 			th:href="${'https://github.com/login/oauth/authorize?client_id=' + {clientId} + '&redirect_uri=http://' + {url} + '/callback&scope=user&state=1'}">
-			<img src="/img/github.png" width="32" height="32"
+			<img src="/img/github.png" width="132" height="132"
 			style="margin-bottom: 15px;">
 		</a>
 
 		<!-- 首次GitHub第三方登陆提示 -->
-		<a style="float: right;" class="btn btn-primary"
+		<a style="float:right;" class="btn btn-primary"
 			data-toggle="collapse" href="#collapseExample" role="button"
-			aria-expanded="false" aria-controls="collapseExample"> 如何注册？ </a>
+			aria-expanded="false" aria-controls="collapseExample"> 如何登陆？ </a>
 		<div style="margin-bottom: 10px;" class="collapse"
 			id="collapseExample">
-			<div class="card card-body">内测阶段，首次登陆需要绑定Github账户，下次就可以根据Github账户中的userName登陆了～[请点击左边那个按钮]</div>
+			<div class="card card-body">内测阶段，仅支持Github第三方登陆[请点击左边那个按钮]</div>
 		</div>
 		<!-- 首次GitHub第三方登陆提示 End-->
 
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
-			in</button>
+		
 		<p class="mt-5 mb-3 text-muted text-center">© www.sshome.xyz</p>
 	</form>
 </body>

@@ -6,6 +6,7 @@ public class GithubUser {
     private Long id;
     private String bio;
     private String avatar_url;
+    private String email;
 
     
     public String getLogin() {
@@ -55,6 +56,16 @@ public class GithubUser {
 
 	public void setAvatar_url(String avatar_url) {
 		this.avatar_url = avatar_url;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 
