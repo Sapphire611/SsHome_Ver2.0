@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -23,7 +23,7 @@
 				class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
 				<h6
 					class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-					<span>SsHome - Tables</span> <a
+					<span>后面的按钮功能并没有完成</span><a
 						class="d-flex align-items-center text-muted" href="#"
 						aria-label="Add a new report"> <svg
 							xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -130,21 +130,28 @@
 									<th>操作</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody th:if="${paginationDTO != null}"
+								th:each="user : ${paginationDTO.data}">
 								<tr style="font-size: 18px;">
-									<td><img class="rounded" src="/img/sapphire611.jpeg" width="30" height="30"></td>
-									<td>1</td>
-									<td>34004352</td>
-									<td>Sara is my one and only ~</td>
-									<td>Sapphire611</td>
+									<td><img class="rounded" th:src="${user.getAvatarurl()}"
+										width="30" height="30"></td>
+									<td th:text="${user.getId()}">-1</td>
+									<td th:text="${user.getAccountid()}">-1</td>
+									<td th:text="${user.getBio()}">-1</td>
+									<td th:text="${user.getName()}">-1</td>
 									<td>
-										<button type="button" class="btn btn-success btn-sm">✓️</button>
-										<button type="button" class="btn btn-danger btn-sm">X</button>
+										<button th:if="${user.getAdminboolean() == 1}" type="button"
+											class="btn btn-success btn-sm">✓️</button>
+										<button th:if="${user.getAdminboolean() == 0}" type="button"
+											class="btn btn-danger btn-sm">X</button>
 									</td>
 									<td>
-										<button type="button" class="btn btn-outline-success btn-sm">升为管理员</button>
-										<button type="button" class="btn btn-outline-danger btn-sm">取消管理员</button>
-										<button type="button" class="btn btn-outline-danger btn-sm">删除用户</button>
+										<button th:if="${session.user.getId() == 1}" type="button"
+											class="btn btn-outline-success btn-sm">升为管理员</button>
+										<button th:if="${session.user.getId() == 1}" type="button"
+											class="btn btn-outline-danger btn-sm">取消管理员</button>
+										<button th:if="${session.user.getId() == 1}" type="button"
+											class="btn btn-outline-danger btn-sm">删除用户</button>
 									</td>
 								</tr>
 							</tbody>
@@ -159,24 +166,41 @@
 						<table class="table table-striped table-sm">
 							<thead>
 								<tr>
-									<th>#</th>
 									<th>Id</th>
-									<th>Github Account Id</th>
-									<th>Header</th>
-									<th>Header</th>
-									<th>Header</th>
-									<th>Header</th>
+									<th>问题标题</th>
+									<th>问题内容</th>
+									<th>标签</th>
+									<th>提问者</th>
+									<th>浏览数</th>
+									<th>评论数</th>
+									<th>点赞数</th>
+									<th>操作</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody th:if="${paginationDTO != null}"
+								th:each="question : ${paginationDTO.data}">
 								<tr>
-									<td>1,001</td>
-									<td>Lorem</td>
-									<td>ipsum</td>
-									<td>dolor</td>
-									<td>sit</td>
-									<th>Header</th>
-									<th>Header</th>
+									<td th:text="${question.getId()}">1</td>
+									<td><a th:href="@{'/question/' +${question.getId()}}"><span
+											th:text="${question.getTitle()}"></span></a></td>
+									<td
+										th:text="${#strings.abbreviate(question.getDescription(),20)}">Content</td>
+									<td><span class="badge badge-info"
+										style="margin-right: 3px;"
+										th:each="tag : ${question.getTag().split(',')}"> <span
+											class="badge badge-info" th:text="${tag}">-1</span>
+									</span></td>
+									<td><img class="rounded" style="margin-right: 6px;"
+										th:src="${question.getUser().getAvatarurl()}" width="30"
+										height="30"><span
+										th:text="${question.getUser().getName()}"></span></td>
+									<td th:text="${question.getViewCount()}">123</td>
+									<td th:text="${question.getCommentCount()}">234</td>
+									<td th:text="${question.getLikeCount()}">456</td>
+									<td>
+										<button type="button" class="btn btn-outline-danger btn-sm">删除问题</button>
+									</td>
+
 								</tr>
 							</tbody>
 						</table>
@@ -190,20 +214,33 @@
 						<table class="table table-striped table-sm">
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>Header</th>
-									<th>Header</th>
-									<th>Header</th>
-									<th>Header</th>
+									<th>Id</th>
+									<th>ParentId</th>
+									<th>评论类型</th>
+									<th>评论内容</th>
+									<th>评论人Id</th>
+									<th>评论数</th>
+									<th>点赞数</th>
+									<th>操作</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody th:if="${paginationDTO != null}"
+								th:each="comment : ${paginationDTO.data}">
 								<tr>
-									<td>1,001</td>
-									<td>Lorem</td>
-									<td>ipsum</td>
-									<td>dolor</td>
-									<td>sit</td>
+									<td th:text="${comment.getId()}">-1</td>
+									<td th:text="${comment.getParentId()}"></td>
+									<td><span th:if="${comment.getType() == 1}"
+										class="badge badge-primary">一级评论</span> <span
+										th:if="${comment.getType() == 2}" class="badge badge-info">二级评论</span>
+									</td>
+									<td th:text="${#strings.abbreviate(comment.getContent(),20)}"></td>
+									<td th:text="${comment.getCommentator()}"></td>
+									<td th:text="${comment.getCommentcount()}">234</td>
+									<td th:text="${comment.getLikeCount()}">456</td>
+									<td>
+										<button type="button" class="btn btn-outline-danger btn-sm">删除评论</button>
+									</td>
+
 								</tr>
 							</tbody>
 						</table>
@@ -217,20 +254,31 @@
 						<table class="table table-striped table-sm">
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>Header</th>
-									<th>Header</th>
-									<th>Header</th>
-									<th>Header</th>
+									<th>Id</th>
+									<th>通知发起人Id</th>
+									<th>通知接收人Id</th>
+									<th>通知种类</th>
+									<th>相关问题/评论 Id</th>
+									<th>相关问题/评论 名称</th>
+									<th>通知状态</th>
+									<th>操作</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody th:if="${paginationDTO != null}"
+								th:each="notification : ${paginationDTO.data}">
 								<tr>
-									<td>1,001</td>
-									<td>Lorem</td>
-									<td>ipsum</td>
-									<td>dolor</td>
-									<td>sit</td>
+									<td th:text="${notification.getId()}">1</td>
+									<td th:text="${notification.getNotifier()}">4</td>
+									<td th:text="${notification.getReceiver()}">1</td>
+									<td><span th:if="${notification.getType() == 1}"
+										class="badge badge-primary">问题通知</span> <span
+										th:if="${notification.getType() == 2}" class="badge badge-info">回复通知</span></td>
+									<td th:text="${notification.getOuterid()}">7</td>
+									<td th:text="${notification.getOutertitle()}">test</td>
+									<td><span th:if="${notification.getStatus() == 0}"
+										class="badge badge-primary">未读</span> <span
+										th:if="${notification.getStatus() == 1}" class="badge badge-info">已读</span></td>
+									<td><button type="button" class="btn btn-outline-danger btn-sm">删除通知</button></td>
 								</tr>
 							</tbody>
 						</table>
@@ -244,26 +292,32 @@
 						<table class="table table-striped table-sm">
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>Header</th>
-									<th>Header</th>
-									<th>Header</th>
-									<th>Header</th>
+									<th>Id</th>
+									<th>点赞人Id</th>
+									<th>SourceId</th>
+									<th>点赞类型</th>
+									<th>操作</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody th:if="${paginationDTO != null}"
+								th:each="likeRecord : ${paginationDTO.data}">
 								<tr>
-									<td>1,001</td>
-									<td>Lorem</td>
-									<td>ipsum</td>
-									<td>dolor</td>
-									<td>sit</td>
+									<td th:text="${likeRecord.getId()}">1,001</td>
+									<td th:text="${likeRecord.getUserid()}">ipsum</td>
+									<td th:text="${likeRecord.getSourceid()}">Lorem</td>
+									<td><span th:if="${likeRecord.getType() == 1}"
+										class="badge badge-primary">问题点赞</span> <span
+										th:if="${likeRecord.getType() == 2}" class="badge badge-info">回复点赞</span>
+									</td>
+									<td>
+										<button type="button" class="btn btn-outline-danger btn-sm">删除评论</button>
+									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
-
+				
 
 			</main>
 		</div>

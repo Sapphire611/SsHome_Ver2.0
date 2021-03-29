@@ -103,7 +103,7 @@ public class QuestionService {
 		return paginationDTO;
 	}
 
-	// Profile 页面显示 My Question
+	// Profile 页面显示Question
 	public PaginationDTO<QuestionDTO> list(Long userId, Integer page, Integer size) {
 		PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<QuestionDTO>();
 

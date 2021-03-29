@@ -34,13 +34,11 @@ public class PublishController {
 
 		if (currentUser == null) {
 			return "redirect:/";
-			// 这里似乎要防止别的用户进入这个地址，不然任何人都可以编辑问题
-		} else if (questionAuthorId != currentUser.getId()) {
+			// 管理员 + 问题编辑者可以编辑问题
+		} else if (currentUser.getAdminboolean() == 1 || questionAuthorId != currentUser.getId()) {
 			return "redirect:/forum";
 		} else {
-
 			QuestionDTO question = questionService.getById(id);
-
 			model.addAttribute("title", question.getTitle());
 			model.addAttribute("description", question.getDescription());
 			model.addAttribute("tag", question.getTag());
@@ -71,17 +69,22 @@ public class PublishController {
 		model.addAttribute("tags", TagCache.get());
 
 		if (title == null || title == "") {
-			model.addAttribute("error", "Please input Title...");
+			model.addAttribute("error", "请输入标题！");
 			return "publish";
 		}
 
 		if (description == null || description == "") {
-			model.addAttribute("error", "Please input Description...");
+			model.addAttribute("error", "请输入问题内容！");
 			return "publish";
 		}
 
 		if (tag == null || tag == "") {
-			model.addAttribute("error", "Please input tags...");
+			model.addAttribute("error", "请输入标签！");
+			return "publish";
+		}
+		
+		if (tag.length() > 45) {
+			model.addAttribute("error", "标签过多...");
 			return "publish";
 		}
 
@@ -101,17 +104,17 @@ public class PublishController {
 		question.setTitle(title);
 		question.setId(id);
 		question.setDescription(description.trim());
-		// System.out.println(question.getDescription());
 		question.setTag(tag.trim());
 		question.setCreator(currentUser.getId());
 		
-		// 1 = 发送新问题 2 = 更新问题
 		int flag = questionService.createOrUpdate(question);
 
 		// 根据功能跳转至不同路径
 		if(flag == 1) {
+			// 1 = 发送新问题
 			return "redirect:/forum/" ;
 		}else {
+			// 2 = 更新问题
 			return "redirect:/question/" + id;
 		}
 		

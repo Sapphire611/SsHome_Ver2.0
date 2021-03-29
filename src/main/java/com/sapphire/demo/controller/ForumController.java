@@ -34,7 +34,7 @@ public class ForumController {
 	@GetMapping("/forum")
 	// size = 一页显示7个问题
 	public String forum(Model model, @RequestParam(name = "page", defaultValue = "1") Integer page,
-									 @RequestParam(name = "size", defaultValue = "7") Integer size, 
+									 @RequestParam(name = "size", defaultValue = "5") Integer size, 
 									 @RequestParam(name = "search", required = false) String search,HttpServletRequest request) {
 
 		// User currentUser = (User) request.getSession().getAttribute("user");
