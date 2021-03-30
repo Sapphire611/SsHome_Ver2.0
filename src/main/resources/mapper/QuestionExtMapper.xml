@@ -23,7 +23,7 @@
 	<select id="selectRelated"
 		parameterType="com.sapphire.demo.model.Question"
 		resultMap="BaseResultMap">
-		select * from QUESTION
+		select * from question
 		<where>
 			<if test="id != null">
 				and id != #{id}
@@ -36,14 +36,14 @@
 	</select>
 
 	<select id="selectHot" resultMap="BaseResultMap">
-		select * from QUESTION order by
+		select * from question order by
 		view_count desc limit 5
 	</select>
 
 	<select id="countBySearch"
 		parameterType="com.sapphire.demo.dto.QuestionQueryDTO"
 		resultType="java.lang.Integer">
-		select count(*) from QUESTION
+		select count(*) from question
 		<where>
 			<if test="search != null and search != ''">
 				and title regexp #{search}
@@ -66,7 +66,7 @@
 	<select id="selectBySearch"
 		parameterType="com.sapphire.demo.dto.QuestionQueryDTO"
 		resultMap="BaseResultMap">
-		select * from QUESTION
+		select * from question
 		<where>
 			<if test="search != null and search != ''">
 				and title regexp #{search}
