@@ -101,6 +101,8 @@ public class CommentService {
 
 			// 问题的回复数 + 1
 			question.setCommentCount(question.getCommentCount() + 1);
+			// 修改问题更新时间
+			question.setGmtmodified(System.currentTimeMillis());
 			questionMapper.updateByPrimaryKey(question);
 
 			// 创建通知
@@ -162,7 +164,7 @@ public class CommentService {
 		// 获取对应问题id下的一级回复
 		CommentExample example = new CommentExample();
 		example.createCriteria().andParentIdEqualTo(id).andTypeEqualTo(type.getType());
-		example.setOrderByClause("gmtCreate desc");
+		// example.setOrderByClause("gmtCreate desc");
 		List<Comment> comments = commentMapper.selectByExample(example);
 
 		if (comments.size() == 0) {

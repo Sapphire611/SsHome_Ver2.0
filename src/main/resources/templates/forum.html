@@ -151,7 +151,7 @@
 			</div>
 		</div>
 		
-		<div th:if="${session.user.getAdminboolean() == 1}"
+		<div th:if="${session.user != null && session.user.getAdminboolean() == 1}"
 			class="d-flex align-items-center p-2 my-3 bg-white rounded shadow-sm">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<a href="/cms/home" class="btn btn-outline-danger btn-lg btn-block " role="button">[管理员]后台系统</a>
