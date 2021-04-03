@@ -55,7 +55,7 @@ public class QuestionService {
 
 		// Search
 		QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
-		questionQueryDTO.setSearch(search);
+		questionQueryDTO.setSearch(search);	
 
 		Integer SearchtotalCount = questionExtMapper.countBySearch(questionQueryDTO);
 

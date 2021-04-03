@@ -141,18 +141,19 @@ public class CommentService {
 			CommentDTO commentDTO = new CommentDTO();
 			BeanUtils.copyProperties(comment, commentDTO);
 			commentDTO.setUser(userMap.get(comment.getCommentator()));
-
-			// 增加判断 当前用户是否点赞当前评论
-			LikeRecordExample example2 = new LikeRecordExample();
-			example2.createCriteria().andUseridEqualTo(currentUser.getId()).andSourceidEqualTo(comment.getId())
-					.andTypeEqualTo(CommentTypeEnum.COMMENT.getType());
-			List<LikeRecord> selectByExample2 = likeRecordMapper.selectByExample(example2);
-
-			if (selectByExample2.size() == 0) {
-				commentDTO.setIsLiked(0);
-			} else {
-				commentDTO.setIsLiked(1);
+			if (currentUser.getId() != null) {
+				// 增加判断 当前用户是否点赞当前评论
+				LikeRecordExample example2 = new LikeRecordExample();
+				example2.createCriteria().andUseridEqualTo(currentUser.getId()).andSourceidEqualTo(comment.getId())
+						.andTypeEqualTo(CommentTypeEnum.COMMENT.getType());
+				List<LikeRecord> selectByExample2 = likeRecordMapper.selectByExample(example2);
+				if (selectByExample2.size() == 0) {
+					commentDTO.setIsLiked(0);
+				} else {
+					commentDTO.setIsLiked(1);
+				}
 			}
+
 			return commentDTO;
 		}).collect(Collectors.toList());
 

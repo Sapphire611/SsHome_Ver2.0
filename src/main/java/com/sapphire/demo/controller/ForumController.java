@@ -38,7 +38,6 @@ public class ForumController {
 									 @RequestParam(name = "search", required = false) String search,HttpServletRequest request) {
 
 		// User currentUser = (User) request.getSession().getAttribute("user");
-
 		PaginationDTO<QuestionDTO> paginationDTO = questionService.list(search,page, size);
 		model.addAttribute("paginationDTO", paginationDTO);
 		model.addAttribute("search", search);
