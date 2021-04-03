@@ -77,9 +77,13 @@ public class CommentService {
 				throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
 			}
 
-			// 二级回复数 + 1
+			// 评论回复数 + 1
 			dbComment.setCommentcount(dbComment.getCommentcount() + 1);
 			commentMapper.updateByPrimaryKey(dbComment);
+
+			// 修改问题更新时间
+			question.setGmtmodified(System.currentTimeMillis());
+			questionMapper.updateByPrimaryKey(question);
 
 			// 插入回复
 			commentMapper.insert(comment);
@@ -141,7 +145,7 @@ public class CommentService {
 			CommentDTO commentDTO = new CommentDTO();
 			BeanUtils.copyProperties(comment, commentDTO);
 			commentDTO.setUser(userMap.get(comment.getCommentator()));
-			if (currentUser.getId() != null) {
+			if (currentUser != null) {
 				// 增加判断 当前用户是否点赞当前评论
 				LikeRecordExample example2 = new LikeRecordExample();
 				example2.createCriteria().andUseridEqualTo(currentUser.getId()).andSourceidEqualTo(comment.getId())
