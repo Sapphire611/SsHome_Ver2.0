@@ -103,18 +103,23 @@ public class QuestionService {
 		return paginationDTO;
 	}
 
-	// Profile 页面显示Question
+	/**
+	 * Profile 页面显示 Questions
+	 * @param userId
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	
 	public PaginationDTO<QuestionDTO> list(Long userId, Integer page, Integer size) {
 		PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<QuestionDTO>();
 
+		Integer totalPage;
+		
 		// count()
 		QuestionExample example = new QuestionExample();
 		example.createCriteria().andCreatorEqualTo(userId);
 		Integer totalCount = (int) questionMapper.countByExample(example);
-
-		paginationDTO.setPagination(totalCount, page);
-
-		Integer totalPage;
 
 		if (totalCount % size == 0) {
 			totalPage = totalCount / size;
@@ -128,6 +133,8 @@ public class QuestionService {
 		if (page > totalPage)
 			page = totalPage;
 
+		paginationDTO.setPagination(totalPage, page);
+		
 		// size * (page - 1)
 		Integer offset = page < 1 ? 0 : size * (page - 1);
 

@@ -41,6 +41,7 @@ public class ProfileController {
 			model.addAttribute("sectionName", "个人提问");
 
 			PaginationDTO<QuestionDTO> paginationQuestionDTO = questionService.list(currentUser.getId(), page, size);
+			
 			if (paginationQuestionDTO != null) {
 				model.addAttribute("paginationDTO", paginationQuestionDTO);
 			} else {

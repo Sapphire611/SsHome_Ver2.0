@@ -6,6 +6,7 @@ import com.sapphire.demo.model.UserExample;
 import com.sapphire.demo.service.NotificationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +25,9 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Autowired
     private NotificationService notificationService;
+    
+    @Value("${href}")
+	private String href;
     
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -46,6 +50,8 @@ public class SessionInterceptor implements HandlerInterceptor {
                     break;
                 }
             }
+        }else {
+        	
         }
         return true;
     }
@@ -55,6 +61,7 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 
+    	modelAndView.addObject("loginURL", href);
     }
 
     @Override

@@ -7,7 +7,7 @@
 
 	<form th:if="${session.user != null}" class="form-inline">
 		<ul class="navbar-nav">
-		<li class="nav-item dropdown"><a
+			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> &nbsp;&nbsp;导航 </a>
@@ -15,11 +15,11 @@
 					<a class="dropdown-item" href="/forum">讨论区</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="/aboutme">游戏区（暂无）</a>
-				</div></li> 
-			<li class="nav-item"><a
-				class="nav-link" href="/profile/replies"
-				role="button"> &nbsp;&nbsp;通知 <span style="font-size: 13px;" class="badge badge-pill badge-danger" th:text="${session.unreadCount}">-1</span></a>
-				</li> 
+				</div></li>
+			<li class="nav-item"><a class="nav-link" href="/profile/replies"
+				role="button"> &nbsp;&nbsp;通知 <span style="font-size: 13px;"
+					class="badge badge-pill badge-danger"
+					th:text="${session.unreadCount}">-1</span></a></li>
 			<li class="nav-item dropdown" th:if="${session.user != null}"><a
 				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -30,7 +30,8 @@
 					th:if="${countNewNotice != 0}">-1</span> <span
 					th:text="${session.user.getName()}">&nbsp;</span></a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" th:href="@{/userinfo/{name}(name=${session.user.getName()})}">个人空间</a>
+					<a class="dropdown-item"
+						th:href="@{/userinfo/{name}(name=${session.user.getName()})}">个人空间</a>
 					<a class="dropdown-item" href="/profile/questions">个人中心</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="/logout">登出</a>
@@ -41,8 +42,7 @@
 
 
 	<form th:if="${session.user == null}" class="form-inline">
-		<a class="nav-link btn btn-outline-light"
-			href="https://github.com/login/oauth/authorize?client_id=0bf2f93d51164f7779d9&redirect_uri=http://101.133.175.192/callback&scope=user&state=1">登陆&nbsp;</a>
+		<a class="nav-link btn btn-outline-light" th:href="${loginURL}">登陆&nbsp;</a>
 	</form>
 
 </nav>
