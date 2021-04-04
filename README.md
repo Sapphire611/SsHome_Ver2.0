@@ -13,22 +13,24 @@ api-getUsers-demo | https://api.github.com/users/Sapphire611
 彻底解决mysql中文乱码 | https://blog.csdn.net/u012410733/article/details/61619656
 Json Editor Online | http://jsonseditoronline.org/
 Markdown Editor | https://pandao.github.io/editor.md/
+
 ---
 ### 项目部署说明
 
 > https://blog.csdn.net/Sirius_hly/article/details/82631470
 
 ```
-1. 安装 Java、Mysql、Tomcat
-2. 运行 src/main/resourse/db/boot/home.sql (source home.sql) 
-3. 自行创建 GitHub OAuth App
-4. 在application.properties 替换对应的clientId、ClientSecret、url、redirectURL等属性
-5. src/main/resoursetemplate/navagation/中等的登陆链接是全局的，需要手动修改
-6. 启动项目，如果是linux服务器，可参考下列命令用于ftp文件上传、部署
+1. 安装 Java、Mysql、Tomcat等必要工具
+2. 通过Git 下载项目到本地，等待编译和相关内容下载完成
+3. 运行 src/main/resourse/db/boot/home.sql (source home.sql)，生成具体表数据
+4. 更改 application.properites 中的属性，将本地测试状态的属性打开，192上线状态的属性注释掉
+5. 启动项目，如果是linux服务器，可参考下列命令用于ftp文件上传、部署
 ```
 ---
 
 ### Port & Terminal
+
+> Mac上命令行界面操作的相关命令，仅供参考
 
 ```
 source ~/.bash_profile
@@ -41,14 +43,14 @@ put Desktop/home.sql /root
 sudo lsof -i:80
 sudo kill -9 42505
 ```
+> mysql 修改密码
 
-### mysql 修改密码
-> alter user 'root'@'localhost' identified by  '新密码';
+```
+alter user 'root'@'localhost' identified by  '新密码';
+```
 
-### MyBatisGenerator 
+> MyBatisGenerator 
 
-> source ~/.bash_profile
-
-> mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
-
-> NAVBAR LOGIN_URL == 全局
+```
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+```
