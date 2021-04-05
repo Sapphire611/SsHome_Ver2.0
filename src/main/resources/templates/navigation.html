@@ -42,7 +42,7 @@
 
 
 	<form th:if="${session.user == null}" class="form-inline">
-		<a class="nav-link btn btn-outline-light" th:href="${loginURL}">登陆&nbsp;</a>
+		<a class="nav-link btn btn-outline-light" th:href="${session.loginURL}">登陆&nbsp;</a>
 	</form>
 
 </nav>
