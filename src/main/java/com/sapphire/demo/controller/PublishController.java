@@ -35,7 +35,7 @@ public class PublishController {
 		if (currentUser == null) {
 			return "redirect:/";
 			// 管理员 + 问题编辑者可以编辑问题
-		} else if (currentUser.getAdminboolean() == 1 || questionAuthorId != currentUser.getId()) {
+		} else if (currentUser.getAdminboolean() != 1 || questionAuthorId != currentUser.getId()) {
 			return "redirect:/forum";
 		} else {
 			QuestionDTO question = questionService.getById(id);

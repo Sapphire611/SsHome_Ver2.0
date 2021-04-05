@@ -61,8 +61,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-    	request.getSession().setAttribute("loginURL", href);
-  
+    	request.getSession().setAttribute("loginURL", href); 
     }
 
     @Override
