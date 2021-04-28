@@ -2,7 +2,7 @@
 
 > https://www.bilibili.com/video/BV1r4411r7au
 
-![image](http://m.qpic.cn/psc?/V146JDoj1Lpm8R/TmEUgtj9EK6.7V8ajmQrEF5q7qfihLNzv7gQWXNsvvfyfApyuPgmT2vuI8RzFFW3zajq6Z0YfiiL3onfnyR5dFfpvZ3YG3ezPrw8QPJsEBw!/b&bo=hAP0AYQD9AEDR2I!&rf=viewer_4&t=5)
+![image](http://sshome.cn-sh2.ufileos.com/01a9a648-70d5-4425-a7dd-db0444e9773c.png?UCloudPublicKey=TOKEN_fedda2ac-20e5-497b-94f7-15a051b41f62&Signature=nbhZ1E2C8%2BFMs4oZXUzM2ScUsKI%3D&Expires=1650702983)
 
 ---
 
