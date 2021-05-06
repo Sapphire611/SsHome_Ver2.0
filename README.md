@@ -1,4 +1,4 @@
-## SsHome_Ver2.0
+# SsHome_Ver2.0
 
 > https://www.bilibili.com/video/BV1r4411r7au
 
@@ -19,24 +19,26 @@ Json Editor Online | http://jsonseditoronline.org/
 Markdown Editor | https://pandao.github.io/editor.md/
 
 ---
-### 项目部署说明
+
+## 项目部署说明
 
 > https://blog.csdn.net/Sirius_hly/article/details/82631470
 
+``` console
+1. (前置条件)安装 Java、Mysql等
+2. git clone https://github.com/Sapphire611/SsHome_Ver2.0.git 
+3. 用IDE(Eclipse、STS、VsCode)打开后，等待Maven相关内容下载
+4. 运行 src/main/resourse/db/boot/home.sql (source home.sql) ，生成初始数据
+5. 运行 DemoApplication.java
 ```
-1. 安装 Java、Mysql、Tomcat等必要工具
-2. 通过Git 下载项目到本地，等待编译和相关内容下载完成
-3. 运行 src/main/resourse/db/boot/home.sql (source home.sql)，生成具体表数据
-4. 更改 application.properites 中的属性，将本地测试状态的属性打开，192上线状态的属性注释掉
-5. 启动项目，如果是linux服务器，可参考下列命令用于ftp文件上传、部署
-```
+
 ---
 
 ### Port & Terminal
 
 > Mac上命令行界面操作的相关命令，仅供参考
 
-```
+``` linux
 source ~/.bash_profile
 source ~/.zshrc
 mvn flyway:migrate
@@ -47,14 +49,15 @@ put Desktop/home.sql /root
 sudo lsof -i:80
 sudo kill -9 42505
 ```
+
 > mysql 修改密码
 
-```
+```console
 alter user 'root'@'localhost' identified by  '新密码';
 ```
 
-> MyBatisGenerator 
+> MyBatisGenerator
 
-```
+``` console
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 ```
